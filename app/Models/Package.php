@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,11 +9,9 @@ class Package extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'price',
-        'image_url',
+        'name', 'location', 'duration', 'people', 'price', 'photopath', 'description'
     ];
 }
+
 
 

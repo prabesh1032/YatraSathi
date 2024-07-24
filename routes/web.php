@@ -10,9 +10,12 @@ use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/packages', [PageController::class, 'package'])->name('packages');
+Route::get('/destinations', [PageController::class, 'destination'])->name('destinations');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/destination', [DestinationController::class, 'index'])->name('destinations.index');
@@ -31,10 +34,10 @@ Route::get('/booking/{id}/destroy', [BookingController::class, 'destroy'])->name
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
-Route::post('/packages', [PackageController::class, 'store'])->name('packages.store');
+Route::post('/packages/store', [PackageController::class, 'store'])->name('packages.store');
 Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('packages.edit');
-Route::post('/packages/{id}', [PackageController::class, 'update'])->name('packages.update');
-Route::get('/packages/{id}', [PackageController::class, 'destroy'])->name('packages.destroy');
+Route::put('/packages/{id}/update', [PackageController::class, 'update'])->name('packages.update');
+Route::get('/packages/{id}/destroy', [PackageController::class, 'destroy'])->name('packages.destroy');
 
 
 

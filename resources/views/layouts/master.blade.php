@@ -15,6 +15,8 @@
             </div>
             <div class="flex space-x-6">
                 <a href="{{ route('home') }}" class="hover:text-yellow-500">Home</a>
+                <a href="" class="hover:text-yellow-500">Package</a>
+                <a href="{{ route('destinations') }}" class="hover:text-yellow-500">Destination</a>
                 <a href="{{ route('about') }}" class="hover:text-yellow-500">About</a>
                 <a href="{{ route('contact') }}" class="hover:text-yellow-500">Contact</a>
                 <a href="/login" class="hover:text-yellow-500">Login</a>

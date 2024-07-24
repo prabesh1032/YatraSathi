@@ -21,7 +21,7 @@
             <i class="ri-suitcase-line text-3xl text-white"></i>
         </div>
         <p class="text-white">Create and manage travel packages for customers.</p>
-        <a href="#" class="mt-4 block px-4 py-2 bg-yellow-500 text-black font-bold rounded-full
+        <a href="{{ route('packages.index') }}" class="mt-4 block px-4 py-2 bg-yellow-500 text-black font-bold rounded-full
          hover:bg-yellow-600 text-center">Manage Packages</a>
     </div>
     <div class="bg-gradient-to-r from-yellow-400 to-orange-500 p-6 rounded-lg shadow-lg transform

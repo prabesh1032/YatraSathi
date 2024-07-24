@@ -7,13 +7,10 @@ use Illuminate\Http\Request;
 class PackageController extends Controller
 {
     public function index()
-{
-    // Fetch paginated packages
-    $packages = Package::paginate(10); // Adjust the number of items per page as needed
-
-    return view('packages.index', compact('packages'));
-}
-
+    {
+        $packages = Package::all();
+        return view('packages.index', compact('packages'));
+    }
 
     public function create()
     {
@@ -23,51 +20,65 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'name' => 'required',
+            'location' => 'required',
+            'duration' => 'required|integer',
+            'people' => 'required|integer',
             'price' => 'required|numeric',
-            'image_url' => 'required|image',
+            'photopath' => 'nullable|image',
+            'description' => 'nullable',
         ]);
-            $photoname = time() . '.' . $request->image_url->extension();
-            $request->image_url->move(public_path('images'), $photoname);
-            $data['image_url'] = $photoname;
+
+        $data = $request->only(['name', 'location', 'duration', 'people', 'price', 'description']);
+
+        if ($request->hasFile('photopath')) {
+            $photoname = time() . '.' . $request->photopath->extension();
+            $request->photopath->move(public_path('images'), $photoname);
+            $data['photopath'] = $photoname;
+        }
 
         Package::create($data);
 
         return redirect()->route('packages.index')->with('success', 'Package created successfully.');
     }
 
-    public function edit(Package $package)
+    public function edit($id)
     {
+        $package = Package::find($id);
         return view('packages.edit', compact('package'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'name' => 'required',
+            'location' => 'required',
+            'duration' => 'required|integer',
+            'people' => 'required|integer',
             'price' => 'required|numeric',
-            'image_url' => 'required|required',
+            'photopath' => 'nullable|image',
+            'description' => 'nullable',
         ]);
+
         $package = Package::find($id);
         $package->name = $request->name;
-        $package->description = $request->description;
+        $package->location = $request->location;
+        $package->duration = $request->duration;
+        $package->people = $request->people;
         $package->price = $request->price;
+        $package->description = $request->description;
 
-        if ($request->hasFile('image_url')) {
-            // Save new photo
-        $photoname = time() . '.' . $request->image_url->extension();
-        $request->image_url->move(public_path('images'), $photoname);
+        if ($request->hasFile('photopath')) {
+            $photoname = time() . '.' . $request->photopath->extension();
+            $request->photopath->move(public_path('images'), $photoname);
 
-        // Delete old photo if exists
-        if ($package->photopath) {
-            $oldPhoto = public_path('images') . '/' . $package->photopath;
-            if (file_exists($oldPhoto)) {
-                unlink($oldPhoto);
+            if ($package->photopath) {
+                $oldPhoto = public_path('images') . '/' . $package->photopath;
+                if (file_exists($oldPhoto)) {
+                    unlink($oldPhoto);
+                }
             }
-        }
-        $package->image_url= $photoname;
+            $package->photopath = $photoname;
         }
 
         $package->save();
@@ -78,8 +89,8 @@ class PackageController extends Controller
     public function destroy($id)
     {
         $package = Package::find($id);
-        if ($package->image_url) {
-            $photo = public_path('images') . '/' . $package->image_url;
+        if ($package->photopath) {
+            $photo = public_path('images') . '/' . $package->photopath;
             if (is_file($photo)) {
                 unlink($photo);
             }

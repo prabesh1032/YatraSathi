@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Destination;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -10,7 +12,17 @@ class PageController extends Controller
     {
         return view('welcome');
     }
+    public function package()
+    {
+        $packages = Package::all(); // Fetch all packages from the database
+        return view('package', compact('packages'));
+    }
 
+    public function destination()
+    {
+        $destinations = Destination::all(); // Fetch all destinations from the database
+        return view('destination', compact('destinations'));
+    }
     public function about()
     {
         return view('about');
