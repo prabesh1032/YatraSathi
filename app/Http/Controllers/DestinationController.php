@@ -38,35 +38,6 @@ class DestinationController extends Controller
         $destination = Destination::find($id);
         return view('destinations.edit', compact('destination'));
     }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'description' => 'required|string',
-    //         'photopath' => 'nullable|image',
-    //     ]);
-
-    //     $destination = Destination::find($id);
-    //     $destination->name = $validatedData['name'];
-    //     $destination->description = $validatedData['description'];
-
-    //     if ($request->hasFile('photopath')) {
-    //         $photoname = time() . '.' . $request->photopath->extension();
-    //         $request->photopath->move(public_path('images'), $photoname);
-    //         $destination->photopath = $photoname;
-
-    //         // Delete old photo
-    //         $oldPhoto = public_path('images') . '/' . $destination->photopath;
-    //         if (file_exists($oldPhoto)) {
-    //             unlink($oldPhoto);
-    //         }
-    //     }
-
-    //     $destination->save();
-
-    //     return redirect()->route('destinations.index')->with('success', 'Destination updated successfully.');
-    // }
     public function update(Request $request, $id)
 {
     $validatedData = $request->validate([

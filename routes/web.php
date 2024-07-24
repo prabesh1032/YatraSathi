@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\PackageController;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
 
@@ -25,12 +26,17 @@ Route::get('/booking', [BookingController::class, 'index'])->name('bookings.inde
 Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
 Route::post('/booking/store', [BookingController::class, 'store'])->name('bookings.store');
 Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-Route::put('/booking/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
+Route::post('/booking/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
 Route::get('/booking/{id}/destroy', [BookingController::class, 'destroy'])->name('bookings.destroy');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
+Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
+Route::post('/packages', [PackageController::class, 'store'])->name('packages.store');
+Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('packages.edit');
+Route::post('/packages/{id}', [PackageController::class, 'update'])->name('packages.update');
+Route::get('/packages/{id}', [PackageController::class, 'destroy'])->name('packages.destroy');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

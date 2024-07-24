@@ -45,8 +45,8 @@
             </div>
             <div>
                 <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
-                <p>Email: <a href="mailto:test@gmail.com" class="text-gray-300 hover:text-yellow-500">test@gmail.com</a></p>
-                <p>Phone: <a href="tel:+9742538007" class="text-gray-300 hover:text-yellow-500">9742538007</a></p>
+                <p>Email: <a href="#" class="text-gray-300 hover:text-yellow-500">test@gmail.com</a></p>
+                <p>Phone: <a href="#" class="text-gray-300 hover:text-yellow-500">9742538007</a></p>
                 <p>Address: 123,<br>Chitwan,<br>Nepall</p>
             </div>
             <div>

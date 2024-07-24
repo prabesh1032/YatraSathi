@@ -30,7 +30,7 @@
                 <a href="{{ route('destinations.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-map-pin-line mr-2"></i> Destinations
                 </a>
-                <a href="#" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-suitcase-line mr-2"></i> Packages
                 </a>
                 <a href="{{ route('bookings.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
@@ -68,7 +68,10 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div class="bg-yellow-200 p-4 rounded-lg shadow">
                             <p class="text-gray-700">Total Bookings</p>
-                            <p class="text-2xl font-bold">500</p>
+                            @php
+                            $totalBookings = \App\Models\Booking::count();
+                            @endphp
+                            <p class="text-2xl font-bold">{{$totalBookings}}</p>
                         </div>
                         <div class="bg-yellow-200 p-4 rounded-lg shadow">
                             <p class="text-gray-700">New Reviews</p>
