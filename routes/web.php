@@ -10,8 +10,8 @@ use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/packages', [PageController::class, 'package'])->name('packages');
-Route::get('/destinations', [PageController::class, 'destination'])->name('destinations');
+Route::get('/packages/{id}', [PageController::class, 'package'])->name('packages.show');
+Route::get('/destinations/{id}', [PageController::class, 'destination'])->name('destinations.show');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');

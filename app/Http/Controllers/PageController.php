@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
@@ -10,19 +9,24 @@ class PageController extends Controller
 {
     public function home()
     {
-        return view('welcome');
-    }
-    public function package()
-    {
-        $packages = Package::all(); // Fetch all packages from the database
-        return view('package', compact('packages'));
+        $destinations = Destination::all();
+        $packages = Package::all();
+        return view('welcome', compact('destinations', 'packages'));
     }
 
-    public function destination()
+    public function package($id)
     {
-        $destinations = Destination::all(); // Fetch all destinations from the database
-        return view('destination', compact('destinations'));
+
+        $package = Package::find($id);
+        return view('package', compact('package'));
     }
+
+    public function destination($id)
+    {
+        $destination = Destination::find($id);
+        return view('destination', compact('destination'));
+    }
+
     public function about()
     {
         return view('about');
@@ -51,4 +55,3 @@ class PageController extends Controller
         return view('dashboard');
     }
 }
-

@@ -10,6 +10,11 @@ class DestinationController extends Controller
         $destinations = Destination::all();
         return view('destinations.index', compact('destinations'));
     }
+    public function show($id)
+    {
+        $destination = Destination::find($id);
+        return view('destinations.show', compact('destination'));
+    }
 
     public function create()
     {
