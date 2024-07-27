@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Header -->
-<header class="relative h-screen bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Nnx8fGVufDB8fHx8fA%3D%3D');">
+<header class="relative h-screen bg-cover bg-center" style="background-image: url('https://www.alphaadventuretreks.com/blog/wp-content/uploads/2023/07/Nepal-Tour-Packages-From-Malaysia-1.jpeg');">
     <div class="absolute inset-0 bg-black opacity-50"></div>
     <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-white">
         <h1 class="text-4xl md:text-6xl font-bold">Discover Your Next Adventure</h1>

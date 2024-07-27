@@ -8,7 +8,7 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($packages as $package)
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="bg-indigo-100 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             @if($package->photopath)
                 <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}"
                 class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
