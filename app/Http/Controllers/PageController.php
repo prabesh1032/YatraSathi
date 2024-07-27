@@ -13,20 +13,6 @@ class PageController extends Controller
         $packages = Package::all();
         return view('welcome', compact('destinations', 'packages'));
     }
-
-    public function package($id)
-    {
-
-        $package = Package::find($id);
-        return view('package', compact('package'));
-    }
-
-    public function destination($id)
-    {
-        $destination = Destination::find($id);
-        return view('destination', compact('destination'));
-    }
-
     public function about()
     {
         return view('about');

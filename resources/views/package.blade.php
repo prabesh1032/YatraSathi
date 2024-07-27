@@ -1,4 +1,3 @@
-<!-- resources/views/package.blade.php -->
 
 @extends('layouts.master')
 
@@ -24,8 +23,8 @@
                 <div class="flex justify-between items-center mt-4">
                     <span class="text-blue-500 font-bold text-lg">${{ $package->price }}</span>
                     <div class="flex items-center space-x-2">
-                        <a href="{{ route('packages.show', $package->id) }}" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600">Read More</a>
-                        <a href="{{ route('packages.book', $package->id) }}" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600">Book Now</a>
+                        <a href="" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600">Read More</a>
+                        <a href="" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600">Book Now</a>
                     </div>
                 </div>
             </div>

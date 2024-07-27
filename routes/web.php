@@ -10,8 +10,6 @@ use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/packages/{id}', [PageController::class, 'package'])->name('packages.show');
-Route::get('/destinations/{id}', [PageController::class, 'destination'])->name('destinations.show');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
@@ -19,6 +17,7 @@ Route::post('/contact', [PageController::class, 'submitContact'])->name('contact
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/destination', [DestinationController::class, 'index'])->name('destinations.index');
+Route::get('/alldestinations', [DestinationController::class, 'destination'])->name('destinations');
 Route::get('/destination/create', [DestinationController::class, 'create'])->name('destinations.create');
 Route::post('/destination/store', [DestinationController::class, 'store'])->name('destinations.store');
 Route::get('/destination/{id}/edit', [DestinationController::class, 'edit'])->name('destinations.edit');
@@ -33,6 +32,7 @@ Route::post('/booking/{id}/update', [BookingController::class, 'update'])->name(
 Route::get('/booking/{id}/destroy', [BookingController::class, 'destroy'])->name('bookings.destroy');
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
+Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');
 Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
 Route::post('/packages/store', [PackageController::class, 'store'])->name('packages.store');
 Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('packages.edit');

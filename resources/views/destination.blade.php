@@ -1,4 +1,3 @@
-<!-- resources/views/destination.blade.php -->
 
 @extends('layouts.master')
 

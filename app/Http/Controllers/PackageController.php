@@ -12,10 +12,11 @@ class PackageController extends Controller
         return view('packages.index', compact('packages'));
     }
 
-    public function show($id)
+    public function package($id)
     {
-        $package = Package::find($id);
-        return view('packages.show', compact('package'));
+
+        $package = Package::findOrFail($id);
+        return view('package', compact('package'));
     }
 
     public function create()
