@@ -17,12 +17,10 @@
             <div class="p-4">
                 <h3 class="text-xl font-bold text-gray-900">{{ $destination->name }}</h3>
                 <p class="text-gray-700 mt-2">{{ Str::limit($destination->description, 100) }}</p>
-                <p class="text-gray-700 mt-2"><i class="ri-map-pin-line"></i> Location: {{ $destination->location }}</p>
                 <div class="flex justify-between items-center mt-4">
-                    <span class="text-blue-500 font-bold text-lg">${{ $destination->price }}</span>
                     <div class="flex items-center space-x-2">
-                        <a href="{{ route('destinations.show', $destination->id) }}" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600">Read More</a>
-                        <a href="{{ route('bookings.create', ['destination_id' => $destination->id]) }}" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600">Book Now</a>
+                        <a href="" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600">Read More</a>
+                        <a href="" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600">Book Now</a>
                     </div>
                 </div>
             </div>
