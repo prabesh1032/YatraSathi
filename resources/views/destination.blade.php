@@ -19,7 +19,7 @@
                 <div class="flex justify-between items-center mt-4">
                     <div class="flex items-center space-x-2">
                         <a href="" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600 transition-colors duration-300">Read More</a>
-                        <a href="" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600 transition-colors duration-300">Book Now</a>
+                        <a href="{{ route('destinations.show', $destination->id) }}" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600 transition-colors duration-300">Book Now</a>
                     </div>
                 </div>
             </div>

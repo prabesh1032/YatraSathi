@@ -9,8 +9,8 @@ class PageController extends Controller
 {
     public function home()
     {
-        $destinations = Destination::all();
-        $packages = Package::all();
+        $destinations = Destination::take(3)->get();
+        $packages = Package::take(3)->get();;
         return view('welcome', compact('destinations', 'packages'));
     }
     public function about()
@@ -22,7 +22,6 @@ class PageController extends Controller
     {
         return view('contact');
     }
-
     public function submitContact(Request $request)
     {
         $request->validate([

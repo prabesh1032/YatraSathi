@@ -15,6 +15,11 @@ class DestinationController extends Controller
         $destinations = Destination::all();
         return view('destination', compact('destinations'));
     }
+    public function show(Destination $destination)
+    {
+        $relatedDestinations = Destination::where('id', '!=', $destination->id)->take(4)->get();
+        return view('viewdestination', compact('destination', 'relatedDestinations'));
+    }
     public function create()
     {
         return view('destinations.create');

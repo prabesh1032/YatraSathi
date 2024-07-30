@@ -18,6 +18,18 @@ class PackageController extends Controller
         return view('package', compact('packages'));
     }
 
+    public function show(Package $package)
+    {
+        $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
+        return view('viewpackage', compact('package', 'relatedpackages'));
+    }
+
+    public function read(Package $package)
+    {
+        $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
+        return view('readpackage', compact('package', 'relatedpackages'));
+    }
+
     public function create()
     {
         return view('packages.create');

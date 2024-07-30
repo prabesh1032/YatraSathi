@@ -18,6 +18,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 Route::get('/destination', [DestinationController::class, 'index'])->name('destinations.index');
 Route::get('/alldestinations', [DestinationController::class, 'destination'])->name('destinations');
+Route::get('/destinations/{destination}', [DestinationController::class, 'show'])->name('destinations.show');
 Route::get('/destination/create', [DestinationController::class, 'create'])->name('destinations.create');
 Route::post('/destination/store', [DestinationController::class, 'store'])->name('destinations.store');
 Route::get('/destination/{id}/edit', [DestinationController::class, 'edit'])->name('destinations.edit');
@@ -33,6 +34,8 @@ Route::get('/booking/{id}/destroy', [BookingController::class, 'destroy'])->name
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');
+Route::get('/packages/{package}', [PackageController::class, 'show'])->name('packages.show');
+Route::get('/readpackages/{package}', [PackageController::class, 'read'])->name('packages.read');
 Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
 Route::post('/packages/store', [PackageController::class, 'store'])->name('packages.store');
 Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('packages.edit');

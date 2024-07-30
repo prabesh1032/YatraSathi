@@ -8,10 +8,10 @@
 </head>
 <body class="font-sans bg-white text-gray-800">
     <!-- Navbar -->
-    <nav class="bg-black text-white py-6">
+    <nav class="bg-black top-0 sticky z-10 text-white py-6">
         <div class="container mx-auto flex justify-between items-center px-6">
             <div class="flex items-center">
-                <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-14 h-14 rounded-full mr-4">
+                <img src="{{ asset('SS2.png') }}" a alt="YatraSathi Logo" class="w-14 h-14 rounded-full mr-4">
                 <a href="{{ route('home') }}" class="text-4xl font-bold">YatraSathi</a>
             </div>
             <div class="flex space-x-8 text-xl">
@@ -22,6 +22,10 @@
                 <a href="{{ route('contact') }}" class="hover:text-yellow-500">Contact</a>
                 <a href="/login" class="hover:text-yellow-500">Login</a>
             </div>
+            <form class="ml-4">
+                <input type="text" placeholder="Search..." class="text-black px-2 py-1 rounded">
+                <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded">Go</button>
+            </form>
         </div>
     </nav>
 
