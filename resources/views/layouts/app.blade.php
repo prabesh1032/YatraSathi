@@ -31,7 +31,7 @@
                     <i class="ri-map-pin-line mr-2"></i> Destinations
                 </a>
                 <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
-                    <i class="ri-suitcase-line mr-2"></i> Packages
+                    <i class="ri-suitcase-line mr-2"></i> Packages\
                 </a>
                 <a href="{{ route('bookings.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-book-line mr-2"></i> Bookings

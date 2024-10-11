@@ -26,7 +26,7 @@
                     <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
                     <div class="p-4">
                         <h3 class="text-xl font-bold text-gray-900">{{ $package->name }}</h3>
-                        <p class="text-gray-700 mt-2">{{ Str::limit($package->description, 100) }}</p>
+                        <!-- <p class="text-gray-700 mt-2">{{ Str::limit($package->description, 100) }}</p> -->
                         <p class="text-blue-500 font-bold text-lg mt-4">${{ $package->price }}</p>
                         <a href="{{ route('packages') }}" class="mt-4 inline-block bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600 transition duration-300 ease-in-out transform hover:scale-105">View Details</a>
                     </div>
