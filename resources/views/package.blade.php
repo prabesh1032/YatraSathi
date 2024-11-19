@@ -9,12 +9,18 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($packages as $package)
         <div class="bg-indigo-100 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <!-- Make the image clickable -->
             @if($package->photopath)
-                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
+                <a href="{{ route('packages.read', $package->id) }}">
+                    <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
+                </a>
             @endif
             <div class="p-4">
-                <h3 class="text-xl font-bold text-gray-900">{{ $package->name }}</h3>
-                <!-- <p class="text-gray-700 mt-2">{{ Str::limit($package->description, 100) }}</p> -->
+                <!-- Make the package name clickable -->
+                <a href="{{ route('packages.read', $package->id) }}" class="text-xl font-bold text-gray-900 hover:text-yellow-500">
+                    <h3>{{ $package->name }}</h3>
+                </a>
+                <!-- Description and details -->
                 <p class="text-gray-700 mt-2"><i class="ri-map-pin-line"></i> Location: {{ $package->location }}</p>
                 <p class="text-gray-700 mt-2"><i class="ri-calendar-line"></i> Duration: {{ $package->duration }} days</p>
                 <p class="text-gray-700 mt-2"><i class="ri-group-line"></i> People: {{ $package->people }}</p>

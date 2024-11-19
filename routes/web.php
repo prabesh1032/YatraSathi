@@ -19,6 +19,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::get('/destination', [DestinationController::class, 'index'])->name('destinations.index');
 Route::get('/alldestinations', [DestinationController::class, 'destination'])->name('destinations');
 Route::get('/destinations/{destination}', [DestinationController::class, 'show'])->name('destinations.show');
+Route::get('/destinations/{destination}/read', [DestinationController::class, 'read'])->name('destinations.read');
 Route::get('/destination/create', [DestinationController::class, 'create'])->name('destinations.create');
 Route::post('/destination/store', [DestinationController::class, 'store'])->name('destinations.store');
 Route::get('/destination/{id}/edit', [DestinationController::class, 'edit'])->name('destinations.edit');
@@ -26,11 +27,11 @@ Route::post('/destination/{id}/update', [DestinationController::class, 'update']
 Route::get('/destination/{id}/destroy', [DestinationController::class, 'destroy'])->name('destinations.destroy');
 
 Route::get('/booking', [BookingController::class, 'index'])->name('bookings.index');
-Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
-Route::post('/booking/store', [BookingController::class, 'store'])->name('bookings.store');
-Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-Route::post('/booking/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
-Route::get('/booking/{id}/destroy', [BookingController::class, 'destroy'])->name('bookings.destroy');
+// Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
+// Route::post('/booking/store', [BookingController::class, 'store'])->name('bookings.store');
+// Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+// Route::post('/booking/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
+// Route::get('/booking/{id}/destroy', [BookingController::class, 'destroy'])->name('bookings.destroy');
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');

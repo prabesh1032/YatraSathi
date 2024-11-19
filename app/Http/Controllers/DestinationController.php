@@ -16,10 +16,18 @@ class DestinationController extends Controller
         return view('destination', compact('destinations'));
     }
     public function show(Destination $destination)
-    {
-        $relatedDestinations = Destination::where('id', '!=', $destination->id)->take(4)->get();
-        return view('viewdestination', compact('destination', 'relatedDestinations'));
-    }
+{
+    // Fetch related destinations, excluding the current one
+    $relatedDestinations = Destination::where('id', '!=', $destination->id)->take(4)->get();
+    return view('viewdestination', compact('destination', 'relatedDestinations'));
+}
+
+public function read(Destination $destination)
+{
+    // Fetch related destinations, excluding the current one
+    $relatedDestinations = Destination::where('id', '!=', $destination->id)->take(4)->get();
+    return view('readdestination', compact('destination', 'relatedDestinations'));
+}
     public function create()
     {
         return view('destinations.create');
@@ -41,6 +49,7 @@ class DestinationController extends Controller
 
         return redirect()->route('destinations.index')->with('success', 'Destination added successfully.');
     }
+
 
     public function edit($id)
     {
