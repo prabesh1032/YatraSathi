@@ -16,12 +16,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased bg-gray-100">
+@include('Layouts.alert')
     <div class="flex">
         <div class="w-56 h-screen sticky top-0 bg-cyan-200 shadow-lg">
             <div class="flex flex-col items-center mt-5">
-                <img src="{{ asset('SS2.png') }}" alt="Logo"
-                     class="w-8/12 mx-auto bg-blue-400 p-2 rounded-lg shadow-lg" >
-                <span class="mt-3 font-bold text-xl">YatraSathi</span>
+            <a href="{{ route('home') }}"><img src="{{ asset('SS2.png') }}" alt="Logo"
+                     class="w-8/12 mx-auto bg-blue-400 p-2 rounded-lg shadow-lg" ></a>
+                <a href="{{ route('home') }}" class="mt-3 font-bold text-xl">YatraSathi</span>
             </div>
             <div class="mt-5 space-y-1">
                 <a href="{{ route('dashboard') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">

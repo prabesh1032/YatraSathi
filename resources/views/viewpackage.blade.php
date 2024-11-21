@@ -11,25 +11,28 @@
             <h1 class="text-4xl font-bold text-blue-800">{{ $package->name }}</h1>
             <h2 class="text-2xl font-bold mt-4 text-yellow-600">${{ $package->price }}</h2>
             <p class="text-gray-700 mt-4">Available spots: <span id="stock" class="font-bold">{{ $package->stock }}</span></p>
-            <button type="submit" class="bg-gradient-to-r from-red-600 via-yellow-400 to-gray-600 text-white px-4 py-2 rounded-lg mt-4 inline-block transform transition-transform duration-300 hover:scale-105">Book Now</button>
+            <form action="{{route('bookmarks.store')}} "method="POST">
+                @csrf
+                <input type="hidden" name="package_id" value="{{$package->id}}">
+                <button type="submit" class="bg-gradient-to-r from-red-600 via-yellow-400 to-gray-600 text-white px-4 py-2
+                rounded-lg mt-4 inline-block transform transition-transform duration-300 hover:scale-105">Bookmark</button>
+            </form>
         </div>
         <div class="col-span-1 space-y-4">
-    <a href="#" class="block p-4 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-100">
-        <p class="font-bold">Special Offers</p>
-        <p class="text-sm">Get the best deals and discounts on our packages. Limited time offers available now!</p>
-    </a>
-    <a href="#" class="block p-4 bg-green-50 border-l-4 border-green-500 text-green-700 hover:bg-green-100">
-        <p class="font-bold">Customer Reviews</p>
-        <p class="text-sm">Read reviews from our satisfied customers and learn about their travel experiences with YatraSathi.</p>
-    </a>
-    <a href="#" class="block p-4 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 hover:bg-yellow-100">
-        <p class="font-bold">Travel Tips</p>
-        <p class="text-sm">Check out our travel tips and guides to make the most out of your next adventure.</p>
-    </a>
-</div>
-
+            <a href="#" class="block p-4 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-100">
+                <p class="font-bold">Special Offers</p>
+                <p class="text-sm">Get the best deals and discounts on our packages. Limited time offers available now!</p>
+            </a>
+            <a href="#" class="block p-4 bg-green-50 border-l-4 border-green-500 text-green-700 hover:bg-green-100">
+                <p class="font-bold">Customer Reviews</p>
+                <p class="text-sm">Read reviews from our satisfied customers and learn about their travel experiences with YatraSathi.</p>
+            </a>
+            <a href="#" class="block p-4 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 hover:bg-yellow-100">
+                <p class="font-bold">Travel Tips</p>
+                <p class="text-sm">Check out our travel tips and guides to make the most out of your next adventure.</p>
+            </a>
+        </div>
     </div>
-</div>
 
     <!-- Description Section -->
     <div class="mt-12">

@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
@@ -43,7 +45,23 @@ Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('pac
 Route::put('/packages/{id}/update', [PackageController::class, 'update'])->name('packages.update');
 Route::get('/packages/{id}/destroy', [PackageController::class, 'destroy'])->name('packages.destroy');
 
+Route::middleware('auth')->group(function () {
+    Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
+    Route::get('/bookmarks', [BookmarkController::class, 'myBookmarks'])->name('bookmarks.index');
+    Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
+    Route::get('/bookmarks/{bookmark}/checkout', [BookmarkController::class, 'checkout'])->name('bookmarks.checkout');
 
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
+    // Admin view of all orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index')->middleware('admin');
+
+    // Update order status
+    Route::patch('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
+
+    // Handle eSewa payment for orders
+    Route::post('/orders/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('orders.esewa');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
