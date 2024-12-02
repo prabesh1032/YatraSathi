@@ -32,13 +32,16 @@
                     <i class="ri-map-pin-line mr-2"></i> Destinations
                 </a>
                 <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
-                    <i class="ri-suitcase-line mr-2"></i> Packages\
+                    <i class="ri-suitcase-line mr-2"></i> Packages
                 </a>
-                <a href="{{ route('bookings.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                <a href="{{route('orders.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-book-line mr-2"></i> Bookings
                 </a>
                 <a href="#" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-star-line mr-2"></i> Reviews
+                </a>
+                <a href="{{ route('messages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
+                    <i class="ri-star-line mr-2"></i>Messages
                 </a>
                 <a href="#" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-user-line mr-2"></i> Travellers
@@ -69,10 +72,8 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div class="bg-yellow-200 p-4 rounded-lg shadow">
                             <p class="text-gray-700">Total Bookings</p>
-                            @php
-                            $totalBookings = \App\Models\Booking::count();
-                            @endphp
-                            <p class="text-2xl font-bold">{{$totalBookings}}</p>
+
+                            <p class="text-2xl font-bold">324</p>
                         </div>
                         <div class="bg-yellow-200 p-4 rounded-lg shadow">
                             <p class="text-gray-700">New Reviews</p>

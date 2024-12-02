@@ -63,10 +63,12 @@
                 <p class="text-center text-gray-700">Read reviews from our satisfied customers and learn about their travel experiences with YatraSathi.</p>
             </div>
             <div class="flex flex-col items-center">
-                <img src="{{ asset('tip-travel.png') }}" alt="Travel Tips" class="w-24 h-24 rounded-full shadow-lg mb-4">
-                <h2 class="text-2xl font-bold mb-2">Travel Tips</h2>
-                <p class="text-center text-gray-700">Check out our travel tips and guides to make the most out of your next adventure.</p>
+             <a href="{{ route('traveltips') }}"><img src="{{ asset('tip-travel.png') }}" alt="Travel Tips" class="w-24 h-24 rounded-full shadow-lg mb-4 hover:scale-110 transition duration-300 ease-in-out">
+                    <h2 class="text-2xl font-bold mb-2"><a href="{{ route('traveltips') }}">Travel Tips</h2>
+                    <p class="text-center text-gray-700">Check out our travel tips and guides to make the most out of your next adventure.</p>
+                </a>
             </div>
+
         </div>
     </section>
 

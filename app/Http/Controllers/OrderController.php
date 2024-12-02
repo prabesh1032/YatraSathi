@@ -20,16 +20,17 @@ class OrderController extends Controller
             'phone' => 'required',
             'address' => 'required',
         ]);
-
         $data['user_id'] = auth()->user()->id;
         $data['status'] = 'Pending';
+        $data['total_price'] = $request->price;
 
         // Create the order
-        Order::create($data);
+       Order::create($data);
         // Remove from bookmarks if exists
         Bookmark::where('user_id', $data['user_id'])
             ->where('package_id', $data['package_id'])
             ->delete();
+            // dd($a);
 
         return redirect('/')->with('success', 'Booking has been placed successfully.');
     }
@@ -37,7 +38,9 @@ class OrderController extends Controller
     // Display all orders for admin
     public function index()
     {
-        $orders = Order::with('package', 'user')->get();
+        $orders = Order::all();
+
+
         return view('orders.index', compact('orders'));
     }
 
@@ -54,7 +57,7 @@ class OrderController extends Controller
         ];
 
         // Send email notification
-        Mail::send('emails.orderstatus', $emaildata, function ($message) use ($order) {
+        Mail::send('emails.orderemail', $emaildata, function ($message) use ($order) {
             $message->to($order->user->email, $order->user->name)
                 ->subject('Booking Status Update');
         });

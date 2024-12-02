@@ -2,7 +2,8 @@
 
 @section('content')
 <!-- Header Section -->
-<header class="relative h-screen bg-cover bg-center" style="background-image: url('https://www.spendlifetraveling.com/wp-content/uploads/2022/05/how_to_travel_cheaply_in_the_usa_on_a_budget.jpg');">
+<header class="relative h-screen bg-cover bg-center">
+<img src="{{ asset('aboutus.jpg') }}" alt="Header Image" class="absolute inset-0 w-full h-full object-cover z-0">
     <div class="absolute inset-0 bg-black opacity-30"></div>
     <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-white">
         <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg">About Us</h1>

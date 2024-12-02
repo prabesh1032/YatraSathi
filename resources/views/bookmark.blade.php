@@ -14,7 +14,7 @@
         </div>
         <div class="flex justify-between mt-4">
             <button onclick="showModal('{{ $bookmark->id }}')" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-400">Remove</button>
-            <a href="{{ route('bookmarks.checkout', $bookmark->package->id) }}" class="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 focus:ring-2 focus:ring-green-400">Book Now</a>
+            <a href="{{ route('bookmarks.checkout', $bookmark->id) }}" class="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 focus:ring-2 focus:ring-green-400">Book Now</a>
         </div>
     </div>
     @empty

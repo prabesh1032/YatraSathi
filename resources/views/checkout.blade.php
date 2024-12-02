@@ -10,17 +10,18 @@
 
             <!-- Package Information -->
             <div class="col-span-1 lg:col-span-1 flex flex-col bg-white p-6 rounded-lg shadow-lg">
-                <img src="{{ asset('images/packages/' . $package->image_path) }}" alt="Package Image" class="w-full h-48 object-cover rounded-lg mb-5">
+                <img src="{{ asset('images/'.$bookmark->package->photopath) }}" alt="Package Image" class="w-full h-48 object-cover rounded-lg mb-5">
 
                 <div>
-                    <h2 class="text-2xl font-semibold text-gray-800">{{ $package->name }}</h2>
-                    <p class="text-lg text-gray-600 mt-2">Price: ₹{{ number_format($package->price, 2) }}</p>
-                    <p class="text-lg text-gray-800 font-semibold mt-2">Total: ₹{{ number_format($package->price, 2) }}</p>
+                    <h2 class="text-2xl font-semibold text-gray-800">{{ $bookmark->package->name }}</h2>
+                    <p class="text-lg text-gray-600 mt-2">Price: ${{ number_format($bookmark->package->price, 2) }}</p>
+                    <p class="text-lg text-gray-600 mt-2">Days: {{ $bookmark->package->duration }}</p>
                 </div>
 
                 <!-- Hidden Fields -->
-                <input type="hidden" name="package_id" value="{{ $package->id }}">
-                <input type="hidden" name="price" value="{{ $package->price }}">
+                <input type="hidden" name="package_id" value="{{ $bookmark->package_id }}">
+                <input type="hidden" name="price" value="{{ $bookmark->package->price }}">
+                <input type="hidden" name="bookmark_id" value="{{ $bookmark->id }}">
             </div>
 
             <!-- User Information -->
@@ -42,7 +43,7 @@
                 <h3 class="text-2xl font-semibold text-gray-800 mb-5">Order Summary</h3>
 
                 <div class="mb-5">
-                    <h2 class="text-xl font-semibold text-gray-800">Total: ₹{{ number_format($package->price, 2) }}</h2>
+                    <h2 class="text-xl font-semibold text-gray-800">Total: ${{ number_format($bookmark->package->price, 2) }}</h2>
                 </div>
 
                 <select name="payment_method" class="w-full border rounded-lg p-4 mb-5 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -56,19 +57,33 @@
     </form>
 
     <!-- eSewa Payment Form -->
-    <form action="https://uat.esewa.com.np/epay/main" method="POST" class="mt-10">
-        <input type="hidden" id="amount" name="tAmt" value="{{ $package->price }}" required>
-        <input type="hidden" id="amt" name="amt" value="{{ $package->price }}" required>
-        <input type="hidden" name="txAmt" value="0" required>
-        <input type="hidden" name="psc" value="0" required>
-        <input type="hidden" name="pdc" value="0" required>
-        <input type="hidden" name="scd" value="EPAYTEST" required>
-        <input type="hidden" name="pid" value="YatraSathi_{{ uniqid() }}" required>
-        <input type="hidden" name="su" value="{{ route('orders.esewa', $package->id) }}" required>
-        <input type="hidden" name="fu" value="{{ route('bookmarks.index') }}" required>
+     <form action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST" class="mt-10">
+        <input type="hidden" id="amount" name="amount" value="{{ $bookmark->package->price }}" required>
+        <input type="hidden" id="tax_amount" name="tax_amount" value="0" required>
+        <input type="hidden" id="total_amount" name="total_amount" value="{{ $bookmark->package->price }}" required>
+        <input type="hidden" id="transaction_uuid" name="transaction_uuid" value="{{ time() }}" required>
+        <input type="hidden" id="product_code" name="product_code" value="EPAYTEST" required>
+        <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', $bookmark->id) }}" required>
+        <input type="hidden" id="failure_url" name="failure_url" value="{{ route('bookmarks.index') }}" required>
 
-        <!-- Payment Button -->
+
         <input value="Pay with eSewa" type="submit" class="bg-green-500 text-white w-full p-4 rounded-lg cursor-pointer mt-5 hover:bg-green-600 transition duration-300 ease-in-out">
     </form>
+    @php
+    $total_amount = $bookmark->package->price;
+    $transaction_uuid = time();
+    $msg = "total_amount=$total_amount,transaction_uuid=$transaction_uuid,product_code=EPAYTEST";
+    $secret = "8gBm/:&EnhH.1/q";
+    $s = hash_hmac('sha256', $msg, $secret, true);
+    $signature = base64_encode($s);
+@endphp
+
+<script>
+    // Assign the calculated values to the hidden form fields in JavaScript
+    document.getElementById('amount').value = "{{ $total_amount }}";
+    document.getElementById('total_amount').value = "{{ $total_amount }}";
+    document.getElementById('transaction_uuid').value = "{{ $transaction_uuid }}";
+    document.getElementById('signature').value = "{{ $signature }}";
+</script>
 
 @endsection

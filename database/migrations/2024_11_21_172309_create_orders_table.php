@@ -8,34 +8,27 @@ class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('package_id');
-            $table->string('payment_method'); // e.g., Cash, eSewa
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('package_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('phone');
             $table->text('address');
-            $table->string('status')->default('Pending'); // Pending, Confirmed, Cancelled
+            $table->string('phone');
+            $table->string('payment_method'); // Example: 'COD', 'eSewa', etc.
+            $table->decimal('total_price', 10, 2); // Example: $100.50
+            $table->string('status')->default('pending'); // Example: 'pending', 'completed'
             $table->timestamps();
-
-            // Foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('package_id')->references('id')->on('packages')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('orders');
     }

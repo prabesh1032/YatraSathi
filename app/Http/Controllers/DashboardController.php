@@ -8,7 +8,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalBookings = Booking::count();
-        return view('dashboard', compact('totalBookings'));
+        return view('dashboard');
     }
 }

@@ -11,6 +11,10 @@ class Package extends Model
     protected $fillable = [
         'name', 'location', 'duration', 'people', 'price', 'photopath', 'description'
     ];
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
 
 

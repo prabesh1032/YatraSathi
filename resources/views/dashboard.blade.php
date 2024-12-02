@@ -31,7 +31,7 @@
             <i class="ri-book-line text-3xl text-white"></i>
         </div>
         <p class="text-white">View and manage customer bookings.</p>
-        <a href="{{ route('bookings.index') }}" class="mt-4 block px-4 py-2 bg-yellow-500 text-black font-bold rounded-full
+        <a href="" class="mt-4 block px-4 py-2 bg-yellow-500 text-black font-bold rounded-full
          hover:bg-yellow-600 text-center">Manage Bookings</a>
     </div>
     <div class="bg-gradient-to-r from-red-400 to-pink-500 p-6 rounded-lg shadow-lg transform

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Models\Booking;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/traveltips', [PageController::class, 'traveltips'])->name('traveltips');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
 
@@ -28,7 +30,7 @@ Route::get('/destination/{id}/edit', [DestinationController::class, 'edit'])->na
 Route::post('/destination/{id}/update', [DestinationController::class, 'update'])->name('destinations.update');
 Route::get('/destination/{id}/destroy', [DestinationController::class, 'destroy'])->name('destinations.destroy');
 
-Route::get('/booking', [BookingController::class, 'index'])->name('bookings.index');
+//Route::get('/booking', [BookingController::class, 'index'])->name('bookings.index');
 // Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
 // Route::post('/booking/store', [BookingController::class, 'store'])->name('bookings.store');
 // Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
@@ -45,6 +47,9 @@ Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('pac
 Route::put('/packages/{id}/update', [PackageController::class, 'update'])->name('packages.update');
 Route::get('/packages/{id}/destroy', [PackageController::class, 'destroy'])->name('packages.destroy');
 
+Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+Route::post('/contact', [MessageController::class, 'store'])->name('contact.store');
+
 Route::middleware('auth')->group(function () {
     Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
     Route::get('/bookmarks', [BookmarkController::class, 'myBookmarks'])->name('bookmarks.index');
@@ -52,15 +57,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/bookmarks/{bookmark}/checkout', [BookmarkController::class, 'checkout'])->name('bookmarks.checkout');
 
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-
-    // Admin view of all orders
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index')->middleware('admin');
-
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    // ->middleware('admin');
     // Update order status
-    Route::patch('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
-
+    Route::get('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
     // Handle eSewa payment for orders
-    Route::post('/orders/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('orders.esewa');
+    Route::post('/orders/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
 });
 
 Route::middleware('auth')->group(function () {

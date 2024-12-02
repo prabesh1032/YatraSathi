@@ -39,4 +39,8 @@ class PageController extends Controller
     {
         return view('dashboard');
     }
+    public function traveltips()
+    {
+        return view('traveltips');
+    }
 }

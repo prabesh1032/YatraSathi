@@ -51,8 +51,9 @@ class BookmarkController extends Controller
     }
 
     // Handle checkout or action for bookmarked package
-    public function checkout(Bookmark $bookmark)
+    public function checkout($bookmark)
     {
+        $bookmark = Bookmark::find($bookmark);
         // Ensure the bookmark belongs to the authenticated user
         if ($bookmark->user_id != auth()->user()->id) {
             return back()->with('error', 'Unauthorized access');
