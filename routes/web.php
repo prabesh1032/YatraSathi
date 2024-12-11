@@ -16,6 +16,8 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/traveltips', [PageController::class, 'traveltips'])->name('traveltips');
 Route::get('/adventure', [PageController::class, 'adventure'])->name('adventure');
+Route::get('/search', [PageController::class, 'search'])->name('search');
+
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');

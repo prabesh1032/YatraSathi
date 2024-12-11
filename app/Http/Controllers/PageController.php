@@ -47,4 +47,10 @@ class PageController extends Controller
     {
         return view('adventure');
     }
+    public function search(Request $request)
+    {
+        $qry=$request->qry;
+        $packages=Package::where('name','like','%'.$qry.'%')->get();
+        return view('search',compact('packages','qry'));
+    }
 }

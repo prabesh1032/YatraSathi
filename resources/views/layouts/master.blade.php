@@ -38,8 +38,9 @@
                 <a href="/login" class="hover:text-yellow-500">Login</a>
                 @endauth
             </div>
-            <form class="ml-4 ">
-                <input type="text" placeholder="Search..." class="text-black px-2 py-1 rounded">
+            <form action="{{route('search') }}" method="GET">
+                <input type="search" placeholder="Search..." class="text-black px-2 py-1 rounded"
+                name="qry" value="{{request()->qry}}" minlength="2" required>
                 <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded">Go</button>
             </form>
         </div>
