@@ -34,7 +34,7 @@
                 </div>
                 @enderror
             </div>
-            <div class="mb-4">
+            <!--<div class="mb-4">
                 <label for="people" class="block text-sm font-medium text-gray-700">People</label>
                 <input type="number" name="people" value="{{ $package->people }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 @error('people')
@@ -42,7 +42,7 @@
                     *{{ $message }}
                 </div>
                 @enderror
-            </div>
+            </div>-->
             <div class="mb-4">
                 <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
                 <input type="number" name="price" value="{{ $package->price }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>

@@ -43,4 +43,8 @@ class PageController extends Controller
     {
         return view('traveltips');
     }
+    public function adventure()
+    {
+        return view('adventure');
+    }
 }

@@ -15,7 +15,8 @@
                 <p class="text-sm text-gray-600 mt-1"><strong>Customer:</strong> {{ $order->name }}</p>
                 <p class="text-sm text-gray-600"><strong>Address:</strong> {{ $order->address }}</p>
                 <p class="text-sm text-gray-600"><strong>Phone:</strong> {{ $order->phone }}</p>
-                <p class="text-sm text-gray-600"><strong>Price:</strong> ${{ number_format($order->price, 2) }}</p>
+                <p class="text-sm text-gray-600"><strong>Number of Travelers:</strong> {{ $order->num_people }}</p>
+                <p class="text-sm text-gray-600"><strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }}</p>
                 <p class="text-sm text-gray-600"><strong>Payment:</strong> {{ $order->payment_method }}</p>
                 <p class="text-sm text-gray-600"><strong>Date:</strong> {{ $order->created_at->format('d M Y') }}</p>
             </div>

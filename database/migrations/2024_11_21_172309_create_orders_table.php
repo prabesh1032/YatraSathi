@@ -19,7 +19,8 @@ class CreateOrdersTable extends Migration
             $table->text('address');
             $table->string('phone');
             $table->string('payment_method'); // Example: 'COD', 'eSewa', etc.
-            $table->decimal('total_price', 10, 2); // Example: $100.50
+            $table->decimal('total_price', 10, 2);
+            $table->integer('num_people')->default(1);
             $table->string('status')->default('pending'); // Example: 'pending', 'completed'
             $table->timestamps();
         });

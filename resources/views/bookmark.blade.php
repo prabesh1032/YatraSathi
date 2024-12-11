@@ -8,9 +8,10 @@
         <img src="{{ asset('images/' . $bookmark->package->photopath) }}" alt="Package Image" class="w-full h-40 object-cover rounded-lg mb-4">
         <div class="flex flex-col gap-2">
             <h1 class="text-xl font-bold text-blue-700">{{ $bookmark->package->name }}</h1>
-            <p class="text-gray-600">💰 <span class="font-semibold">${{ number_format($bookmark->package->price, 2) }}</span></p>
+            <p class="text-gray-600">💰 <span class="font-semibold">${{ number_format($bookmark->total_price, 2) }}</span></p> <!-- Show total price -->
             <p class="text-gray-600">📅 Duration: <span class="font-semibold">{{ $bookmark->package->duration }} days</span></p>
             <p class="text-gray-600">📍 Location: <span class="font-semibold">{{ $bookmark->package->location }}</span></p>
+            <p class="text-gray-600">👥 Number of People: <span class="font-semibold">{{ $bookmark->num_people }}</span></p> <!-- Show number of people -->
         </div>
         <div class="flex justify-between mt-4">
             <button onclick="showModal('{{ $bookmark->id }}')" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-400">Remove</button>

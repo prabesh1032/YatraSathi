@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bookmark;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
@@ -13,20 +14,31 @@ class BookmarkController extends Controller
         // Validate the incoming request
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
+            'num_people' => 'required|integer|min:1', // Ensure a valid number of people is provided
         ]);
 
         // Assign user_id to the bookmark
         $data['user_id'] = auth()->user()->id;
 
+
         // Check if the package is already bookmarked
-        $check = Bookmark::where('user_id', $data['user_id'])->where('package_id', $data['package_id'])->count();
+        $check = Bookmark::where('user_id', $data['user_id'])
+                         ->where('package_id', $data['package_id'])
+                         ->count();
 
         if ($check > 0) {
             return back()->with('error', 'Package already bookmarked');
         }
 
+        // Fetch the package to calculate the total price
+        $package = Package::find($data['package_id']);
+
+        // Calculate the total price (for example, price * num_people)
+        $data['total_price'] = $package->price * $data['num_people'];
+
         // Create the bookmark
         Bookmark::create($data);
+
         return back()->with('success', 'Package added to your bookmarks successfully');
     }
 
@@ -52,14 +64,21 @@ class BookmarkController extends Controller
 
     // Handle checkout or action for bookmarked package
     public function checkout($bookmark)
-    {
-        $bookmark = Bookmark::find($bookmark);
-        // Ensure the bookmark belongs to the authenticated user
-        if ($bookmark->user_id != auth()->user()->id) {
-            return back()->with('error', 'Unauthorized access');
-        }
+{
+    // Attempt to find the bookmark
+    $bookmark = Bookmark::find($bookmark);
 
-        // If you want to initiate a checkout or booking, you can pass data to a view here
-        return view('checkout', compact('bookmark'));
+    // Check if the bookmark exists
+    if (!$bookmark) {
+        return back()->with('error', 'Bookmark not found.');
     }
+
+    // Ensure the bookmark belongs to the authenticated user
+    if ($bookmark->user_id != auth()->user()->id) {
+        return back()->with('error', 'Unauthorized access.');
+    }
+
+    // Proceed with the checkout process
+    return view('checkout', ['bookmark' => $bookmark]);
+}
 }

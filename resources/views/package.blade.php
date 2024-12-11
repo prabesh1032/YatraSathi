@@ -23,12 +23,12 @@
                 <!-- Description and details -->
                 <p class="text-gray-700 mt-2"><i class="ri-map-pin-line"></i> Location: {{ $package->location }}</p>
                 <p class="text-gray-700 mt-2"><i class="ri-calendar-line"></i> Duration: {{ $package->duration }} days</p>
-                <p class="text-gray-700 mt-2"><i class="ri-group-line"></i> People: {{ $package->people }}</p>
+                <!-- <p class="text-gray-700 mt-2"><i class="ri-group-line"></i> People: {{ $package->people }}</p> -->
                 <div class="flex justify-between items-center mt-4">
-                    <span class="text-blue-500 font-bold text-lg">${{ $package->price }}</span>
+                    <span class="text-blue-500 font-bold text-lg">${{ $package->price }} Per Person</span>
                     <div class="flex items-center space-x-2">
                         <a href="{{ route('packages.read', $package->id) }}" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600">Read More</a>
-                        <a href="{{ route('packages.show', $package->id) }}" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600">Book Now</a>
+                        <a href="{{ route('packages.show', $package->id) }}" class="bg-green-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-600">Explore</a>
                     </div>
                 </div>
             </div>

@@ -28,8 +28,8 @@
                 <a href="{{ route('dashboard') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-dashboard-line mr-2"></i> Dashboard
                 </a>
-                <a href="{{ route('destinations.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
-                    <i class="ri-map-pin-line mr-2"></i> Destinations
+                <!--<a href="{{ route('destinations.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                    <i class="ri-map-pin-line mr-2"></i> Destinations-->
                 </a>
                 <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-suitcase-line mr-2"></i> Packages

@@ -90,19 +90,6 @@ public function read(Destination $destination)
     return redirect()->route('destinations.index')->with('success', 'Destination updated successfully.');
 }
 
-
-    // public function destroy($id)
-    // {
-    //     $destination = Destination::find($id);
-    //     $photo = public_path('images') . '/' . $destination->photopath;
-
-    //     if (file_exists($photo)) {
-    //         unlink($photo);
-    //     }
-    //     $destination->delete();
-
-    //     return redirect()->route('destinations.index')->with('success', 'Destination deleted successfully.');
-    // }
     public function destroy($id)
 {
     $destination = Destination::find($id);

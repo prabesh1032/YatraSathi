@@ -13,27 +13,36 @@ class OrderController extends Controller
     // Store a new booking order
     public function store(Request $request)
     {
+        // Validate the incoming request
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
-            'payment_method' => 'required',
-            'name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'num_people' => 'nullable|integer|min:1', // Ensure num_people is valid
         ]);
+
+        // Default the num_people to 1 if not provided
+        $data['num_people'] = $request->input('num_people', 1);
+
+        // Additional data to be stored in the order
+        $data['payment_method'] = "COD";
         $data['user_id'] = auth()->user()->id;
         $data['status'] = 'Pending';
-        $data['total_price'] = $request->price;
-
+        $data['total_price'] = $request->price * $data['num_people']; // Calculate total price based on num_people
+        // dd($request->all());
         // Create the order
-       Order::create($data);
-        // Remove from bookmarks if exists
+        Order::create($data);
+
+        // Remove from bookmarks if it exists
         Bookmark::where('user_id', $data['user_id'])
             ->where('package_id', $data['package_id'])
             ->delete();
-            // dd($a);
 
         return redirect('/')->with('success', 'Booking has been placed successfully.');
     }
+
 
     // Display all orders for admin
     public function index()
@@ -54,6 +63,9 @@ class OrderController extends Controller
         $emaildata = [
             'name' => $order->user->name,
             'status' => $status,
+            'order'=>$order,
+            'package' => $order->package,
+            'payment_method' => $order->payment_method,
         ];
 
         // Send email notification

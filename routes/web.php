@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/traveltips', [PageController::class, 'traveltips'])->name('traveltips');
+Route::get('/adventure', [PageController::class, 'adventure'])->name('adventure');
+
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
 
@@ -30,16 +32,10 @@ Route::get('/destination/{id}/edit', [DestinationController::class, 'edit'])->na
 Route::post('/destination/{id}/update', [DestinationController::class, 'update'])->name('destinations.update');
 Route::get('/destination/{id}/destroy', [DestinationController::class, 'destroy'])->name('destinations.destroy');
 
-//Route::get('/booking', [BookingController::class, 'index'])->name('bookings.index');
-// Route::get('/booking/create', [BookingController::class, 'create'])->name('bookings.create');
-// Route::post('/booking/store', [BookingController::class, 'store'])->name('bookings.store');
-// Route::get('/booking/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-// Route::post('/booking/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
-// Route::get('/booking/{id}/destroy', [BookingController::class, 'destroy'])->name('bookings.destroy');
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');
-Route::get('/packages/{package}', [PackageController::class, 'show'])->name('packages.show');
+Route::get('/packages/{package}/show', [PackageController::class, 'show'])->name('packages.show');
 Route::get('/readpackages/{package}', [PackageController::class, 'read'])->name('packages.read');
 Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
 Route::post('/packages/store', [PackageController::class, 'store'])->name('packages.store');

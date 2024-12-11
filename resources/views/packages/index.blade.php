@@ -16,8 +16,8 @@
                 <h3 class="text-xl font-bold text-gray-900">{{ $package->name }}</h3>
                 <div class="text-gray-700 mt-2"><i class="ri-map-pin-2-line text-green-500"></i> {{ $package->location }}</div>
                 <div class="text-gray-700 mt-2"><i class="ri-calendar-line text-green-500"></i> {{ $package->duration }} days</div>
-                <div class="text-gray-700 mt-2"><i class="ri-group-line text-green-500"></i> {{ $package->people }} Person</div>
-                <div class="flex justify-between items-center mt-4">
+                <!--<div class="text-gray-700 mt-2"><i class="ri-group-line text-green-500"></i> {{ $package->people }} Person</div>-->
+                <div class="flex justify-between items-center mt-4">    
                     <span class="text-green-600 font-bold text-lg">${{ $package->price }}</span>
                     <div class="flex items-center space-x-2">
                         <a href="{{ route('packages.edit', $package->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-yellow-600">Edit</a>

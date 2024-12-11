@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PackageController extends Controller
 {
@@ -41,7 +42,6 @@ class PackageController extends Controller
             'name' => 'required',
             'location' => 'required',
             'duration' => 'required|integer',
-            'people' => 'required|integer',
             'price' => 'required|numeric',
             'photopath' => 'nullable|image',
             'description' => 'nullable',
@@ -72,7 +72,6 @@ class PackageController extends Controller
             'name' => 'required',
             'location' => 'required',
             'duration' => 'required|integer',
-            'people' => 'required|integer',
             'price' => 'required|numeric',
             'photopath' => 'nullable|image',
             'description' => 'nullable',
@@ -82,7 +81,6 @@ class PackageController extends Controller
         $package->name = $request->name;
         $package->location = $request->location;
         $package->duration = $request->duration;
-        $package->people = $request->people;
         $package->price = $request->price;
         $package->description = $request->description;
 

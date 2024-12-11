@@ -13,7 +13,6 @@ class CreatePackagesTable extends Migration
             $table->string('name');
             $table->string('location');
             $table->integer('duration');
-            $table->integer('people');
             $table->decimal('price', 8, 2);
             $table->string('photopath')->nullable();
             $table->text('description')->nullable();

@@ -4,7 +4,6 @@
 
 @section('content')
     <div class="container mx-auto">
-        <h1 class="text-4xl font-bold mb-4">Destinations</h1>
         <a href="{{ route('destinations.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
             Add Destination</a>
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
