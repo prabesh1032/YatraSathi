@@ -37,7 +37,7 @@
                 <a href="{{route('orders.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-book-line mr-2"></i> Bookings
                 </a>
-                <a href="#" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
+                <a href="{{route('reviews.index')}}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-star-line mr-2"></i> Reviews
                 </a>
                 <a href="{{ route('messages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">

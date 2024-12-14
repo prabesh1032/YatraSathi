@@ -3,8 +3,8 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-800">Search Results for --{{$qry}}</h1>
-        <p class="mt-2 text-gray-600">Discover the beauty of Nepal with our curated travel packages.</p>
+        <h1 class="text-4xl font-bold text-gray-800">Search Results for "{{ $qry }}"</h1>
+        <p class="mt-2 text-gray-600">Explore the best of Nepal with travel packages crafted just for you.</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($packages as $package)
@@ -34,9 +34,11 @@
             </div>
         </div>
         @empty
-        <h1 class ="text-gray-500 text-5xl text-center from-neutral-600 mt-10 col-span-4">
-            No Product Found
-        </h1>
+        <!-- No Results Section -->
+        <div class="col-span-full text-center">
+            <h2 class="text-5xl font-bold text-gray-500">No Packages Found</h2>
+            <p class="text-lg text-gray-600 mt-4">Try adjusting your search or explore our <a href="{{ route('packages') }}" class="text-indigo-500 font-semibold hover:underline">available packages</a>.</p>
+        </div>
         @endforelse
     </div>
 </div>

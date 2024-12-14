@@ -9,6 +9,7 @@ use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\ReviewController;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +17,15 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/traveltips', [PageController::class, 'traveltips'])->name('traveltips');
 Route::get('/adventure', [PageController::class, 'adventure'])->name('adventure');
-Route::get('/search', [PageController::class, 'search'])->name('search');
 
+Route::get('/search', [PageController::class, 'search'])->name('search');
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+
+Route::post('/review/store', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index');
+Route::delete('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -60,7 +65,7 @@ Route::middleware('auth')->group(function () {
     // Update order status
     Route::get('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
     // Handle eSewa payment for orders
-    Route::post('/orders/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
+    Route::get('/ordersesewa/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
 });
 
 Route::middleware('auth')->group(function () {

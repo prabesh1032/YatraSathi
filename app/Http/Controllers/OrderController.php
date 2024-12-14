@@ -56,7 +56,7 @@ class OrderController extends Controller
     // Update the booking status
     public function status($id, $status)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('package')->findOrFail($id);
         $order->status = $status;
         $order->save();
 
@@ -78,32 +78,42 @@ class OrderController extends Controller
     }
 
     // Handle eSewa payment and booking confirmation
-    public function storeEsewa(Request $request, $packageId)
+    public function storeEsewa(Request $request, $bookmarkId)
     {
-        $data = $request->data;
-        $data = base64_decode($data);
-        $data = json_decode($data);
 
-        if ($data->status === "COMPLETE") {
-            $package = Package::find($packageId);
+        $data=$request->data;
+        $data=base64_decode($data);
+        $data=json_decode($data);
+        $status=$data->status;
 
-            $order = new Order();
-            $order->package_id = $package->id;
-            $order->payment_method = "eSewa";
-            $order->name = auth()->user()->name;
-            $order->phone = 'N/A';
-            $order->address = 'N/A';
-            $order->user_id = auth()->user()->id;
-            $order->status = "Pending";
-            $order->save();
-
+        if($status==="COMPLETE")
+        {
+            $bookmark = Bookmark::find($bookmarkId);
+            if (!$bookmark) {
+                return redirect('/')->with('error', 'Bookmark not found.');
+            }
+             $order = new Order();
+             $order->package_id = $bookmark->package_id;
+             $order->total_price = $bookmark->total_price;
+             $order->num_people = $bookmark->num_people;
+             $order->payment_method = "eSewa";
+             $order->name = $bookmark->user->name;
+             $order->phone = 'N/A';
+             $order->address = 'N/A';
+             $order->user_id = auth()->user()->id;
+             $order->status = "Pending";
+             $order->save();
+             $bookmark->delete();
             $emaildata = [
                 'name' => $order->user->name,
                 'status' => 'Pending',
+                'order' => $order,
+                'package' => $order->package,
+                'paymentMethod' => $order->payment_method,
             ];
 
             // Send confirmation email
-            Mail::send('emails.orderstatus', $emaildata, function ($message) use ($order) {
+            Mail::send('emails.orderemail', $emaildata, function ($message) use ($order) {
                 $message->to($order->user->email, $order->user->name)
                     ->subject('Booking Confirmation');
             });

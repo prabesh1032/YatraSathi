@@ -17,7 +17,7 @@
             <strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }} <br>
             <strong>Number of Travelers:</strong> {{ $order->num_people }} <br>
             <strong>Duration:</strong> {{ $package->duration }} Days <br>
-            <strong>Payment Method:</strong> {{ $payment_method }}
+            <strong>Payment Method:</strong> {{ $order->payment_method }}
         </p>
 
         <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
