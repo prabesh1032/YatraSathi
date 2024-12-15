@@ -11,7 +11,7 @@
             <i class="ri-map-pin-line text-3xl text-white"></i>
         </div>
         <p class="text-white">Manage your travel destinations and details.</p>
-        <a href="{{ route('destinations.index') }}" class="mt-4 block px-4 py-2 bg-yellow-500
+        <a href="" class="mt-4 block px-4 py-2 bg-yellow-500
          text-black font-bold rounded-full hover:bg-yellow-600 text-center">Manage Destinations</a>
     </div>
     <div class="bg-gradient-to-r from-purple-400 to-pink-500 p-6 rounded-lg shadow-lg transform

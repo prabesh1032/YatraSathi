@@ -9,9 +9,8 @@ class PageController extends Controller
 {
     public function home()
     {
-        $destinations = Destination::take(3)->get();
         $packages = Package::take(3)->get();;
-        return view('welcome', compact('destinations', 'packages'));
+        return view('welcome', compact( 'packages'));
     }
     public function about()
     {
@@ -46,6 +45,10 @@ class PageController extends Controller
     public function adventure()
     {
         return view('adventure');
+    }
+    public function whyToChooseUs()
+    {
+        return view('whyToChooseUs');
     }
     public function search(Request $request)
     {

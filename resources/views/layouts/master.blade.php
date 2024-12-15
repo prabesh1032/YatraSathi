@@ -10,42 +10,84 @@
 <body class="font-sans bg-white text-gray-800">
 @include('Layouts.alert')
     <!-- Navbar -->
-    <nav class="bg-black top-0 sticky z-10 text-white py-6">
+    <nav class="bg-black top-0 sticky z-10 text-white py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <div class="flex items-center ">
+            <!-- Logo Section -->
+            <div class="flex items-center">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-14 h-14 rounded-full mr-4">
+                    <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-12 h-12 rounded-full mr-3">
                 </a>
-                <a href="{{ route('home') }}" class="text-4xl font-bold">YatraSathi</a>
+                <a href="{{ route('home') }}" class="text-3xl font-bold">YatraSathi</a>
             </div>
-            <div class="flex space-x-6 text-xl">
+
+            <!-- Hamburger Menu Button (for small screens) -->
+            <button
+                id="menu-toggle"
+                class="text-yellow-500 hover:text-yellow-600 lg:hidden text-2xl focus:outline-none"
+            >
+                <i class="ri-menu-line"></i>
+            </button>
+
+            <!-- Navbar Links -->
+            <div id="menu" class="hidden lg:flex lg:space-x-6 text-xl">
                 <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
                 <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
-               <!-- <a href="{{ route('destinations') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'destinations' ? 'text-yellow-500 font-bold' : '' }}">Destination</a> -->
                 <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
                 <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
 
-                <!-- Show My Bookmarks Link Only if User is Logged In -->
                 @auth
-                    <a href="{{ route('bookmarks.store') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My Bookmarks</a>
+                    <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My Bookmarks</a>
+                    <form action="{{ route('logout') }}" method="POST" class="inline-block">
+                        @csrf
+                        <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
+                    </form>
+                @else
+                    <a href="/login" class="hover:text-yellow-500">Login</a>
                 @endauth
-                @auth
-                <form action="{{route('logout')}}" method="POST">
+            </div>
+
+            <!-- Search Bar -->
+            <form action="{{ route('search') }}" method="GET" class="hidden lg:flex items-center">
+                <input type="search"
+                    placeholder="Search..."
+                    class="text-black px-2 py-1 rounded"
+                    name="qry"
+                    value="{{ request()->qry }}"
+                    minlength="2"
+                    required>
+                <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded ml-2">Go</button>
+            </form>
+        </div>
+
+        <!-- Dropdown Menu for Mobile -->
+        <div id="mobile-menu" class="hidden flex flex-col space-y-4 text-center bg-black text-white py-4 lg:hidden">
+            <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
+            <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
+            <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
+            <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
+
+            @auth
+                <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My Bookmarks</a>
+                <form action="{{ route('logout') }}" method="POST" class="inline-block">
                     @csrf
                     <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
                 </form>
-                @else
+            @else
                 <a href="/login" class="hover:text-yellow-500">Login</a>
-                @endauth
-            </div>
-            <form action="{{route('search') }}" method="GET">
-                <input type="search" placeholder="Search..." class="text-black px-2 py-1 rounded"
-                name="qry" value="{{request()->qry}}" minlength="2" required>
-                <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded">Go</button>
+            @endauth
+
+            <form action="{{ route('search') }}" method="GET" class="mt-4">
+                <input type="search"
+                    placeholder="Search..."
+                    class="text-black px-2 py-1 rounded w-full"
+                    name="qry"
+                    value="{{ request()->qry }}"
+                    minlength="2"
+                    required>
+                <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded mt-2 w-full">Go</button>
             </form>
         </div>
     </nav>
-
     <!-- Main content -->
     <main class="container mx-auto my-10 px-6">
         @yield('content')
@@ -113,6 +155,14 @@
         <p>&copy; 2024 All rights reserved</p>
     </div>
 </footer>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const desktopMenu = document.getElementById('menu');
 
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

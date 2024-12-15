@@ -17,6 +17,7 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/traveltips', [PageController::class, 'traveltips'])->name('traveltips');
 Route::get('/adventure', [PageController::class, 'adventure'])->name('adventure');
+Route::get('/whyToChooseUs', [PageController::class, 'whyToChooseUs'])->name('whyToChooseUs');
 
 Route::get('/search', [PageController::class, 'search'])->name('search');
 
@@ -28,17 +29,6 @@ Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index')
 Route::delete('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/destination', [DestinationController::class, 'index'])->name('destinations.index');
-Route::get('/alldestinations', [DestinationController::class, 'destination'])->name('destinations');
-Route::get('/destinations/{destination}', [DestinationController::class, 'show'])->name('destinations.show');
-Route::get('/destinations/{destination}/read', [DestinationController::class, 'read'])->name('destinations.read');
-Route::get('/destination/create', [DestinationController::class, 'create'])->name('destinations.create');
-Route::post('/destination/store', [DestinationController::class, 'store'])->name('destinations.store');
-Route::get('/destination/{id}/edit', [DestinationController::class, 'edit'])->name('destinations.edit');
-Route::post('/destination/{id}/update', [DestinationController::class, 'update'])->name('destinations.update');
-Route::get('/destination/{id}/destroy', [DestinationController::class, 'destroy'])->name('destinations.destroy');
-
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');

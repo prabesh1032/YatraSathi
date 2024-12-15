@@ -21,7 +21,7 @@
     <div class="container mx-auto mb-12 text-center">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             <!-- Email Section -->
-            <div class="p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all">
+            <div class="p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all bg-gradient-to-r from-yellow-100 to-lime-200">
                 <h3 class="text-2xl font-semibold text-black mb-4 text-center">Email</h3>
                 <p class="text-lg text-gray-600 mb-4 text-center">For all inquiries, feel free to email us at:</p>
                 <div class="flex justify-center items-center">
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <!-- Phone Section -->
-            <div class="p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all">
+            <div class="p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all bg-gradient-to-r from-lime-200 to-yellow-100">
                 <h3 class="text-2xl font-semibold text-black mb-4 text-center">Phone</h3>
                 <p class="text-lg text-gray-600 mb-4 text-center">Call us anytime to talk about your next journey:</p>
                 <div class="flex justify-center items-center">
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <!-- Social Media Section -->
-            <div class="p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all">
+            <div class="p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all bg-gradient-to-r from-yellow-100 to-lime-200">
                 <h3 class="text-2xl font-semibold text-black mb-4 text-center">Follow Us</h3>
                 <p class="text-lg text-gray-600 mb-4 text-center">Stay connected with us on social media for updates, tips, and special offers:</p>
                 <div class="flex justify-center gap-6">
@@ -82,15 +82,6 @@
             <div class="mb-4">
                 <label for="message" class="block text-lg font-medium mb-2">Message</label>
                 <textarea id="message" name="message" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32" required></textarea>
-            </div>
-            <!-- Service Type Select -->
-            <div class="mb-4">
-                <label for="service_type" class="block text-lg font-medium mb-2">What type of service are you interested in?</label>
-                <select id="service_type" name="service_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                    <option value="trekking">Trekking</option>
-                    <option value="beach_holiday">Beach Holidays</option>
-                    <option value="custom_package">Custom Package</option>
-                </select>
             </div>
             <!-- Submit Button -->
             <div class="text-center">

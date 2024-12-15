@@ -3,9 +3,9 @@
 @section('content')
 <!-- Header Section with Parallax Effect -->
 <header class="relative h-screen bg-cover bg-center" style="background-image: url('{{ asset('pokhara.jpg') }}'); background-attachment: fixed;">
-    <div class="absolute inset-0 bg-black opacity-40"></div>
+    <div class="absolute inset-0 bg-black opacity-50"></div>
     <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-white">
-        <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg animate__animated animate__fadeIn">About Us</h1>
+        <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg">About Us</h1>
         <p class="text-lg md:text-xl mt-4 font-semibold ">Explore our vision and the journey behind YatraSathi</p>
         <a href="#mission" class="mt-6 px-8 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600 transition-all duration-300 shadow-lg transform hover:scale-105">LEARN MORE</a>
     </div>
