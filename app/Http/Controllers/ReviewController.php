@@ -28,5 +28,18 @@ class ReviewController extends Controller
         $reviews = Review::with('package', 'user')->latest()->paginate(10);
         return view('reviews.index', compact('reviews'));
     }
+    public function destroy($id)
+    {
+        $review = Review::findOrFail($id);
+
+        // Optional: Ensure only the admin or the user who created the review can delete it
+        if (auth()->id() !== $review->user_id && !auth()->user()->is_admin) {
+            return back()->with('error', 'You are not authorized to delete this review.');
+        }
+
+        $review->delete();
+
+        return back()->with('success', 'Review deleted successfully!');
+    }
 
 }

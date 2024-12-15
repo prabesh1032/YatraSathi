@@ -41,7 +41,7 @@
                     <i class="ri-star-line mr-2"></i> Reviews
                 </a>
                 <a href="{{ route('messages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
-                    <i class="ri-star-line mr-2"></i>Messages
+                    <i class="ri-message-line mr-2"></i>Messages
                 </a>
                 <a href="#" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-user-line mr-2"></i> Travellers

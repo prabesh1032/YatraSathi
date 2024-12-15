@@ -1,43 +1,51 @@
 @extends('layouts.app')
-
+@section('title', 'Reviews')
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-center text-blue-700 mb-8">Manage Reviews</h1>
+    <h1 class="text-4xl font-extrabold text-center text-blue-600 mb-8">Manage Reviews</h1>
 
-    @if(session('success'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
-            {{ session('success') }}
+    <!-- Reviews Table -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-lg font-semibold">
+            All Reviews
         </div>
-    @endif
-
-    <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
         <table class="min-w-full border-collapse border border-gray-200">
-            <thead>
-                <tr class="bg-blue-100 text-blue-700">
-                    <th class="px-6 py-3 border-b text-left">#</th>
-                    <th class="px-6 py-3 border-b text-left">Package Name</th>
-                    <th class="px-6 py-3 border-b text-left">Reviewer</th>
-                    <th class="px-6 py-3 border-b text-left">Rating</th>
-                    <th class="px-6 py-3 border-b text-left">Review</th>
-                    <th class="px-6 py-3 border-b text-left">Date</th>
-                    <th class="px-6 py-3 border-b text-center">Actions</th>
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 border-b-2 text-left font-semibold text-gray-600">#</th>
+                    <th class="px-6 py-3 border-b-2 text-left font-semibold text-gray-600">Package Name</th>
+                    <th class="px-6 py-3 border-b-2 text-left font-semibold text-gray-600">Reviewer</th>
+                    <th class="px-6 py-3 border-b-2 text-left font-semibold text-gray-600">Rating</th>
+                    <th class="px-6 py-3 border-b-2 text-left font-semibold text-gray-600">Review</th>
+                    <th class="px-6 py-3 border-b-2 text-left font-semibold text-gray-600">Date</th>
+                    <th class="px-6 py-3 border-b-2 text-center font-semibold text-gray-600">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($reviews as $review)
-                <tr class="hover:bg-gray-100">
-                    <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
-                    <td class="px-6 py-4 border-b">{{ $review->package->name }}</td>
-                    <td class="px-6 py-4 border-b">{{ $review->user->name }}</td>
-                    <td class="px-6 py-4 border-b">{{ $review->rating }} / 5</td>
-                    <td class="px-6 py-4 border-b">{{ $review->review }}</td>
-                    <td class="px-6 py-4 border-b">{{ $review->created_at->format('d M, Y') }}</td>
+                <tr class="hover:bg-blue-50 transition-colors">
+                    <td class="px-6 py-4 border-b text-gray-700">{{ $loop->iteration }}</td>
+                    <td class="px-6 py-4 border-b text-gray-700 font-medium">{{ $review->package->name }}</td>
+                    <td class="px-6 py-4 border-b text-gray-700">{{ $review->user->name }}</td>
+                    <td class="px-6 py-4 border-b text-gray-700 flex items-center justify-start space-x-1">
+                        <span class="align-middle">{{ $review->rating }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.562 4.816a1 1 0 00.95.691h5.045c.969 0 1.371 1.24.588 1.81l-4.09 2.968a1 1 0
+                            00-.364 1.118l1.562 4.816c.3.921-.755 1.688-1.54 1.118l-4.09-2.968a1 1 0 00-1.176 0l-4.09 2.968c-.785.57-1.84-.197-1.54-1.118l1.562-4.816a1 1
+                             0 00-.364-1.118L2.5 9.444c-.783-.57-.38-1.81.588-1.81h5.045a1 1 0 00.95-.691L9.049 2.927z" />
+                        </svg>
+                    </td>
+
+                    <td class="px-6 py-4 border-b text-gray-700">{{ $review->review }}</td>
+                    <td class="px-6 py-4 border-b text-gray-500">{{ $review->created_at->format('d M, Y') }}</td>
                     <td class="px-6 py-4 border-b text-center">
                         <!-- Delete Button -->
                         <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-colors">
+                                Delete
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -50,8 +58,9 @@
         </table>
     </div>
 
-    <div class="mt-6">
-        {{ $reviews->links() }}
+    <!-- Pagination -->
+    <div class="mt-6 flex justify-center">
+        {{ $reviews->links('pagination::tailwind') }}
     </div>
 </div>
 @endsection

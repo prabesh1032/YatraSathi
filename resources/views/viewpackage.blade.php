@@ -73,11 +73,11 @@
                     <!-- Rating Input -->
                     <div>
                         <label class="block text-lg font-bold text-gray-800 mb-2">Rating</label>
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-2" id="starRating">
                             @for($i = 1; $i <= 5; $i++)
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="rating" value="{{ $i }}" class="hidden" required>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8 h-8 text-gray-300 hover:text-yellow-400 focus:text-yellow-400 transition duration-200" viewBox="0 0 24 24">
+                                <label>
+                                    <input type="radio" name="rating" value="{{ $i }}" class="hidden">
+                                    <svg data-value="{{ $i }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="star w-8 h-8 text-gray-300 hover:text-yellow-400 cursor-pointer transition duration-200" viewBox="0 0 24 24">
                                         <path d="M12 .587l3.668 7.431 8.215 1.192-5.945 5.798 1.402 8.192L12 18.902l-7.34 3.798 1.402-8.192L.873 9.21l8.215-1.192L12 .587z"/>
                                     </svg>
                                 </label>
@@ -98,8 +98,6 @@
                 <p class="text-center text-lg font-medium">Please <a href="{{ route('login') }}" class="text-blue-600 underline hover:text-blue-800">log in</a> to leave a review.</p>
             </div>
             @endauth
-
-
             <!-- Related Packages Section -->
             <h2 class="text-3xl font-bold text-gray-800 mt-12 mb-6">Related Packages</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -118,4 +116,20 @@
         </div>
     </div>
 </div>
+<script>
+    // Select all star elements
+    const stars = document.querySelectorAll('#starRating .star');
+
+    // Add click event listener to each star
+    stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            // Remove yellow color from all stars
+            stars.forEach(s => s.classList.remove('text-yellow-400'));
+            // Add yellow color to all stars up to and including the clicked star
+            for (let i = 0; i <= index; i++) {
+                stars[i].classList.add('text-yellow-400');
+            }
+        });
+    });
+</script>
 @endsection
