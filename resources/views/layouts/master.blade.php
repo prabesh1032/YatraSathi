@@ -97,15 +97,15 @@
     <section class="bg-lime-200 py-10 mt-10">
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
             <div class="flex flex-col items-center">
-               <a href="{{route('packages')}}"> <img src="{{ asset('special-offer.jpg') }}" alt="Special Offers" class="w-24 h-24 rounded-full shadow-lg mb-4">
-                <h2 class="text-2xl font-bold mb-2"><a href="{{route('packages')}}">Special Offers</h2>
-                <p class="text-center text-gray-700">Get the best deals and discounts on our packages. Limited time offers available now!</p>
-               </a>
+               <a href="{{route('whyToChooseUs')}}"> <img src="{{ asset('whyus.jpg') }}" alt="Special Offers" class="w-24 h-24 rounded-full shadow-lg mb-4">
+                <h2 class="text-2xl font-bold mb-2"><a href="{{route('whyToChooseUs')}}">Why to Choose Us</h2>
+                <p class="text-center text-gray-700">Discover why thousands trust YatraSathi for personalized travel experiences.</p>
+                </a>
             </div>
             <div class="flex flex-col items-center">
             <a href="{{ route('adventure') }}"> <img src="{{ asset('aa.jpg') }}" alt="Customer Reviews" class="w-24 h-24 rounded-full shadow-lg mb-4 hover:scale-110 transition duration-300 ease-in-out">
                 <h2 class="text-2xl font-bold mb-2"><a href="{{ route('adventure') }}">Adventure Activities</h2>
-                <p class="text-center text-gray-700">Join thrilling adventures like trekking, scuba diving, safaris, and mountain biking for unforgettable experiences with YatraSathi.</p>
+                <p class="text-center text-gray-700">Join thrilling adventures for unforgettable experiences with YatraSathi.</p>
             </a>
             </div>
 
@@ -138,16 +138,16 @@
         </div>
         <div>
             <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
-            <p><i class="ri-mail-line mr-2"></i>Email: <a href="mailto:test@gmail.com" class="text-gray-300 hover:text-yellow-500">test@gmail.com</a></p>
-            <p><i class="ri-phone-line mr-2"></i>Phone: <a href="tel:+9779742538007" class="text-gray-300 hover:text-yellow-500">9742538007</a></p>
+            <p><i class="ri-mail-line mr-2"></i>Email: <a href="mailto:prabesh11100@gmail.com" class="text-gray-300 hover:text-yellow-500">prabesh11100@gmail.com</a></p>
+            <p><i class="ri-phone-line mr-2"></i>Phone: <a href="tel:+9779812965110" class="text-gray-300 hover:text-yellow-500">9812965110</a></p>
             <p><i class="ri-map-pin-line mr-2"></i>Address: 123, Chitwan, Nepal</p>
         </div>
         <div>
             <h2 class="text-2xl font-bold mb-4">Social Links</h2>
             <ul class="space-y-2">
-                <li><a href="https://facebook.com/yatrasathi" class="text-gray-300 hover:text-yellow-500"><i class="ri-facebook-line ri-2x"></i> Facebook</a></li>
-                <li><a href="https://twitter.com/yatrasathi" class="text-gray-300 hover:text-yellow-500"><i class="ri-twitter-line ri-2x"></i> Twitter</a></li>
-                <li><a href="https://instagram.com/yatrasathi" class="text-gray-300 hover:text-yellow-500"><i class="ri-instagram-line ri-2x"></i> Instagram</a></li>
+                <li><a href="https://facebook.com/prabesh.ach" class="text-gray-300 hover:text-yellow-500"><i class="ri-facebook-line ri-2x"></i> Facebook</a></li>
+                <li><a href="https://twitter.com/PrabeshAch33319" class="text-gray-300 hover:text-yellow-500"><i class="ri-twitter-line ri-2x"></i> Twitter</a></li>
+                <li><a href="https://instagram.com/prabesh_ach" class="text-gray-300 hover:text-yellow-500"><i class="ri-instagram-line ri-2x"></i> Instagram</a></li>
             </ul>
         </div>
     </div>

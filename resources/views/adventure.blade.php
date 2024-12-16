@@ -2,10 +2,10 @@
 
 @section('content')
 <!-- Adventure Activities Section -->
-<section class="bg-gradient-to-r from-teal-400 to-blue-500 py-16 text-white">
+<section class="bg-gradient-to-r from-white to-indigo-50 py-16 text-gray-900">
     <div class="container mx-auto text-center">
         <h1 class="text-4xl font-extrabold mb-8 text-yellow-500">Adventure Awaits!</h1>
-        <p class="text-xl mb-12 text-gray-100">Get ready for the adventure of a lifetime. Whether you're seeking the thrill of trekking through rugged mountains, diving into crystal-clear waters, or experiencing the wild on a safari, we have the perfect adventure waiting for you.</p>
+        <p class="text-xl mb-12 text-black">Get ready for the adventure of a lifetime. Whether you're seeking the thrill of trekking through rugged mountains, diving into crystal-clear waters, or experiencing the wild on a safari, we have the perfect adventure waiting for you.</p>
 
         <!-- Adventure Activities Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -60,7 +60,7 @@
 
         <!-- Call to Action -->
         <div class="mt-12">
-            <p class="text-xl mb-4 text-gray-100">Ready to start your adventure? Join us for a thrilling journey and make memories that will last a lifetime.</p>
+            <p class="text-xl mb-4 text-gray-900">Ready to start your adventure? Join us for a thrilling journey and make memories that will last a lifetime.</p>
             <a href="{{ route('packages') }}" class="px-8 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600">View All Adventure Packages</a>
         </div>
     </div>

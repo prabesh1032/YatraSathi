@@ -16,15 +16,8 @@
     <div class="container mx-auto text-center">
         <h2 class="text-4xl font-extrabold text-indigo-700 mb-4">Welcome to YatraSathi</h2>
         <p class="text-xl text-gray-600 mb-8">Your trusted travel companion for discovering breathtaking destinations.</p>
-        <div class="flex justify-center gap-4">
-            <a href="{{ route('packages') }}" class="px-6 py-3 bg-indigo-500 text-white font-bold rounded-full shadow-lg hover:bg-indigo-600 transition transform hover:scale-105">See Popular Packages</a>
-            <a href="{{ route('whyToChooseUs') }}" class="px-6 py-3 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-600 transition transform hover:scale-105">Why Choose Us</a>
-        </div>
     </div>
 </section>
-
-
-
 <!-- Popular Packages Section -->
 <section id="popular-packages" class="py-16 bg-gray-100">
     <div class="container mx-auto text-center">

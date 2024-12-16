@@ -22,8 +22,12 @@ class PackageController extends Controller
     public function show(Package $package)
     {
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
-        return view('viewpackage', compact('package', 'relatedpackages'));
+
+        $reviews = $package->reviews()->latest()->take(3)->get();
+
+        return view('viewpackage', compact('package', 'relatedpackages', 'reviews'));
     }
+
 
     public function read(Package $package)
     {
