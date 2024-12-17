@@ -40,7 +40,7 @@
                 <a href="{{ route('messages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-message-line mr-2"></i>Messages
                 </a>
-                <a href="#" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                <a href="{{route('travellers.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
                     <i class="ri-user-line mr-2"></i> Travellers
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="block p-3 text-gray-700 hover:bg-red-700 text-left transition duration-200 ease-in-out">
@@ -83,7 +83,16 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <input type="text" placeholder="Search..." class="p-2 rounded border border-gray-300">
+                <form action="{{ route('search') }}" method="GET" class="hidden lg:flex items-center">
+                    <input type="search"
+                        placeholder="Search..."
+                        class="text-black px-2 py-1 rounded"
+                        name="qry"
+                        value="{{ request()->qry }}"
+                        minlength="2"
+                        required>
+                    <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded ml-2">Go</button>
+                </form>
                     <button class="bg-yellow-500 text-black p-2 rounded ml-2 transition duration-200 ease-in-out hover:bg-yellow-600"><i class="ri-search-line"></i></button>
                 </div>
             </div>

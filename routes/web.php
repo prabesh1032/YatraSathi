@@ -10,6 +10,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TravellerController;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,6 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/traveltips', [PageController::class, 'traveltips'])->name('traveltips');
 Route::get('/adventure', [PageController::class, 'adventure'])->name('adventure');
 Route::get('/whyToChooseUs', [PageController::class, 'whyToChooseUs'])->name('whyToChooseUs');
-
 Route::get('/search', [PageController::class, 'search'])->name('search');
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
@@ -29,6 +29,8 @@ Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index')
 Route::delete('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/travellers',[TravellerController::class,'index'])->name('travellers.index');
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');
