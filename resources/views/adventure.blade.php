@@ -4,66 +4,64 @@
 <!-- Adventure Activities Section -->
 <section class="bg-gradient-to-r from-white to-indigo-50 py-16 text-gray-900">
     <div class="container mx-auto text-center">
-        <h1 class="text-4xl font-extrabold mb-8 text-yellow-500">Adventure Awaits!</h1>
-        <p class="text-xl mb-12 text-black">Get ready for the adventure of a lifetime. Whether you're seeking the thrill of trekking through rugged mountains, diving into crystal-clear waters, or experiencing the wild on a safari, we have the perfect adventure waiting for you.</p>
+        <!-- Section Title -->
+        <h1 class="text-5xl font-extrabold mb-6 text-gray-900 uppercase tracking-wide drop-shadow-md">Adventure <span class="text-yellow-500">Awaits!</h1>
+        <p class="text-xl text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed">
+            Get ready for the adventure of a lifetime! Whether you're trekking through mountains, diving into crystal-clear waters, or exploring the wild on a safari, your next unforgettable experience starts here.
+        </p>
 
         <!-- Adventure Activities Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Trekking -->
-            <div class="bg-white text-gray-800 p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
-                <img src="{{ asset('trekHimal.jpg') }}" alt="Trekking" class="w-full h-48 object-cover rounded-lg mb-4">
-                <h3 class="text-2xl font-semibold text-black mb-4">Trekking in the Himalayas</h3>
-                <p class="text-gray-600 mb-4">Embark on an unforgettable journey through the majestic Himalayas, with breathtaking views and a sense of accomplishment.</p>
-                <a href="{{ route('packages') }}" class="text-blue-500 font-semibold hover:text-yellow-600">Explore Trekking Packages</a>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Activity Card Template -->
+            @php
+                $activities = [
+                    ['image' => 'trekHimal.jpg', 'title' => 'Trekking in the Himalayas', 'desc' => 'Embark on an unforgettable journey through the majestic Himalayas.', 'btn' => 'Explore Trekking Packages'],
+                    ['image' => 'Paragliding.jpg', 'title' => 'Paragliding', 'desc' => 'Soar above stunning landscapes and feel the rush of freedom as you glide through the air.', 'btn' => 'Explore Paragliding Packages'],
+                    ['image' => 'safari.jpg', 'title' => 'Wildlife Safari', 'desc' => 'Get up close with nature and witness wildlife in its natural habitat.', 'btn' => 'Explore Safari Packages'],
+                    ['image' => 'biking.jpg', 'title' => 'Mountain Biking', 'desc' => 'Ride through rugged terrains and beautiful trails on an adrenaline-packed adventure.', 'btn' => 'Explore Mountain Biking Packages'],
+                    ['image' => 'rafting.jpg', 'title' => 'Rafting Adventures', 'desc' => 'Paddle through rapids and enjoy the excitement of white-water rafting.', 'btn' => 'Join a Rafting Expedition'],
+                    ['image' => 'horseriding.jpg', 'title' => 'Horseback Riding', 'desc' => 'Explore scenic trails on horseback, enjoying the peacefulness of nature.', 'btn' => 'Book Your Riding Tour']
+                ];
+            @endphp
 
-            <!-- Paragliding -->
-            <div class="bg-white text-gray-800 p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
-                <img src="{{ asset('Paragliding.jpg') }}" alt="Paragliding" class="w-full h-48 object-cover rounded-lg mb-4">
-                <h3 class="text-2xl font-semibold text-black mb-4">Paragliding</h3>
-                <p class="text-gray-600 mb-4">Soar above stunning landscapes and feel the rush of freedom as you glide through the air.</p>
-                <a href="{{ route('packages') }}" class="text-blue-500 font-semibold hover:text-yellow-600">Explore Paragliding Packages</a>
-            </div>
+            @foreach ($activities as $activity)
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-500 relative group">
+                    <!-- Card Image -->
+                    <img src="{{ asset($activity['image']) }}" alt="{{ $activity['title'] }}"
+                        class="w-full h-52 object-cover group-hover:brightness-75 transition-all duration-500">
 
-            <!-- Wildlife Safari -->
-            <div class="bg-white text-gray-800 p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
-                <img src="{{ asset('safari.jpg') }}" alt="Safari" class="w-full h-48 object-cover rounded-lg mb-4">
-                <h3 class="text-2xl font-semibold text-black mb-4">Wildlife Safari</h3>
-                <p class="text-gray-600 mb-4">Get up close with nature and witness the wild in its natural habitat. Our safaris take you to the heart of some of the world’s best wildlife reserves.</p>
-                <a href="{{ route('packages') }}" class="text-blue-500 font-semibold hover:text-yellow-600">Explore Safari Packages</a>
-            </div>
+                    <!-- Activity Badge -->
+                    <span class="absolute top-4 left-4 bg-yellow-500 text-white text-xs font-bold uppercase px-3 py-1 rounded-full shadow-md">
+                        Popular
+                    </span>
 
-            <!-- Mountain Biking -->
-            <div class="bg-white text-gray-800 p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
-                <img src="{{ asset('biking.jpg') }}" alt="Mountain Biking" class="w-full h-48 object-cover rounded-lg mb-4">
-                <h3 class="text-2xl font-semibold text-black mb-4">Mountain Biking</h3>
-                <p class="text-gray-600 mb-4">Ride through rugged terrains, challenging trails, and beautiful landscapes on an adrenaline-packed mountain biking adventure.</p>
-                <a href="{{ route('packages') }}" class="text-blue-500 font-semibold hover:text-yellow-600">Explore Mountain Biking Packages</a>
-            </div>
-
-            <!-- Rafting -->
-            <div class="bg-white text-gray-800 p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
-                <img src="{{ asset('rafting.jpg') }}" alt="Rafting" class="w-full h-48 object-cover rounded-lg mb-4">
-                <h3 class="text-2xl font-semibold text-black mb-4">Rafting Adventures</h3>
-                <p class="text-gray-600 mb-4">Paddle through rapids and enjoy the excitement of white-water rafting in breathtaking river landscapes.</p>
-                <a href="{{ route('packages') }}" class="text-blue-500 font-semibold hover:text-yellow-600">Join a Rafting Expedition</a>
-            </div>
-
-            <!-- Horseback Riding -->
-            <div class="bg-white text-gray-800 p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all transform hover:scale-105">
-                <img src="{{ asset('horseriding.jpg') }}" alt="Horseback Riding" class="w-full h-48 object-cover rounded-lg mb-4">
-                <h3 class="text-2xl font-semibold text-black mb-4">Horseback Riding</h3>
-                <p class="text-gray-600 mb-4">Explore scenic trails on horseback, enjoying the peacefulness of nature with guided riding tours.</p>
-                <a href="{{ route('packages') }}" class="text-blue-500 font-semibold hover:text-yellow-600">Book Your Horseback Riding Tour</a>
-            </div>
+                    <!-- Content -->
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-indigo-500 mb-3 group-hover:text-yellow-500 transition-colors duration-300">
+                            {{ $activity['title'] }}
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            {{ $activity['desc'] }}
+                        </p>
+                        <a href="{{ route('packages') }}"
+                            class="text-indigo-500 font-semibold hover:underline">
+                            {{ $activity['btn'] }}
+                        </a>
+                    </div>
+                </div>
+            @endforeach
         </div>
 
         <!-- Call to Action -->
         <div class="mt-12">
-            <p class="text-xl mb-4 text-gray-900">Ready to start your adventure? Join us for a thrilling journey and make memories that will last a lifetime.</p>
-            <a href="{{ route('packages') }}" class="px-8 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600">View All Adventure Packages</a>
+            <p class="text-2xl mb-6 text-gray-800 font-medium leading-snug">
+                Ready to start your adventure? <span class="text-yellow-500 font-bold">Join us</span> for a thrilling journey and create memories that will last a lifetime.
+            </p>
+            <a href="{{ route('packages') }}"
+                class="inline-block bg-yellow-500 text-gray-900 font-bold text-lg px-8 py-3 rounded-full shadow-md hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105">
+                View All Adventure Packages
+            </a>
         </div>
     </div>
 </section>
-
 @endsection

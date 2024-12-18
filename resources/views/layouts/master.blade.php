@@ -42,7 +42,7 @@
                         <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
                     </form>
                 @else
-                    <a href="/login" class="hover:text-yellow-500">Login</a>
+                    <a href="/login" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'login' ? 'text-yellow-500 font-bold' : '' }}">Login</a>
                 @endauth
             </div>
 
