@@ -46,7 +46,7 @@
         </div>
 
         <!-- Stats Section -->
-        <div class="mt-16 bg-indigo-700 text-white py-12 rounded-lg shadow-lg">
+        <div class="mt-16 bg-black text-white py-12 rounded-lg shadow-lg">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div class="group">
                     <h3 class="text-5xl font-bold group-hover:text-yellow-400 transition-colors duration-300">50+</h3>
@@ -67,62 +67,49 @@
             </div>
         </div>
 
-        <section class="bg-gray-900 text-white py-16">
+        <section class="bg-gray-100 text-white py-16">
             <div class="container mx-auto text-center">
-                <h2 class="text-4xl font-extrabold mb-4">
+                <h2 class="text-4xl font-extrabold text-black mb-4">
                     Experience Unforgettable <span class="text-yellow-500">Adventures
                 </h2>
-                <p class="text-lg mb-8 text-gray-300">
+                <p class="text-lg mb-8 text-gray-900">
                     Discover breathtaking destinations and create lifelong memories.
                 </p>
 
                 <!-- Carousel / Slider -->
                 <div class="relative w-full lg:w-8/12 mx-auto overflow-hidden rounded-lg shadow-lg">
-                    <div class="carousel flex transition-transform duration-500 ease-in-out">
-                        <!-- Slide 1 -->
-                        <div class="w-full flex-shrink-0">
-                            <img src="{{ asset('rafting.jpg') }}" alt="Adventure Image 1" class="w-full h-64 object-cover">
+                <div class="carousel flex transition-transform duration-500 ease-in-out">
+                    @foreach($packages as $package)
+                    <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="w-full flex-shrink-0 relative block">
+                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-80 object-cover rounded-lg">
+                        <div class="absolute bottom-0 left-0 bg-gradient-to-t from-black  to-transparent text-white p-4">
+                            <h3 class="text-3xl text-yellow-500 font-bold">{{ $package->name }}</h3>
+                            <p class="text-xl text-green-600 font-bold">${{ $package->price }}</p>
                         </div>
-                        <!-- Slide 2 -->
-                        <div class="w-full flex-shrink-0">
-                            <img src="{{ asset('localculture.jpg') }}" alt="Adventure Image 2" class="w-full h-64 object-cover">
-                        </div>
-                        <!-- Slide 3 -->
-                        <div class="w-full flex-shrink-0">
-                            <img src="{{ asset('safari.jpg') }}" alt="Adventure Image 3" class="w-full h-64 object-cover">
-                        </div>
-                        <div class="w-full flex-shrink-0">
-                            <img src="{{ asset('lake.png') }}" alt="Adventure Image 2" class="w-full h-64 object-cover">
-                        </div>
-                        <div class="w-full flex-shrink-0">
-                            <img src="{{ asset('aboutus.jpg') }}" alt="Adventure Image 2" class="w-full h-64 object-cover">
-                        </div>
-                        <div class="w-full flex-shrink-0">
-                            <img src="{{ asset('contact-bg.jpg') }}" alt="Adventure Image 2" class="w-full h-64 object-cover">
-                        </div>
-                    </div>
+                    </a>
+                    @endforeach
                 </div>
-
-                <!-- Call to Action -->
-                <a href="{{ route('packages') }}"
-                    class="mt-6 inline-block bg-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full shadow-md hover:bg-yellow-600 transition duration-300">
-                    Start Your Journey
-                </a>
             </div>
-        </section>
+
+            <!-- Call to Action -->
+            <a href="{{ route('packages') }}" class="mt-6 inline-block bg-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full shadow-md hover:bg-yellow-600 transition duration-300">
+                Start Your Journey
+            </a>
+        </div>
+    </section>
 
         <!-- Carousel Script -->
         <script>
             const carousel = document.querySelector('.carousel');
             let currentIndex = 0;
+            const totalSlides = document.querySelectorAll('.carousel > a').length;
 
             setInterval(() => {
-                currentIndex = (currentIndex + 1) % 6; // Assuming 6 slides
+                currentIndex = (currentIndex + 1) % totalSlides;
                 const offset = -currentIndex * 100;
                 carousel.style.transform = `translateX(${offset}%)`;
             }, 3000); // Auto-slide every 3 seconds
         </script>
-
     </div>
 </section>
 @endsection

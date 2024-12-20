@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $packages = Package::take(3)->get();;
+        $packages = Package::take(12)->get();;
         return view('welcome', compact( 'packages'));
     }
     public function about()
@@ -48,7 +48,8 @@ class PageController extends Controller
     }
     public function whyToChooseUs()
     {
-        return view('whyToChooseUs');
+        $packages = Package::take(12)->get();;
+        return view('whyToChooseUs',compact( 'packages'));
     }
     public function search(Request $request)
     {
