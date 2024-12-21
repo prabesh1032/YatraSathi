@@ -6,7 +6,7 @@
 
         <!-- Section Title -->
         <div class="text-center mb-12">
-            <h2 class="text-5xl font-extrabold text-indigo-700 mb-4 tracking-tight">Why Choose <span class="text-yellow-500">YatraSathi?</span></h2>
+            <h2 class="text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Why Choose <span class="text-yellow-500">YatraSathi?</span></h2>
             <p class="text-lg text-gray-600">We go beyond expectations to turn your travel dreams into reality.</p>
         </div>
 
@@ -24,10 +24,10 @@
                         ['ri-flight-takeoff-line', 'Flexible and budget-friendly travel plans.']
                     ] as $feature)
                     <li class="flex items-center group">
-                        <div class="bg-indigo-100 p-4 rounded-full shadow-md mr-4 transition-transform duration-300 group-hover:scale-125 group-hover:bg-indigo-500">
-                            <i class="{{ $feature[0] }} text-indigo-700 text-3xl group-hover:text-white"></i>
+                        <div class="bg-indigo-100 p-4 rounded-full shadow-md mr-4 transition-transform duration-300 group-hover:scale-125 group-hover:bg-gray-900">
+                            <i class="{{ $feature[0] }} text-gray-900 text-3xl group-hover:text-white"></i>
                         </div>
-                        <span class="group-hover:text-indigo-500 transition-colors duration-300">{{ $feature[1] }}</span>
+                        <span class="group-hover:text-yellow-500 transition-colors duration-300">{{ $feature[1] }}</span>
                     </li>
                     @endforeach
                 </ul>

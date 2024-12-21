@@ -10,8 +10,8 @@
             <div class="mb-6">
                 <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="rounded-lg shadow-lg w-full h-64 object-cover">
             </div>
-            <a href="{{ route('packages.read', $package->id) }}" class="bg-indigo-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-600">Read More</a>
-        </div>
+            <a href="{{ route('packages.read', $package->id) }}" class="bg-indigo-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">Learn More</a>
+            </div>
 
         <!-- Package Details Section (Center) -->
         <div class="w-full md:w-1/3 p-4">
