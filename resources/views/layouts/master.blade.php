@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans bg-white text-gray-800">
+<body class="font-sans bg-gradient-to-r from-blue-100 via-white to-green-100 text-gray-800">
 @include('Layouts.alert')
     <!-- Navbar -->
     <nav class="bg-black top-0 sticky z-10 text-white py-4">

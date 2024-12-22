@@ -1,55 +1,66 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold text-center text-blue-700">{{ $package->name }}</h1>
+<div class="container mx-auto p-8">
+    <!-- Package Title -->
+    <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-4">{{ $package->name }}</h1>
+    <p class="text-center text-lg text-gray-600">Discover the wonders of {{ $package->location }} with this exclusive package!</p>
 
-    <div class="flex flex-wrap mt-6">
-        <!-- Package Image Section (Left) -->
-        <div class="w-full md:w-1/3 p-4">
-            <div class="mb-6">
-                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="rounded-lg shadow-lg w-full h-64 object-cover">
-            </div>
-            <a href="{{ route('packages.read', $package->id) }}" class="bg-indigo-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">Learn More</a>
-            </div>
+    <!-- Main Content -->
+    <div class="flex flex-wrap mt-12 gap-y-8">
+        <!-- Package Image Section -->
+        <div class="w-full md:w-1/3 p-4 flex flex-col items-center bg-white shadow-md rounded-lg">
+            <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="rounded-lg shadow-lg w-full h-64 object-cover transition-transform duration-500 hover:scale-105">
+            <a href="{{ route('packages.read', $package->id) }}" class="block bg-gradient-to-r from-indigo-500 to-blue-600 text-white text-center mt-6 px-6 py-3 rounded-md shadow-lg hover:from-indigo-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+                Learn More
+            </a>
+        </div>
 
-        <!-- Package Details Section (Center) -->
-        <div class="w-full md:w-1/3 p-4">
-            <div class="space-y-4">
-                <p class="text-lg text-gray-600 mb-3">📍 Location: <strong>{{ $package->location }}</strong></p>
-                <p class="text-lg text-gray-600 mb-3">💰 Price: <strong>${{ number_format($package->price, 2) }} Per Person</strong></p>
-                <p class="text-lg text-gray-600 mb-3">📅 Duration: <strong>{{ $package->duration }} days</strong></p>
+        <!-- Package Details Section -->
+        <div class="w-full md:w-1/3 p-6 bg-white shadow-md rounded-lg">
+            <div class="space-y-6">
+                <p class="text-lg text-gray-700 flex items-center">
+                    <i class="ri ri-map-pin-2-fill text-blue-500 text-xl mr-3"></i>
+                    <span><strong>Location:</strong> {{ $package->location }}</span>
+                </p>
+                <p class="text-lg text-gray-700 flex items-center">
+                    <i class="ri ri-money-dollar-circle-line text-green-500 text-xl mr-3"></i>
+                    <span><strong>Price:</strong> ${{ number_format($package->price, 2) }} <span class="text-sm text-gray-500">Per Person</span></span>
+                </p>
+                <p class="text-lg text-gray-700 flex items-center">
+                    <i class="ri ri-time-line text-yellow-500 text-xl mr-3"></i>
+                    <span><strong>Duration:</strong> {{ $package->duration }} days</span>
+                </p>
                 <form method="POST" action="{{ route('bookmarks.store') }}">
                     @csrf
                     <input type="hidden" name="package_id" value="{{ $package->id }}">
                     <label for="num_people" class="block text-gray-700 font-semibold mb-2">Number of People:</label>
-                    <input type="number" id="num_people" name="num_people" class="w-full p-2 border rounded-lg mb-4" min="1" value="1" required>
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400">
-                        Add to Bookmarks
+                    <input type="number" id="num_people" name="num_people" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all mb-4" min="1" value="1" required>
+                    <button type="submit" class="block w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                        <i class="ri ri-bookmark-line mr-2"></i> Add to Bookmarks
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- Sidebar Section (Right) -->
-        <div class="w-full md:w-1/3 p-4">
-            <div class="space-y-4">
-                <a href="{{ route('whyToChooseUs') }}" class="block p-4 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-100">
-                    <p class="font-bold">Why Choose Us</p>
-                    <p class="text-sm">See why this package stands out.</p>
+        <!-- Sidebar Section -->
+        <div class="w-full md:w-1/3 p-4 flex flex-col bg-white shadow-md rounded-lg">
+            <div class="space-y-6">
+            <a href="{{ route('whyToChooseUs') }}" class="block p-6 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-200 transition-all duration-300 rounded-lg shadow-md">
+                    <p class="font-bold text-xl">Why Choose Us</p>
+                    <p class="text-sm mt-1">See why this package stands out.</p>
                 </a>
-                <a href="{{ route('adventure') }}" class="block p-4 bg-green-50 border-l-4 border-green-500 text-green-700 hover:bg-green-100">
-                    <p class="font-bold">Adventure Activities</p>
-                    <p class="text-sm">Explore thrilling activities like trekking and more.</p>
+                <a href="{{ route('adventure') }}" class="block p-6 bg-green-50 border-l-4 border-green-500 text-green-700 hover:bg-green-200 transition-all duration-300 rounded-lg shadow-md">
+                    <p class="font-bold text-xl">Adventure Activities</p>
+                    <p class="text-sm mt-1">Experience exciting adventures like trekking.</p>
                 </a>
-                <a href="{{ route('traveltips') }}" class="block p-4 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 hover:bg-yellow-100">
-                    <p class="font-bold">Travel Tips</p>
-                    <p class="text-sm">Make the most out of your journey with our tips.</p>
+                <a href="{{ route('traveltips') }}" class="block p-6 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 hover:bg-yellow-200 transition-all duration-300 rounded-lg shadow-md">
+                    <p class="font-bold text-xl">Travel Tips</p>
+                    <p class="text-sm mt-1">Get the best tips for a memorable journey.</p>
                 </a>
             </div>
         </div>
     </div>
-
     <!-- Reviews Section -->
     <div class="mt-12">
     <h2 class="text-3xl font-bold text-gray-900 mb-4">User Reviews</h2>
