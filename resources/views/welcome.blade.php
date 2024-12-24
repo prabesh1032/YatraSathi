@@ -30,12 +30,22 @@
         <p class="text-lg mb-8 text-gray-900 font-roboto-slab tracking-wide">
             Discover breathtaking destinations through different packages and create lifelong memories.
         </p>
+        <div class="flex justify-center items-center space-x-6 text-4xl mb-8">
+            <i class="ri-plane-line text-indigo-500 hover:text-indigo-700 transition transform hover:scale-125"></i>
+            <i class="ri-map-pin-line text-lime-500 hover:text-lime-700 transition transform hover:scale-125"></i>
+            <i class="ri-earth-line text-yellow-500 hover:text-yellow-700 transition transform hover:scale-125"></i>
+            <i class="ri-suitcase-line text-teal-500 hover:text-teal-700 transition transform hover:scale-125"></i>
+            <i class="ri-bus-line text-blue-500 hover:text-blue-700 transition transform hover:scale-125"></i>
+            <i class="ri-hotel-line text-purple-500 hover:text-purple-700 transition transform hover:scale-125"></i>
+            <i class="ri-camera-line text-red-500 hover:text-red-700 transition transform hover:scale-125"></i>
+            <i class="ri-compass-line text-green-500 hover:text-green-700 transition transform hover:scale-125"></i>
+        </div>
         <!-- Carousel / Slider -->
         <div class="relative w-full lg:w-8/12 mx-auto overflow-hidden rounded-lg shadow-lg">
             <div class="carousel flex transition-transform duration-500 ease-in-out">
                 @foreach($packages as $package)
                 <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="w-full flex-shrink-0 relative block">
-                    <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-80 object-cover rounded-lg">
+                    <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-80 object-cover rounded-lg shadow-lg hover:scale-105 transition-all duration-300">
                     <div class="absolute bottom-0 left-0 bg-gradient-to-t from-black  to-transparent text-white p-4">
                         <h3 class="text-3xl text-yellow-500 font-bold">{{ $package->name }}</h3>
                         <p class="text-xl text-green-600 font-bold">${{ $package->price }}</p>
