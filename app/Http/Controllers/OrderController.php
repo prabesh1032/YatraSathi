@@ -44,14 +44,14 @@ class OrderController extends Controller
     }
 
 
-    // Display all orders for admin
-    public function index()
+        public function index()
     {
-        $orders = Order::all();
-
+        // Fetch orders with pagination (10 items per page)
+        $orders = Order::latest()->paginate(12);
 
         return view('orders.index', compact('orders'));
     }
+
 
     // Update the booking status
     public function status($id, $status)
