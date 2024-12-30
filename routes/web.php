@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
     // Handle eSewa payment for orders
     Route::get('/ordersesewa/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
+    Route::post('/order/khalti/{packageId}', [OrderController::class, 'storeKhalti'])->name('order.storeKhalti');
 });
 
 Route::middleware('auth')->group(function () {

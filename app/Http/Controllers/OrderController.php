@@ -13,7 +13,6 @@ class OrderController extends Controller
     // Store a new booking order
     public function store(Request $request)
     {
-        // Validate the incoming request
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'name' => 'required|string|max:255',
@@ -30,8 +29,7 @@ class OrderController extends Controller
         $data['payment_method'] = "COD";
         $data['user_id'] = auth()->user()->id;
         $data['status'] = 'Pending';
-        $data['total_price'] = $request->price * $data['num_people']; // Calculate total price based on num_people
-        // dd($request->all());
+        $data['total_price'] = $request->price * $data['num_people'];
         // Create the order
         Order::create($data);
 
@@ -90,7 +88,7 @@ class OrderController extends Controller
         {
             $bookmark = Bookmark::find($bookmarkId);
             if (!$bookmark) {
-                return redirect('/')->with('error', 'Bookmark not found.');
+                return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
             }
              $order = new Order();
              $order->package_id = $bookmark->package_id;

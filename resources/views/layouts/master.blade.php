@@ -11,14 +11,14 @@
 <body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
 @include('Layouts.alert')
     <!-- Navbar -->
-    <nav class="bg-black top-0 sticky z-10 text-white py-4">
-        <div class="container mx-auto flex justify-between items-center px-6">
+    <nav class="bg-black top-0 sticky z-10 text-white py-9">
+        <div class="container mx-auto flex justify-between items-center px-0">
             <!-- Logo Section -->
             <div class="flex items-center">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-12 h-12 rounded-full mr-3">
+                    <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-16 h-16 rounded-full mr-2">
                 </a>
-                <a href="{{ route('home') }}" class="text-3xl font-bold">YatraSathi</a>
+                <a href="{{ route('home') }}" class="text-4xl text-gray-50 font-extrabold">YatraSathi</a>
             </div>
 
             <!-- Hamburger Menu Button (for small screens) -->
@@ -31,19 +31,40 @@
 
             <!-- Navbar Links -->
             <div id="menu" class="hidden lg:flex lg:space-x-6 text-xl">
-                <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
-                <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
-                <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
-                <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
+                <a href="{{ route('home') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    Home
+                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="{{ route('packages') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    Packages
+                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="{{ route('about') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    About
+                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="{{ route('contact') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    Contact
+                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
 
                 @auth
-                    <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My Bookmarks</a>
-                    <form action="{{ route('logout') }}" method="POST" class="inline-block">
+                    <a href="{{ route('bookmarks.index') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-extrabold' : '' }}">
+                        My-Bookmarks
+                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="group relative inline-block">
                         @csrf
-                        <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
+                        <input type="submit"
+                            value="Logout"
+                            class="hover:text-yellow-500 cursor-pointer bg-transparent border-0 p-0 text-xl focus:outline-none">
+                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                     </form>
                 @else
-                    <a href="/login" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'login' ? 'text-yellow-500 font-bold' : '' }}">Login</a>
+                    <a href="/login" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'login' ? 'text-yellow-500 font-extrabold' : '' }}">
+                        Login
+                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
                 @endauth
             </div>
 
@@ -61,7 +82,7 @@
         </div>
 
         <!-- Dropdown Menu for Mobile -->
-        <div id="mobile-menu" class="hidden flex flex-col space-y-4 text-center bg-black text-white py-4 lg:hidden">
+        <div id="mobile-menu" class="hidden flex-col space-y-4 text-center bg-black text-white py-4 lg:hidden">
             <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
             <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
             <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
@@ -89,16 +110,17 @@
             </form>
         </div>
     </nav>
+
     <!-- Main content -->
-    <main class="container mx-auto my-10 px-6">
+    <main class="container mx-auto my-7 ">
         @yield('content')
     </main>
 
     <!-- Useful Section Above Footer -->
-    <section class="bg-lime-200 py-10 mt-10">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
+    <section class="bg-gradient-to-r from-lime-200 via-teal-200 to-indigo-200 py-10 ">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 ">
             <div class="flex flex-col items-center">
-               <a href="{{route('whyToChooseUs')}}"> <img src="{{ asset('whyus.jpg') }}" alt="Special Offers" class="w-24 h-24 rounded-full shadow-lg mb-4">
+               <a href="{{route('whyToChooseUs')}}"> <img src="{{ asset('whyus.jpg') }}" alt="Special Offers" class="w-24 h-24 rounded-full shadow-lg mb-4 hover:scale-110 transition duration-300 ease-in-out">
                 <h2 class="text-2xl font-bold mb-2"><a href="{{route('whyToChooseUs')}}">Why to Choose Us</h2>
                 <p class="text-center text-gray-700">Discover why thousands trust YatraSathi for personalized travel experiences.</p>
                 </a>
@@ -121,41 +143,44 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black text-white py-10 mt-10">
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 px-6">
-        <div class="flex flex-col items-center mt-5">
+    <footer class="bg-black text-white py-10">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
+        <div class="flex flex-col items-center md:items-start">
             <img src="{{ asset('SS2.png') }}" alt="Logo" class="w-24 h-24 mx-auto rounded-full shadow-lg bg-white p-2">
             <span class="mt-4 font-bold text-2xl text-yellow-500">YatraSathi</span>
-            <p class="mt-4 text-center text-gray-400"></p>
+            <p class="mt-4 text-center text-gray-400">Explore the world with confidence</p>
         </div>
         <div>
             <h2 class="text-2xl font-bold mb-4">Customer Support</h2>
             <ul class="space-y-2">
-                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-question-line mr-2"></i> FAQs</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-service-line mr-2"></i> Help Center</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-arrow-right-circle-line mr-2"></i> Cancellation Policy</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-shield-check-line mr-2"></i> Travel Insurance</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-question-line mr-2"></i>FAQs</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-service-line mr-2"></i>Help Center</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-arrow-right-circle-line mr-2"></i>Cancellation Policy</a></li>
+                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-shield-check-line mr-2"></i>Travel Insurance</a></li>
             </ul>
         </div>
         <div>
             <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
-            <p><i class="ri-mail-line mr-2"></i>Email: <a href="mailto:prabesh11100@gmail.com" class="text-gray-300 hover:text-yellow-500">prabesh11100@gmail.com</a></p>
-            <p><i class="ri-phone-line mr-2"></i>Phone: <a href="tel:+9779812965110" class="text-gray-300 hover:text-yellow-500">9812965110</a></p>
-            <p><i class="ri-map-pin-line mr-2"></i>Address: 123, Chitwan, Nepal</p>
-        </div>
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Social Links</h2>
-            <ul class="space-y-2">
-                <li><a href="https://facebook.com/prabesh.ach" class="text-gray-300 hover:text-yellow-500"><i class="ri-facebook-line ri-2x"></i> Facebook</a></li>
-                <li><a href="https://twitter.com/PrabeshAch33319" class="text-gray-300 hover:text-yellow-500"><i class="ri-twitter-line ri-2x"></i> Twitter</a></li>
-                <li><a href="https://instagram.com/prabesh_ach" class="text-gray-300 hover:text-yellow-500"><i class="ri-instagram-line ri-2x"></i> Instagram</a></li>
-            </ul>
+            <p class="text-gray-300"><i class="ri-mail-line mr-2"></i>Email: <a href="mailto:prabesh11100@gmail.com" class="hover:text-yellow-500">prabesh11100@gmail.com</a></p>
+            <p class="text-gray-300"><i class="ri-phone-line mr-2"></i>Phone: <a href="tel:+9779812965110" class="hover:text-yellow-500">9812965110</a></p>
         </div>
     </div>
     <div class="bg-gray-900 text-gray-300 text-center py-5">
-        <p>&copy; 2024 All rights reserved</p>
+        <p>&copy; 2024 YatraSathi | All Rights Reserved</p>
+        <div class="flex justify-center space-x-5 mt-2">
+            <a href="https://facebook.com/prabesh.ach" class="text-gray-300 hover:text-yellow-500">
+                <i class="ri-facebook-line ri-2x"></i>
+            </a>
+            <a href="https://twitter.com/PrabeshAch33319" class="text-gray-300 hover:text-yellow-500">
+                <i class="ri-twitter-line ri-2x"></i>
+            </a>
+            <a href="https://instagram.com/prabesh_ach" class="text-gray-300 hover:text-yellow-500">
+                <i class="ri-instagram-line ri-2x"></i>
+            </a>
+        </div>
     </div>
 </footer>
+
     <script>
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');

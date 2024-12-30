@@ -11,17 +11,13 @@ class BookmarkController extends Controller
     // Store a bookmark
     public function store(Request $request)
     {
-        // Validate the incoming request
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
-            'num_people' => 'required|integer|min:1', // Ensure a valid number of people is provided
+            'num_people' => 'required|integer|min:1',
         ]);
 
-        // Assign user_id to the bookmark
         $data['user_id'] = auth()->user()->id;
 
-
-        // Check if the package is already bookmarked
         $check = Bookmark::where('user_id', $data['user_id'])
                          ->where('package_id', $data['package_id'])
                          ->count();
@@ -29,16 +25,9 @@ class BookmarkController extends Controller
         if ($check > 0) {
             return back()->with('error', 'Package already bookmarked');
         }
-
-        // Fetch the package to calculate the total price
         $package = Package::find($data['package_id']);
-
-        // Calculate the total price (for example, price * num_people)
         $data['total_price'] = $package->price * $data['num_people'];
-
-        // Create the bookmark
         Bookmark::create($data);
-
         return back()->with('success', 'Package added to your bookmarks successfully');
     }
 
@@ -64,21 +53,21 @@ class BookmarkController extends Controller
 
     // Handle checkout or action for bookmarked package
     public function checkout($bookmark)
-{
-    // Attempt to find the bookmark
-    $bookmark = Bookmark::find($bookmark);
+    {
+        // Attempt to find the bookmark
+        $bookmark = Bookmark::find($bookmark);
 
-    // Check if the bookmark exists
-    if (!$bookmark) {
-        return back()->with('error', 'Bookmark not found.');
+        // Check if the bookmark exists
+        if (!$bookmark) {
+            return back()->with('error', 'Bookmark not found.');
+        }
+
+        // Ensure the bookmark belongs to the authenticated user
+        if ($bookmark->user_id != auth()->user()->id) {
+            return back()->with('error', 'Unauthorized access.');
+        }
+
+        // Proceed with the checkout process
+        return view('checkout', ['bookmark' => $bookmark]);
     }
-
-    // Ensure the bookmark belongs to the authenticated user
-    if ($bookmark->user_id != auth()->user()->id) {
-        return back()->with('error', 'Unauthorized access.');
-    }
-
-    // Proceed with the checkout process
-    return view('checkout', ['bookmark' => $bookmark]);
-}
 }
