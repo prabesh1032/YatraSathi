@@ -9,7 +9,7 @@
             About Us
         </h1>
         <p class="text-xl md:text-2xl mb-1 font-extrabold">
-            Discover the story and passion behind YatraSathi.
+            Discover the story and passion behind YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-indigo-500"></i>
         </p>
         <a href="#mission" class="mt-6 px-8 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600 shadow-lg transition-all duration-300 transform hover:scale-105 animate__animated animate__fadeInUp animate__delay-1.5s">
             Learn More <i class="ri-arrow-down-circle-line ml-2"></i>
@@ -22,7 +22,7 @@
     <section id="about" class="relative text-center mb-16 bg-gradient-to-r from-lime-200 to-lime-400 text-white py-16 rounded-lg shadow-xl">
         <div class="absolute inset-0 bg-cover bg-center opacity-15" style="background-image: url('{{ asset('contact-bg.jpg') }}');"></div>
         <h2 class="text-4xl font-extrabold mb-6 text-black">
-            About YatraSathi
+            About YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-indigo-500"></i>
         </h2>
         <p class="text-lg text-black max-w-3xl mx-auto font-bold">
             YatraSathi is more than just a travel agency; it's a movement that makes travel simpler, more adventurous, and deeply meaningful. We curate bespoke travel experiences that allow you to connect with the places you visit in ways that resonate long after you return home.
@@ -33,7 +33,7 @@
     <section id="mission" class="bg-white text-gray-900 py-16 px-6 rounded-lg mb-16 shadow-xl relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-t from-yellow-300 to-transparent opacity-30"></div>
         <h2 class="text-3xl font-extrabold mb-6 text-yellow-500 text-center animate__animated animate__fadeIn">
-            Our Mission <i class="ri-earth-line text-indigo-500 ml-2"></i>
+            Our Mission <i class="ri-plane-line text-indigo-500 ml-2"></i>
         </h2>
         <p class="text-lg max-w-3xl mx-auto text-center font-bold">
         Our mission is to bring the world closer through travel. By offering a wide range of curated experiences, we aim to create a sense of discovery and connection that transcends ordinary travel. We believe in sustainable tourism, authentic experiences, and creating memories that will last a lifetime.        </p>
@@ -44,7 +44,7 @@
 
         <!-- Section Title -->
         <div class="text-center mb-12">
-            <h2 class="text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Why Choose <span class="text-indigo-500">YatraSathi?</span></h2>
+            <h2 class="text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Why Choose <span class="text-indigo-500">YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-yellow-500"></i> ?</span></h2>
             <p class="text-lg text-gray-600">We go beyond expectations to turn your travel dreams into reality.</p>
         </div>
 

@@ -18,9 +18,11 @@
                 <a href="{{ route('home') }}">
                     <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-16 h-16 rounded-full mr-2">
                 </a>
-                <a href="{{ route('home') }}" class="text-4xl text-gray-50 font-extrabold">YatraSathi</a>
+                <a href="{{ route('home') }}" class="text-4xl text-gray-50 font-extrabold flex items-center">
+                    YatraSathi
+                    <i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-yellow-500"></i>
+                </a>
             </div>
-
             <!-- Hamburger Menu Button (for small screens) -->
             <button
                 id="menu-toggle"
@@ -50,7 +52,7 @@
 
                 @auth
                     <a href="{{ route('bookmarks.index') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-extrabold' : '' }}">
-                        My-Bookmarks
+                    My-Adventure
                         <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <form action="{{ route('logout') }}" method="POST" class="group relative inline-block">
@@ -89,7 +91,7 @@
             <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
 
             @auth
-                <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My Bookmarks</a>
+                <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My-Adventure</a>
                 <form action="{{ route('logout') }}" method="POST" class="inline-block">
                     @csrf
                     <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
@@ -141,45 +143,57 @@
 
         </div>
     </section>
-
-    <!-- Footer -->
     <footer class="bg-black text-white py-10">
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
+        <!-- Logo and Tagline Section -->
         <div class="flex flex-col items-center md:items-start">
-            <img src="{{ asset('SS2.png') }}" alt="Logo" class="w-24 h-24 mx-auto rounded-full shadow-lg bg-white p-2">
-            <span class="mt-4 font-bold text-2xl text-yellow-500">YatraSathi</span>
-            <p class="mt-4 text-center text-gray-400">Explore the world with confidence</p>
+            <img src="{{ asset('SS2.png') }}" alt="Logo" class="w-24 h-24 rounded-full shadow-lg bg-white p-2">
+            <span class="mt-4 font-bold text-2xl text-yellow-500">YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-yellow-500"></i></span>
         </div>
+
+        <!-- Customer Support Section -->
         <div>
             <h2 class="text-2xl font-bold mb-4">Customer Support</h2>
             <ul class="space-y-2">
                 <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-question-line mr-2"></i>FAQs</a></li>
                 <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-service-line mr-2"></i>Help Center</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-arrow-right-circle-line mr-2"></i>Cancellation Policy</a></li>
-                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-shield-check-line mr-2"></i>Travel Insurance</a></li>
-            </ul>
+                <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i class="ri-arrow-right-circle-line mr-2"></i>Cancellation Policy</a></li>            </ul>
         </div>
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
-            <p class="text-gray-300"><i class="ri-mail-line mr-2"></i>Email: <a href="mailto:prabesh11100@gmail.com" class="hover:text-yellow-500">prabesh11100@gmail.com</a></p>
-            <p class="text-gray-300"><i class="ri-phone-line mr-2"></i>Phone: <a href="tel:+9779812965110" class="hover:text-yellow-500">9812965110</a></p>
+
+        <!-- Social Links Section -->
+        <div class="flex flex-col items-center md:items-start">
+            <h2 class="text-2xl font-bold mb-4">Follow Us:</h2>
+            <div class="flex space-x-5">
+                <!-- Facebook -->
+                <a href="https://facebook.com/prabesh.ach" class="text-gray-300 hover:text-yellow-500">
+                    <i class="ri-facebook-line ri-2x"></i>
+                </a>
+                <!-- Twitter -->
+                <a href="https://twitter.com/PrabeshAch33319" class="text-gray-300 hover:text-yellow-500">
+                    <i class="ri-twitter-line ri-2x"></i>
+                </a>
+                <!-- Instagram -->
+                <a href="https://instagram.com/prabesh_ach" class="text-gray-300 hover:text-yellow-500">
+                    <i class="ri-instagram-line ri-2x"></i>
+                </a>
+                <!-- Email -->
+                <a href="mailto:prabesh11100@gmail.com" class="text-gray-300 hover:text-yellow-500">
+                    <i class="ri-mail-line ri-2x"></i>
+                </a>
+                <!-- Phone -->
+                <a href="tel:+9779812965110" class="text-gray-300 hover:text-yellow-500">
+                    <i class="ri-phone-line ri-2x"></i>
+                </a>
+            </div>
         </div>
     </div>
+    <!-- Footer Bottom Section -->
     <div class="bg-gray-900 text-gray-300 text-center py-5">
         <p>&copy; 2024 YatraSathi | All Rights Reserved</p>
-        <div class="flex justify-center space-x-5 mt-2">
-            <a href="https://facebook.com/prabesh.ach" class="text-gray-300 hover:text-yellow-500">
-                <i class="ri-facebook-line ri-2x"></i>
-            </a>
-            <a href="https://twitter.com/PrabeshAch33319" class="text-gray-300 hover:text-yellow-500">
-                <i class="ri-twitter-line ri-2x"></i>
-            </a>
-            <a href="https://instagram.com/prabesh_ach" class="text-gray-300 hover:text-yellow-500">
-                <i class="ri-instagram-line ri-2x"></i>
-            </a>
-        </div>
     </div>
 </footer>
+
+
 
     <script>
         const menuToggle = document.getElementById('menu-toggle');

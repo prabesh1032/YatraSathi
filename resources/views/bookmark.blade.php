@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<h1 class="text-gray-900 text-5xl text-center font-extrabold my-10">My Bookmarks</h1>
+<h1 class="text-gray-900 text-5xl text-center font-extrabold my-10">My Travelling<span class="text-yellow-500"> Plans</h1>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 md:px-20">
     @forelse($bookmarks as $bookmark)
     <div class="p-5 border shadow-lg rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">

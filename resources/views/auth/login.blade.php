@@ -21,7 +21,7 @@
         <div class="bg-white bg-opacity-30 backdrop-blur-lg rounded-lg shadow-lg p-8 w-full max-w-md text-gray-900">
             <!-- Title -->
             <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-6">
-                <i class="ri-login-circle-line"></i> Login to <span class="text-indigo-600">YatraSathi</span>
+                <i class="ri-login-circle-line"></i> Login to <span class="text-indigo-600">YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-yellow-500"></i></span>
             </h2>
 
             <!-- Form -->

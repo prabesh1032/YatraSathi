@@ -37,7 +37,7 @@
                     <label for="num_people" class="block text-gray-700 font-semibold mb-2">Number of People:</label>
                     <input type="number" id="num_people" name="num_people" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all mb-4" min="1" value="1" required>
                     <button type="submit" class=" w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-                        <i class="ri ri-bookmark-line mr-2"></i> Add to Bookmarks
+                        <i class="ri ri-bookmark-line mr-2"></i> Add to My-Plan
                     </button>
                 </form>
             </div>
