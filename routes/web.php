@@ -20,8 +20,6 @@ Route::get('/whyToChooseUs', [PageController::class, 'whyToChooseUs'])->name('wh
 Route::get('/search', [PageController::class, 'search'])->name('search');
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
-
 Route::post('/review/store', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index');
 Route::delete('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
@@ -41,7 +39,7 @@ Route::put('/packages/{id}/update', [PackageController::class, 'update'])->name(
 Route::get('/packages/{id}/destroy', [PackageController::class, 'destroy'])->name('packages.destroy');
 
 Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-Route::post('/contact', [MessageController::class, 'store'])->name('contact.store');
+Route::post('/messages/store', [MessageController::class, 'store'])->name('messages.store');
 
 Route::middleware('auth')->group(function () {
     Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');

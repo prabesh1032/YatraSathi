@@ -76,7 +76,7 @@
         <h2 class="text-3xl font-extrabold text-center mb-6 text-gray-800">Reach Out to Us - <span class="text-yellow-500">We Are Here for You!</span></h2>
         <p class="text-lg text-center mb-8 text-gray-600">Got questions or need assistance? Drop us a message, and we'll connect with you in no time!</p>
 
-        <form action="{{ route('contact.store') }}" method="POST" class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
+        <form action="{{ route('messages.store') }}" method="POST" class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-lg font-medium mb-2">Name</label>

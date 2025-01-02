@@ -66,7 +66,11 @@
                 </div>
             </div>
             <hr class="h-1 bg-yellow-100 mb-6">
-
+            @php
+                $totalbookings = \App\Models\Order::count();
+                $totalreviews= \App\Models\Review::count();
+                $totalpackages = \App\Models\Package::count();
+            @endphp
             <!-- Quick Stats -->
             <div class="flex flex-col bg-white mb-4 p-6 rounded-lg shadow">
                 <h2 class="text-xl font-semibold mb-4">Quick Stats</h2>
@@ -76,7 +80,7 @@
                         <i class="ri-book-line text-green-600 text-4xl"></i>
                         <div>
                             <p class="text-gray-700">Total Bookings</p>
-                            <p class="text-2xl font-bold">200</p>
+                            <p class="text-2xl font-bold">{{$totalbookings}}</p>
                         </div>
                     </div>
 
@@ -85,7 +89,7 @@
                         <i class="ri-star-line text-yellow-500 text-4xl"></i>
                         <div>
                             <p class="text-gray-700">New Reviews</p>
-                            <p class="text-2xl font-bold">123</p>
+                            <p class="text-2xl font-bold">{{$totalreviews}}</p>
                         </div>
                     </div>
 
@@ -94,7 +98,7 @@
                         <i class="ri-user-line text-purple-500 text-4xl"></i>
                         <div>
                             <p class="text-gray-700">Total Travellers</p>
-                            <p class="text-2xl font-bold">456</p>
+                            <p class="text-2xl font-bold"></p>
                         </div>
                     </div>
 
@@ -103,7 +107,7 @@
                         <i class="ri-suitcase-line text-orange-500 text-4xl"></i>
                         <div>
                             <p class="text-gray-700">Total Packages</p>
-                            <p class="text-2xl font-bold">78</p>
+                            <p class="text-2xl font-bold">{{$totalpackages}}</p>
                         </div>
                     </div>
                 </div>
