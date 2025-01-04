@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Header Section with Parallax Effect -->
-<header class="relative h-screen bg-cover bg-center" style="background-image: url('{{ asset('mountain.avif') }}'); background-attachment: fixed;">
+<header class="relative h-screen bg-cover bg-center" style="background-image: url('{{ asset('travelling7.png') }}'); background-attachment: fixed;">
     <div class="absolute inset-0 bg-black opacity-50"></div>
     <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-gray-100">
         <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg animate__animated animate__fadeIn animate-bounce">Get In Touch</h1>

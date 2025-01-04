@@ -11,7 +11,7 @@
 <body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
 @include('Layouts.alert')
     <!-- Navbar -->
-    <nav class="bg-black top-0 sticky z-10 text-white py-9">
+    <nav class="bg-black top-0 sticky z-10 text-white py-5">
         <div class="container mx-auto flex justify-between items-center px-0">
             <!-- Logo Section -->
             <div class="flex items-center">
@@ -114,9 +114,9 @@
     </nav>
 
     <!-- Main content -->
-    <main class="container mx-auto my-7 ">
+
         @yield('content')
-    </main>
+
 
     <!-- Useful Section Above Footer -->
     <section class="bg-gradient-to-r from-lime-200 via-teal-200 to-indigo-200 py-10 ">

@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Header Section -->
-<header class="relative h-screen w-88 bg-cover bg-center" style="background-image: url('{{ asset('home.jpeg') }}'); background-attachment: fixed;">
+<header class="relative h-screen w-88 bg-cover mt-0 bg-center" style="background-image: url('{{ asset('home.jpeg') }}'); background-attachment:fixed;">
     <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
     <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-indigo-700">
         <h1 class="text-5xl md:text-6xl text-black font-extrabold mb-4 animate-bounce">Explore. Dream. Discover.</h1>
@@ -12,13 +12,12 @@
         </a>
     </div>
 </header>
-
 <!-- Welcome Section -->
 <section class="py-8 bg-gray-100">
     <div class="container mx-auto text-center">
         <!-- Heading Section -->
         <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-400 mb-4">
-            Welcome to <span class="text-yellow-500">YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-indigo-500"></i></span>
+            Welcome to <span class="text-yellow-500 ">YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-indigo-500 "></i></span>
         </h2>
         <p class="text-lg text-gray-900 mb-8 font-roboto-slab tracking-wide">
             Your trusted travel partner for unforgettable journeys. Start exploring the world, one destination at a time.

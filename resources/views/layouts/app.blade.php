@@ -70,6 +70,7 @@
                 $totalbookings = \App\Models\Order::count();
                 $totalreviews= \App\Models\Review::count();
                 $totalpackages = \App\Models\Package::count();
+                $totaltravellers= App\Models\User::count();
             @endphp
             <!-- Quick Stats -->
             <div class="flex flex-col bg-white mb-4 p-6 rounded-lg shadow">
@@ -98,7 +99,7 @@
                         <i class="ri-user-line text-purple-500 text-4xl"></i>
                         <div>
                             <p class="text-gray-700">Total Travellers</p>
-                            <p class="text-2xl font-bold"></p>
+                            <p class="text-2xl font-bold">{{$totaltravellers}}</p>
                         </div>
                     </div>
 
