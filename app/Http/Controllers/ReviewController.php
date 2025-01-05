@@ -31,12 +31,6 @@ class ReviewController extends Controller
     public function destroy($id)
     {
         $review = Review::findOrFail($id);
-
-        // Optional: Ensure only the admin or the user who created the review can delete it
-        // if (auth()->id() !== $review->user_id && !auth()->user()->is_admin) {
-        //     return back()->with('error', 'You are not authorized to delete this review.');
-        // }
-
         $review->delete();
 
         return redirect()->route('reviews.index')->with('success', 'Review deleted successfully!');    }

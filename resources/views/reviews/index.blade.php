@@ -29,13 +29,9 @@
 
             <!-- Footer -->
             <div class="p-6 bg-gray-100 flex justify-end">
-                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-colors">
-                        Delete
-                    </button>
-                </form>
+                <button onclick="showModal('{{ $review->id }}')" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-colors">
+                    Delete
+                </button>
             </div>
         </div>
         @empty
@@ -44,10 +40,42 @@
         </div>
         @endforelse
     </div>
-
     <!-- Pagination -->
     <div class="mt-6 flex justify-center">
         {{ $reviews->links('pagination::tailwind') }}
     </div>
 </div>
+<!-- Delete Confirmation Modal -->
+<div class="fixed hidden inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50" id="deleteModal">
+    <form id="deleteForm" method="POST" class="bg-white p-6 rounded-lg shadow-2xl max-w-md">
+        @csrf
+        @method('GET')
+        <h1 class="text-2xl font-bold text-center text-blue-700 mb-4">
+            <i class="ri-error-warning-line text-yellow-500 mr-2"></i> Confirm Deletion
+        </h1>
+        <p class="text-gray-600 text-center mb-6">Are you sure you want to remove this Review? This action cannot be undone.</p>
+        <div class="flex justify-center gap-5">
+            <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-400">
+                <i class="ri-check-line mr-2"></i>Yes, Delete
+            </button>
+            <button type="button" onclick="hideModal()" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 focus:ring-2 focus:ring-gray-400">
+                <i class="ri-close-line mr-2"></i>Cancel
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function showModal(reviewId) {
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteForm = document.getElementById('deleteForm');
+        deleteForm.action = `/review/${reviewId}/destroy`;
+        deleteModal.classList.remove('hidden');
+    }
+
+    function hideModal() {
+        const deleteModal = document.getElementById('deleteModal');
+        deleteModal.classList.add('hidden');
+    }
+</script>
 @endsection

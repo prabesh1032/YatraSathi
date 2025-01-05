@@ -11,7 +11,7 @@
         <p class="text-xl md:text-2xl mb-1 font-extrabold">
             Discover the story and passion behind YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-indigo-500"></i>
         </p>
-        <a href="#mission" class="mt-6 px-8 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600 shadow-lg transition-all duration-300 transform hover:scale-105 animate__animated animate__fadeInUp animate__delay-1.5s">
+        <a href="#mission" class="mt-6 px-8 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-300 shadow-lg transition-all duration-300 transform hover:scale-105 animate__animated animate__fadeInUp animate__delay-1.5s">
             Learn More <i class="ri-arrow-down-circle-line ml-2"></i>
         </a>
     </div>
@@ -80,7 +80,7 @@
 
         <!-- Call to Action -->
         <div class="mt-8 flex justify-center">
-            <a href="{{ route('whyToChooseUs') }}" class="px-6 py-2 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600 shadow-lg transition-transform duration-300 transform hover:scale-105">
+            <a href="{{ route('whyToChooseUs') }}" class="px-6 py-2 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-300 shadow-lg transition-transform duration-300 transform hover:scale-105">
                 Read More <i class="ri-arrow-right-line ml-2"></i>
             </a>
         </div>
@@ -96,7 +96,7 @@
             <p class="text-lg max-w-2xl mx-auto text-gray-700 mb-6 leading-relaxed animate__animated animate__fadeInUp animate__delay-1s">
                 Have questions or ready to plan your next adventure? Contact us today, and let’s make your dream journey a reality!
             </p>
-            <a href="{{ route('contact') }}" class="px-6 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600 shadow-lg transition-transform duration-300 transform hover:scale-105">
+            <a href="{{ route('contact') }}" class="px-6 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-300 shadow-lg transition-transform duration-300 transform hover:scale-105">
                 Contact Us <i class="ri-arrow-right-line ml-2"></i>
             </a>
         </div>

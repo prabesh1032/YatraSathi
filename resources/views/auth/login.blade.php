@@ -54,7 +54,7 @@
 
                     <!-- Submit Button -->
                     <button type="submit"
-                        class="block w-full bg-yellow-500 text-black text-lg font-semibold py-3 rounded-lg shadow-md hover:bg-yellow-600 transition">
+                        class="block w-full bg-yellow-500 text-black text-lg font-semibold py-3 rounded-lg shadow-md hover:bg-yellow-300 transition">
                         <i class="ri-arrow-right-line"></i> Login
                     </button>
                 </form>

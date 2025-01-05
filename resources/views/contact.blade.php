@@ -7,7 +7,7 @@
     <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-gray-100">
         <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg animate__animated animate__fadeIn animate-bounce">Get In Touch</h1>
         <p class="text-md md:text-xl mt-4 font-extrabold">We'd love to hear from you</p>
-        <a href="#contact-form" class="mt-6 px-5 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600 animate__animated animate__fadeIn animate__delay-2s">CONTACT US</a>
+        <a href="#contact-form" class="mt-6 px-5 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-300 animate__animated animate__fadeIn animate__delay-2s">CONTACT US</a>
     </div>
 </header>
 
@@ -91,7 +91,7 @@
                 <textarea id="message" name="message" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32 focus:ring-2 focus:ring-yellow-500" placeholder="Your Message" required></textarea>
             </div>
             <div class="text-center">
-                <button type="submit" class="px-6 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-600 transition-colors duration-300">
+                <button type="submit" class="px-6 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-300 transition-colors duration-300">
                     SEND MESSAGE
                 </button>
             </div>

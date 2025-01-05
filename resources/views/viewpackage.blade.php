@@ -46,7 +46,7 @@
         <!-- Sidebar Section -->
         <div class="w-full md:w-1/3 p-4 flex flex-col bg-white shadow-md rounded-lg">
             <div class="space-y-6">
-            <a href="{{ route('whyToChooseUs') }}" class="block p-6 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-200 transition-all duration-300 rounded-lg shadow-md">
+                <a href="{{ route('whyToChooseUs') }}" class="block p-6 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-200 transition-all duration-300 rounded-lg shadow-md">
                     <p class="font-bold text-xl">Why Choose Us</p>
                     <p class="text-sm mt-1">See why this package stands out.</p>
                 </a>
@@ -63,15 +63,15 @@
     </div>
     <!-- Reviews Section -->
     <div class="mt-12">
-    <h2 class="text-3xl font-bold text-gray-900 mb-4">User Reviews</h2>
-    @if ($reviews->count() > 0)
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach($reviews as $review)
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">User Reviews</h2>
+        @if ($reviews->count() > 0)
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($reviews as $review)
             <div class="bg-gray-100 p-6 rounded-lg shadow-md">
                 <div class="flex items-center mb-4">
                     <div class="mr-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8 h-8 text-yellow-400" viewBox="0 0 24 24">
-                            <path d="M12 .587l3.668 7.431 8.215 1.192-5.945 5.798 1.402 8.192L12 18.902l-7.34 3.798 1.402-8.192L.873 9.21l8.215-1.192L12 .587z"/>
+                            <path d="M12 .587l3.668 7.431 8.215 1.192-5.945 5.798 1.402 8.192L12 18.902l-7.34 3.798 1.402-8.192L.873 9.21l8.215-1.192L12 .587z" />
                         </svg>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800">{{ $review->user->name }}</h3>
@@ -81,14 +81,14 @@
                     Rating: {{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}
                 </div>
             </div>
-        @endforeach
+            @endforeach
+        </div>
+        @else
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
+            <p>No reviews yet. Be the first to leave a review!</p>
+        </div>
+        @endif
     </div>
-    @else
-    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
-        <p>No reviews yet. Be the first to leave a review!</p>
-    </div>
-    @endif
-</div>
 
 
     <!-- Add Review Form -->
@@ -113,12 +113,12 @@
                     <div class="flex items-center space-x-2" id="starRating">
                         @for($i = 1; $i <= 5; $i++)
                             <label>
-                                <input type="radio" name="rating" value="{{ $i }}" class="hidden">
-                                <svg data-value="{{ $i }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="star w-8 h-8 text-gray-300 hover:text-yellow-400 cursor-pointer transition duration-200" viewBox="0 0 24 24">
-                                    <path d="M12 .587l3.668 7.431 8.215 1.192-5.945 5.798 1.402 8.192L12 18.902l-7.34 3.798 1.402-8.192L.873 9.21l8.215-1.192L12 .587z"/>
-                                </svg>
+                            <input type="radio" name="rating" value="{{ $i }}" class="hidden">
+                            <svg data-value="{{ $i }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="star w-8 h-8 text-gray-300 hover:text-yellow-400 cursor-pointer transition duration-200" viewBox="0 0 24 24">
+                                <path d="M12 .587l3.668 7.431 8.215 1.192-5.945 5.798 1.402 8.192L12 18.902l-7.34 3.798 1.402-8.192L.873 9.21l8.215-1.192L12 .587z" />
+                            </svg>
                             </label>
-                        @endfor
+                            @endfor
                     </div>
                 </div>
 
@@ -138,20 +138,18 @@
     </div>
     <!-- Related Packages Section -->
     <h2 class="text-3xl font-bold text-gray-800 mt-12 mb-6">Related Packages</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @foreach($relatedpackages as $relatedpackage)
-                    <div class="border border-gray-200 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:shadow-xl">
-                        <a href="{{ route('packages.show', $relatedpackage->id) }}">
-                            <img src="{{ asset('images/' . $relatedpackage->photopath) }}" alt="{{ $relatedpackage->name }}" class="h-56 w-full object-cover transition-transform duration-300 hover:scale-105">
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold text-gray-900">{{ $relatedpackage->name }}</h3>
-                                <p class="text-gray-600 mt-2">USD {{ number_format($relatedpackage->price, 2) }} Per Person</p>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        @foreach($relatedpackages as $relatedpackage)
+        <div class="border border-gray-200 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:shadow-xl">
+            <a href="{{ route('packages.show', $relatedpackage->id) }}">
+                <img src="{{ asset('images/' . $relatedpackage->photopath) }}" alt="{{ $relatedpackage->name }}" class="h-56 w-full object-cover transition-transform duration-300 hover:scale-105">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold text-gray-900">{{ $relatedpackage->name }}</h3>
+                    <p class="text-gray-600 mt-2">USD {{ number_format($relatedpackage->price, 2) }} Per Person</p>
+                </div>
+            </a>
         </div>
+        @endforeach
     </div>
 </div>
 <script>

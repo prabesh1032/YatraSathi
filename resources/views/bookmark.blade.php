@@ -35,7 +35,8 @@
         </div>
     </div>
     @empty
-    <div class="col-span-full text-center">
+    <div class="col-span-full text-center py-12">
+        <img src="{{ asset('notfound.jpg') }}" alt="No Results Found" class="mx-auto w-1/3 h-auto mb-6">
         <h2 class="text-2xl font-extrabold text-gray-600">No bookmarks found</h2>
         <p class="text-gray-500 mb-5">Start exploring packages and bookmark your favorites!</p>
         <a href="{{ route('packages') }}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400">

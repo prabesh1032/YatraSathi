@@ -28,7 +28,7 @@ class BookmarkController extends Controller
         $package = Package::find($data['package_id']);
         $data['total_price'] = $package->price * $data['num_people'];
         Bookmark::create($data);
-        return back()->with('success', 'Package added to your bookmarks successfully');
+        return back()->with('success', 'Package added to your adventure successfully');
     }
 
     // Display all bookmarks for the user

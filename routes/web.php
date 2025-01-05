@@ -43,7 +43,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index');
-    Route::delete('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    Route::get('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::get('/travellers',[TravellerController::class,'index'])->name('travellers.index');
 
     Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');

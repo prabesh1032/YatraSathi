@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,33 +16,40 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="font-sans antialiased bg-gray-100">
-@include('Layouts.alert')
+    @include('Layouts.alert')
     <div class="flex">
         <!-- Sidebar -->
         <div class="w-56 h-screen sticky top-0 bg-cyan-200 shadow-lg">
             <div class="flex flex-col items-center mt-5">
                 <a href="{{ route('home') }}"><img src="{{ asset('SS2.png') }}" alt="Logo"
-                     class="w-8/12 mx-auto bg-blue-400 p-2 rounded-lg shadow-lg"></a>
+                        class="w-8/12 mx-auto bg-blue-400 p-2 rounded-lg shadow-lg"></a>
                 <a href="{{ route('home') }}" class="mt-3 font-bold text-xl">YatraSathi</a>
             </div>
             <div class="mt-5 space-y-1">
-                <a href="{{ route('dashboard') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                <a href="{{ route('dashboard') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('dashboard')) bg-yellow-200 @endif">
                     <i class="ri-dashboard-line text-blue-500 mr-2"></i> Dashboard
                 </a>
-                <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('packages.index')) bg-yellow-200 @endif">
                     <i class="ri-suitcase-line text-orange-500 mr-2"></i> Packages
                 </a>
-                <a href="{{route('orders.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                <a href="{{route('orders.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('orders.index')) bg-yellow-200 @endif">
                     <i class="ri-book-line text-green-500 mr-2"></i> Bookings
                 </a>
-                <a href="{{route('reviews.index')}}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
+                <a href="{{route('reviews.index')}}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('reviews.index')) bg-yellow-200 @endif">
                     <i class="ri-star-line text-yellow-500 mr-2"></i> Reviews
                 </a>
-                <a href="{{ route('messages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out">
+                <a href="{{ route('messages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('messages.index')) bg-yellow-200 @endif">
                     <i class="ri-message-line text-teal-500 mr-2"></i> Messages
                 </a>
-                <a href="{{route('travellers.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out">
+                <a href="{{route('travellers.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('travellers.index')) bg-yellow-200 @endif">
                     <i class="ri-user-line text-purple-500 mr-2"></i> Travellers
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="block p-3 text-gray-700 hover:bg-red-700 text-left transition duration-200 ease-in-out">
@@ -52,7 +60,6 @@
                 </form>
             </div>
         </div>
-
         <!-- Main Content -->
         <div class="flex-1 p-6">
             <div class="flex justify-between items-center mb-6">
@@ -67,10 +74,10 @@
             </div>
             <hr class="h-1 bg-yellow-100 mb-6">
             @php
-                $totalbookings = \App\Models\Order::count();
-                $totalreviews= \App\Models\Review::count();
-                $totalpackages = \App\Models\Package::count();
-                $totaltravellers= App\Models\User::count();
+            $totalbookings = \App\Models\Order::count();
+            $totalreviews= \App\Models\Review::count();
+            $totalpackages = \App\Models\Package::count();
+            $totaltravellers= App\Models\User::count();
             @endphp
             <!-- Quick Stats -->
             <div class="flex flex-col bg-white mb-4 p-6 rounded-lg shadow">
@@ -117,4 +124,5 @@
         </div>
     </div>
 </body>
+
 </html>
