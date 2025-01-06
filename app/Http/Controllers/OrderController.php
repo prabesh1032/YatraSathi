@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Bookmark;
 use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -13,6 +14,7 @@ class OrderController extends Controller
     // Store a new booking order
     public function store(Request $request)
     {
+        //dd($request->all());
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'name' => 'required|string|max:255',
@@ -42,11 +44,11 @@ class OrderController extends Controller
     }
 
 
-        public function index()
+    public function index()
     {
         // Fetch orders with pagination (10 items per page)
         $orders = Order::latest()->paginate(12);
-
+        //dd($orders);
         return view('orders.index', compact('orders'));
     }
 
@@ -61,7 +63,7 @@ class OrderController extends Controller
         $emaildata = [
             'name' => $order->user->name,
             'status' => $status,
-            'order'=>$order,
+            'order' => $order,
             'package' => $order->package,
             'payment_method' => $order->payment_method,
         ];
@@ -79,29 +81,28 @@ class OrderController extends Controller
     public function storeEsewa(Request $request, $bookmarkId)
     {
 
-        $data=$request->data;
-        $data=base64_decode($data);
-        $data=json_decode($data);
-        $status=$data->status;
+        $data = $request->data;
+        $data = base64_decode($data);
+        $data = json_decode($data);
+        $status = $data->status;
 
-        if($status==="COMPLETE")
-        {
+        if ($status === "COMPLETE") {
             $bookmark = Bookmark::find($bookmarkId);
             if (!$bookmark) {
                 return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
             }
-             $order = new Order();
-             $order->package_id = $bookmark->package_id;
-             $order->total_price = $bookmark->total_price;
-             $order->num_people = $bookmark->num_people;
-             $order->payment_method = "eSewa";
-             $order->name = $bookmark->user->name;
-             $order->phone = 'N/A';
-             $order->address = 'N/A';
-             $order->user_id = auth()->user()->id;
-             $order->status = "Pending";
-             $order->save();
-             $bookmark->delete();
+            $order = new Order();
+            $order->package_id = $bookmark->package_id;
+            $order->total_price = $bookmark->total_price;
+            $order->num_people = $bookmark->num_people;
+            $order->payment_method = "eSewa";
+            $order->name = $bookmark->user->name;
+            $order->phone = 'N/A';
+            $order->address = 'N/A';
+            $order->user_id = auth()->user()->id;
+            $order->status = "Pending";
+            $order->save();
+            $bookmark->delete();
             $emaildata = [
                 'name' => $order->user->name,
                 'status' => 'Pending',
@@ -120,5 +121,13 @@ class OrderController extends Controller
         }
 
         return redirect('/')->with('error', 'eSewa payment failed.');
+    }
+    public function userHistory()
+    {
+        $user = Auth::user(); // Get the authenticated user
+        $orders = Order::where('user_id', $user->id)->with('package')->get(); // Fetch orders for the user
+
+        return view('userhistory', compact('orders')); // Pass orders to the view
+
     }
 }

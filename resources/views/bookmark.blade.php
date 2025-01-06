@@ -1,11 +1,20 @@
 @extends('layouts.master')
 
 @section('content')
-<h1 class="text-gray-900 text-5xl text-center font-extrabold my-10">My Travelling<span class="text-yellow-500"> Plans</h1>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 md:px-20">
+<div class="flex items-center justify-between mt-10 mb-12">
+    <h1 class="text-gray-900 text-5xl text-center font-extrabold mx-auto">
+        My Travelling <span class="text-yellow-500">Plans</span>
+    </h1>
+    <a href="{{ route('historyindex') }}"
+        class="inline-block bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-md shadow-md hover:bg-yellow-300 transition duration-300 text-sm">
+        View My History
+    </a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 md:px-20 mb-16">
     @forelse($bookmarks as $bookmark)
     <div class="p-5 border shadow-lg rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
-        <img src="{{ asset('images/' . $bookmark->package->photopath) }}" alt="Package Image" class="w-full h-40 object-cover rounded-lg mb-4 shadow-sm">
+        <img src="{{ asset('images/' . $bookmark->package->photopath) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg mb-4 shadow-sm">
         <div class="flex flex-col gap-3">
             <h1 class="text-2xl font-bold text-blue-700">{{ $bookmark->package->name }}</h1>
             <p class="text-gray-600 flex items-center gap-2">

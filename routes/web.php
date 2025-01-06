@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function(){
     Route::post('/messages/store', [MessageController::class, 'store'])->name('messages.store');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/ordersesewa/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
+    Route::get('/history', [OrderController::class, 'userHistory'])->name('historyindex');
+
 
 
     Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');

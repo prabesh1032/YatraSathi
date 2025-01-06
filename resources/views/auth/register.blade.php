@@ -12,11 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 </head>
-
-<body class="h-screen bg-center" style="background-image: url('{{ asset('travelling3.png') }}');">
+<header class="h-screen w-88 bg-cover mt-0 relative bg-center" style="background-image: url('{{ asset('travelling3.png') }}');">
     <main class="container mx-auto py-12">
         <!-- Overlay for darker background -->
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
 
         <!-- Centered Transparent Form -->
         <div class="relative flex items-center justify-center w-full h-full">
@@ -59,7 +58,7 @@
                         <!-- Address -->
                         <div>
                             <x-input-label for="address" :value="__('Address')" class="block text-sm font-semibold text-gray-900" />
-                            <textarea id="address" name="address" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" required>{{ old('address') }}</textarea>
+                            <x-text-input id="address" name="address" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" />
                             <x-input-error :messages="$errors->get('address')" class="mt-1 text-red-400 text-sm" />
                         </div>
 
@@ -98,6 +97,6 @@
             </div>
         </div>
     </main>
-</body>
+</header>
 </html>
 @endsection
