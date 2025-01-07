@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('role')->default('user'); // Add the 'role' column
             $table->string('phone')->nullable();    // Add the 'phone' column
-            $table->text('address')->nullable();    // Add the 'address' column
+            $table->text('address')->nullable();
+            $table->string('profile_picture')->nullable();
         });
     }
 
@@ -26,7 +27,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role');    // Remove the 'role' column
             $table->dropColumn('phone');  // Remove the 'phone' column
-            $table->dropColumn('address');// Remove the 'address' column
+            $table->dropColumn('address');
+            $table->dropColumn('profile_picture');
         });
     }
 };

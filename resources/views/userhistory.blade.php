@@ -49,14 +49,12 @@
                     <i class="ri-calendar-line text-indigo-500 mr-2"></i><strong>Date:</strong> {{ $order->created_at->format('d M Y') }}
                 </p>
             </div>
-
-
         </div>
         @empty
-        <div class="col-span-full text-center py-16">
-            <img src="{{ asset('images/empty-bookings.svg') }}" alt="No Bookings Found" class="w-1/3 mx-auto mb-6">
-            <h2 class="text-3xl font-bold text-gray-800">No Bookings Found</h2>
-            <p class="text-gray-600 mt-2">You haven't made any bookings yet. Start your journey now!</p>
+        <div class="col-span-full text-center py-12">
+            <img src="{{ asset('notfound.jpg') }}" alt="No Bookings Found" class="w-1/3 mx-auto mb-2">
+            <h2 class="text-3xl font-bold text-gray-800">No Booking History Yet</h2>
+            <p class="text-gray-600 py-8 mt-2">It looks like your travel adventures are yet to begin. Discover exciting destinations and start your journey today!</p>
             <a href="{{ route('packages') }}" class="mt-4 bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg shadow-md hover:bg-indigo-700 transition">
                 <i class="ri-flight-takeoff-line mr-2"></i>Explore Packages
             </a>

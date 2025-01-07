@@ -32,6 +32,7 @@
                 <i class="ri-menu-line"></i>
             </button>
 
+
             <!-- Navbar Links -->
             <div id="menu" class="hidden lg:flex lg:space-x-6 text-xl">
                 <a href="{{ route('home') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-extrabold' : '' }}">
@@ -54,13 +55,21 @@
                 @auth
                 <a href="{{ route('bookmarks.index') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-extrabold' : '' }}">
                     My-Adventure
+                    <span class="absolute top-[-6px] right-[-6px] bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                        @auth
+                        @php
+                        $no_of_items = \App\Models\Bookmark::where('user_id',auth()->id())->Count();
+                        @endphp
+                        {{$no_of_items}}
+                        @else
+                        0
+                        @endauth
+                    </span>
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="group relative inline-block">
                     @csrf
-                    <input type="submit"
-                        value="Logout"
-                        class="hover:text-yellow-500 cursor-pointer bg-transparent border-0 p-0 text-xl focus:outline-none">
+                    <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer bg-transparent border-0 p-0 text-xl focus:outline-none">
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </form>
                 @else
@@ -73,45 +82,42 @@
 
             <!-- Search Bar -->
             <form action="{{ route('search') }}" method="GET" class="hidden lg:flex items-center">
-                <input type="search"
-                    placeholder="Search..."
-                    class="text-black px-2 py-1 rounded"
-                    name="qry"
-                    value="{{ request()->qry }}"
-                    minlength="2"
-                    required>
+                <input type="search" placeholder="Search..." class="text-black px-2 py-1 rounded" name="qry" value="{{ request()->qry }}" minlength="2" required>
                 <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded ml-2">Go</button>
             </form>
-        </div>
-
-        <!-- Dropdown Menu for Mobile -->
-        <div id="mobile-menu" class="hidden flex-col space-y-4 text-center bg-black text-white py-4 lg:hidden">
-            <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
-            <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
-            <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
-            <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
-
             @auth
-            <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My-Adventure</a>
-            <form action="{{ route('logout') }}" method="POST" class="inline-block">
-                @csrf
-                <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
-            </form>
-            @else
-            <a href="/login" class="hover:text-yellow-500">Login</a>
+            <a href="{{ route('userprofile.edit') }}" class="block w-10 h-10">
+                <img src="{{ asset('useravatar.avif') }}" alt="User Avatar" class="w-10 h-10 rounded-full shadow-lg">
+            </a>
             @endauth
+            <!-- Dropdown Menu for Mobile -->
+            <div id="mobile-menu" class="hidden flex-col space-y-4 text-center bg-black text-white py-4 lg:hidden">
+                <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
+                <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
+                <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
+                <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
 
-            <form action="{{ route('search') }}" method="GET" class="mt-4">
-                <input type="search"
-                    placeholder="Search..."
-                    class="text-black px-2 py-1 rounded w-full"
-                    name="qry"
-                    value="{{ request()->qry }}"
-                    minlength="2"
-                    required>
-                <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded mt-2 w-full">Go</button>
-            </form>
-        </div>
+                @auth
+                <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My-Adventure</a>
+                <form action="{{ route('logout') }}" method="POST" class="inline-block">
+                    @csrf
+                    <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
+                </form>
+                @else
+                <a href="/login" class="hover:text-yellow-500">Login</a>
+                @endauth
+
+                <form action="{{ route('search') }}" method="GET" class="mt-4">
+                    <input type="search"
+                        placeholder="Search..."
+                        class="text-black px-2 py-1 rounded w-full"
+                        name="qry"
+                        value="{{ request()->qry }}"
+                        minlength="2"
+                        required>
+                    <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded mt-2 w-full">Go</button>
+                </form>
+            </div>
     </nav>
 
     <!-- Main content -->

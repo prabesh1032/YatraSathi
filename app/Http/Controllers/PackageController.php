@@ -9,10 +9,29 @@ class PackageController extends Controller
 {
     public function index()
     {
-        $packages = Package::all();
-        return view('packages.index', compact('packages'));
-    }
+        // Fetch all packages as an array
+        $packages = Package::all()->toArray();
 
+        // Bubble Sort the packages by price in ascending order
+        $n = count($packages);
+        for ($i = 0; $i < $n - 1; $i++) {
+            for ($j = 0; $j < $n - $i - 1; $j++) {
+                if ($packages[$j]['price'] > $packages[$j + 1]['price']) {
+                    // Swap the elements
+                    $temp = $packages[$j];
+                    $packages[$j] = $packages[$j + 1];
+                    $packages[$j + 1] = $temp;
+                }
+            }
+        }
+
+        // Convert the sorted array back to a collection
+        $sortedPackages = collect($packages);
+
+        // Pass the sorted packages to the view
+        return view('packages.index', ['packages' => $sortedPackages]);
+    }
+    
     public function package()
     {
         $packages = Package::all();

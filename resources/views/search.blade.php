@@ -6,7 +6,6 @@
         <h1 class="text-6xl font-extrabold text-gray-900 mb-4">Search Results for <span class="text-yellow-500">"{{ $qry }}"</span></h1>
         <p class="text-xl text-gray-600">Explore the best travel packages crafted just for you.</p>
     </div>
-
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
         @forelse($packages as $package)
         <div class="relative bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-500 hover:shadow-2xl transform hover:scale-105 group">

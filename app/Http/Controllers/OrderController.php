@@ -14,7 +14,7 @@ class OrderController extends Controller
     // Store a new booking order
     public function store(Request $request)
     {
-        //dd($request->all());
+      dd($request->all());
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'name' => 'required|string|max:255',
@@ -48,7 +48,7 @@ class OrderController extends Controller
     {
         // Fetch orders with pagination (10 items per page)
         $orders = Order::latest()->paginate(12);
-        //dd($orders);
+        // dd($orders);
         return view('orders.index', compact('orders'));
     }
 

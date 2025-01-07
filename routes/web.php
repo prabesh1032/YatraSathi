@@ -10,6 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TravellerController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -32,7 +33,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/ordersesewa/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
     Route::get('/history', [OrderController::class, 'userHistory'])->name('historyindex');
 
-
+    Route::get('/userprofile/edit', [UserProfileController::class, 'edit'])->name('userprofile.edit');
+    Route::post('/userprofile/update', [UserProfileController::class, 'update'])->name('userprofile.update');
 
     Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
     Route::get('/bookmarks', [BookmarkController::class, 'myBookmarks'])->name('bookmarks.index');
