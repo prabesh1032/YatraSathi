@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Package;
@@ -123,11 +124,9 @@ class PackageController extends Controller
         return view('location.index', compact('locations', 'packages', 'package'));
     }
     public function showPackagesByLocation(Request $request)
-{
-    $location = $request->input('location');
-    $packages = Package::where('location', $location)->get();
-
-    return view('location.package', compact('location', 'packages'));
-}
-
+    {
+        $location = $request->input('location');
+        $packages = Package::where('location', $location)->get();
+        return view('location.package', compact('location', 'packages'));
+    }
 }

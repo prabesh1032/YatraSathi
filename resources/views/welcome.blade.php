@@ -83,7 +83,7 @@
         </div>
         <div class="mt-8">
             <a href="{{ route('packages') }}" class="px-8 py-3 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">
-                View All Packages
+                See All
             </a>
         </div>
     </div>
