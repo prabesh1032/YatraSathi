@@ -31,7 +31,8 @@
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-wallet-line text-yellow-500 mr-2"></i> <strong>Total Price:</strong>
                     <span class="text-green-600 font-bold">${{ number_format($order->total_price, 2) }}</span>
                 </p>
-                <p class="text-base text-gray-600 flex items-center"><i class="ri-calendar-line text-teal-500 mr-2"></i> <strong>Date:</strong> {{ $order->created_at->format('d M Y') }}</p>
+                <p class="text-base text-gray-600 flex items-center"><i class="ri-calendar-event-line text-pink-500 mr-2"></i> <strong>Travelling on:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}</p>
+                <p class="text-base text-gray-600 flex items-center"><i class="ri-calendar-line text-teal-500 mr-2"></i> <strong>Booking Date:</strong> {{ $order->created_at->format('d M Y') }}</p>
             </div>
 
             <!-- Action Buttons -->

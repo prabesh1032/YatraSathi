@@ -7,8 +7,8 @@
     <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-indigo-700">
         <h1 class="text-5xl md:text-6xl text-black font-extrabold mb-4 animate-bounce">Explore. Dream. Discover.</h1>
         <p class="text-xl md:text-2xl font-extrabold mb-6">Let us take you places you’ve never been.</p>
-        <a href="{{ route('packages') }}" class="px-8 py-4 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">
-            Discover Packages
+        <a href="{{ route('location.index') }}" class="px-8 py-4 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">
+            Start Your Journey
         </a>
     </div>
 </header>
@@ -56,7 +56,7 @@
 
         <!-- Call to Action -->
         <a href="{{ route('packages') }}" class="mt-6 inline-block bg-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full shadow-md hover:bg-yellow-300 transition duration-300">
-            Start Your Journey
+            View All Packages
         </a>
     </div>
 </section>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JourneyController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
@@ -20,10 +21,13 @@ Route::get('/adventure', [PageController::class, 'adventure'])->name('adventure'
 Route::get('/whyToChooseUs', [PageController::class, 'whyToChooseUs'])->name('whyToChooseUs');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/journey/location', [PackageController::class, 'showLocationPage'])->name('location.index');
 
 Route::get('/packages/{package}/show', [PackageController::class, 'show'])->name('packages.show');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');
 Route::get('/readpackages/{package}', [PackageController::class, 'read'])->name('packages.read');
+Route::get('/packages/location', [PackageController::class, 'showPackagesByLocation'])->name('packages.byLocation');
+
 
 
 Route::middleware('auth')->group(function(){
@@ -32,6 +36,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/ordersesewa/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
     Route::get('/history', [OrderController::class, 'userHistory'])->name('historyindex');
+    Route::post('/orders/{orderId}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     Route::get('/userprofile/edit', [UserProfileController::class, 'edit'])->name('userprofile.edit');
     Route::post('/userprofile/update', [UserProfileController::class, 'update'])->name('userprofile.update');

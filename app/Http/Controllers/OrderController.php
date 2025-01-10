@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Bookmark;
 use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,14 +15,15 @@ class OrderController extends Controller
     // Store a new booking order
     public function store(Request $request)
     {
-      dd($request->all());
+        //   dd($request->all());
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'num_people' => 'nullable|integer|min:1', // Ensure num_people is valid
+            'num_people' => 'nullable|integer|min:1',
+            'travel_date' => 'required|date|after:today' // Ensure num_people is valid
         ]);
 
         // Default the num_people to 1 if not provided
@@ -99,6 +101,7 @@ class OrderController extends Controller
             $order->name = $bookmark->user->name;
             $order->phone = 'N/A';
             $order->address = 'N/A';
+            $order->travel_date = $request->input('travel_date', now()->addDays(7));
             $order->user_id = auth()->user()->id;
             $order->status = "Pending";
             $order->save();
@@ -125,9 +128,48 @@ class OrderController extends Controller
     public function userHistory()
     {
         $user = Auth::user(); // Get the authenticated user
-        $orders = Order::where('user_id', $user->id)->with('package')->get(); // Fetch orders for the user
+        $orders = Order::where('user_id', $user->id)->with('package')->latest()->get(); // Fetch orders for the user
 
         return view('userhistory', compact('orders')); // Pass orders to the view
 
     }
+    public function cancel($orderId)
+    {
+        // Retrieve the order by its ID
+        $order = Order::findOrFail($orderId);
+
+        // Check if the order belongs to the authenticated user
+        if ($order->user_id != auth()->user()->id) {
+            return redirect()->route('historyindex')->with('error', 'You are not authorized to cancel this booking.');
+        }
+
+        // Check if the cancellation is within 6 days of booking
+        $orderDate = Carbon::parse($order->created_at);
+        $currentDate = Carbon::now();
+        $diffInDays = $orderDate->diffInDays($currentDate);
+
+        if ($diffInDays <= 6) {
+            // Send cancellation email before deleting the order
+            $emaildata = [
+                'name' => $order->user->name,
+                'status' => 'Cancelled',
+                'order' => $order,
+                'package' => $order->package,
+                'payment_method' => $order->payment_method,
+            ];
+
+            Mail::send('emails.cancelorderemail', $emaildata, function ($message) use ($order) {
+                $message->to($order->user->email, $order->user->name)
+                    ->subject('Booking Cancellation');
+            });
+
+            // Delete the order from the orders table
+            $order->delete();
+
+            return redirect()->route('historyindex')->with('success', 'Your booking has been cancelled.');
+        } else {
+            return redirect()->route('historyindex')->with('error', 'You can only cancel the booking within 6 days of placing the order.');
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
 @extends('layouts.master')
+
 @section('content')
 <div class="container mx-auto mt-10">
     <!-- Intro Section -->
@@ -10,6 +11,7 @@
             Take a journey through your past adventures and memories. Relive the moments and manage your bookings effortlessly.
         </p>
     </div>
+
     <!-- Bookings Grid -->
     <div class="grid grid-cols-1 mb-4 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         @forelse ($orders as $order)
@@ -17,8 +19,8 @@
             <!-- Image Section -->
             <div class="relative">
                 <img src="{{ asset('images/' . $order->package->photopath) }}" alt="{{ $order->package->name }}" class="h-60 w-full object-cover">
-                <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold py-1.5 px-3 rounded-full shadow">
-                    Visited
+                <div class="absolute top-4 left-4 bg-indigo-500 text-white text-xs font-extrabold py-1.5 px-3 rounded-full shadow-lg">
+                    {{ ucfirst($order->status) }}
                 </div>
                 <div class="absolute top-4 right-4 bg-yellow-400 text-gray-900 text-xs font-bold py-1.5 px-3 rounded-full shadow">
                     {{ $order->payment_method }}
@@ -46,9 +48,29 @@
                     <span class="text-green-600 font-bold">${{ number_format($order->total_price, 2) }}</span>
                 </p>
                 <p class="text-base text-gray-600 flex items-center">
-                    <i class="ri-calendar-line text-indigo-500 mr-2"></i><strong>Date:</strong> {{ $order->created_at->format('d M Y') }}
+                    <i class="ri-calendar-event-line text-pink-500 mr-2"></i> <strong>Travels Date:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}</p>
+                <p class="text-base text-gray-600 flex items-center">
+                    <i class="ri-calendar-line text-indigo-500 mr-2"></i><strong>Booking Date:</strong> {{ $order->created_at->format('d M Y') }}
                 </p>
             </div>
+
+            <!-- Cancel Booking Button -->
+            @if (\Carbon\Carbon::parse($order->created_at)->diffInDays(\Carbon\Carbon::now()) <= 6 && $order->status != 'Cancelled')
+            <div class="p-5">
+                <form action="{{ route('orders.cancel', $order->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300">
+                        Cancel Booking
+                    </button>
+                </form>
+            </div>
+            @else
+            <div class="p-5">
+                <button class="w-full bg-gray-400 text-white py-2 rounded-md text-lg font-semibold cursor-not-allowed">
+                    Cancellation Not Allowed
+                </button>
+            </div>
+            @endif
         </div>
         @empty
         <div class="col-span-full text-center py-12">

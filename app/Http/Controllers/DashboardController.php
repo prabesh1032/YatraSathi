@@ -17,6 +17,24 @@ class DashboardController extends Controller
         $newReviews = Review::where('created_at', '>=', now()->subMonth())->count(); // Adjust the time frame as needed
         $totalTravellers = User::count();
         $totalPackages = Package::count();
-        return view('dashboard', compact('totalBookings', 'newReviews', 'totalTravellers', 'totalPackages'));
+
+        $allPackages = Package::all();
+        $packageNames = $allPackages->pluck('name')->toArray(); // Extract names of all packages
+        $userCounts = [];
+
+        foreach ($allPackages as $package) {
+            $userCounts[] = Order::where('package_id', $package->id)->count(); // Count bookings for each package
+        }
+
+        return view('dashboard', compact(
+            'totalBookings',
+            'newReviews',
+            'totalTravellers',
+            'totalPackages',
+            'packageNames',
+            'userCounts'
+        ));
     }
+
+
 }

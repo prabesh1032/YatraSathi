@@ -77,6 +77,13 @@
                                 <i class="ri-lock-line text-lime-500"></i> Forgot your password<i class="ri-question-line"></i>
                             </a>
                         </div>
+                        <div class="flex justify-center mt-6">
+                            <a href="{{ route('historyindex') }}"
+                                class="inline-block bg-yellow-600 text-gray-900 font-bold px-4 py-2 rounded-md shadow-md hover:bg-yellow-300 transition duration-300 text-sm items-center space-x-2">
+                                <i class="ri-history-line text-lg"></i>
+                                <span>View My Booking History</span>
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>

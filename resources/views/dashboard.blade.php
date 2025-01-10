@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
     <!-- Packages Card -->
     <div class="bg-gradient-to-r from-purple-400 to-pink-500 p-6 rounded-lg shadow-lg transform transition-all hover:scale-105 hover:shadow-2xl">
         <div class="flex items-center justify-between">
@@ -55,6 +55,61 @@
     </div>
 </div>
 
+    <h3 class="text-3xl font-extrabold text-left text-gray-900 py-5"><i class="ri-pie-chart-line text-4xl text-gray-700 mb-2"></i>Pie Chart of Travellers per package</h3>
+    <div class="flex ">
+        <div class="bg-white p-6 rounded-lg shadow-md w-3/4 md:w-3/3 lg:w-full">
+            <canvas id="myChart" class="rounded-lg"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {!! json_encode($packageNames) !!}, // Updated and ensured variable name matches
+            datasets: [{
+                label: 'No of user per package',
+                data: {!! json_encode($userCounts) !!},
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                ],
+                borderWidth: 2,
+                hoverOffset: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Ensures the chart is scalable
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 14
+                        },
+                        color: '#333'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Packages',
+                    font: {
+                        size: 19
+                    },
+                    color: '#444',
+                    padding: {
+                        top: 0,
+                        bottom: 20
+                    }
+                }
+            }
+        }
+    });
+</script>
 <!-- Recent Activities Section -->
 
 @endsection

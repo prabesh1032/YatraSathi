@@ -38,10 +38,14 @@
                 <input type="text" name="address" placeholder="Address" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ auth()->user()->address }}" required>
 
                 <!-- Phone -->
-                <input type="text" name="phone" placeholder="Phone Number" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"value="{{ auth()->user()->phone}}"  required>
+                <input type="text" name="phone" placeholder="Phone Number" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ auth()->user()->phone }}" required>
+
+                <!-- Travel Date -->
+                <label for="travel_date" class="block text-gray-700 mb-2 font-medium">Travel Date:</label>
+                <input type="date" id="travel_date" name="travel_date" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    min="{{ now()->toDateString() }}" required>
             </form>
         </div>
-
         <!-- Order Summary and Payment -->
         <div class="col-span-1 bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out">
             <h3 class="text-2xl font-semibold text-gray-800 mb-5">Order Summary</h3>
@@ -61,7 +65,7 @@
 
             <!-- Order Now Button -->
             <button type="button" id="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white w-full p-4 rounded-lg hover:from-indigo-600 hover:to-blue-500 shadow-lg transition duration-300 ease-in-out">
-                Order Now
+                Book Now
             </button>
         </div>
     </div>

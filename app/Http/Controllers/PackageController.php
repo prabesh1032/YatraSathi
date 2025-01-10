@@ -9,29 +9,10 @@ class PackageController extends Controller
 {
     public function index()
     {
-        // Fetch all packages as an array
-        $packages = Package::all()->toArray();
-
-        // Bubble Sort the packages by price in ascending order
-        $n = count($packages);
-        for ($i = 0; $i < $n - 1; $i++) {
-            for ($j = 0; $j < $n - $i - 1; $j++) {
-                if ($packages[$j]['price'] > $packages[$j + 1]['price']) {
-                    // Swap the elements
-                    $temp = $packages[$j];
-                    $packages[$j] = $packages[$j + 1];
-                    $packages[$j + 1] = $temp;
-                }
-            }
-        }
-
-        // Convert the sorted array back to a collection
-        $sortedPackages = collect($packages);
-
-        // Pass the sorted packages to the view
-        return view('packages.index', ['packages' => $sortedPackages]);
+        $packages = Package::all();
+        return view('packages.index', compact('packages'));
     }
-    
+
     public function package()
     {
         $packages = Package::all();
@@ -47,7 +28,6 @@ class PackageController extends Controller
         return view('viewpackage', compact('package', 'relatedpackages', 'reviews'));
     }
 
-
     public function read(Package $package)
     {
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
@@ -58,7 +38,6 @@ class PackageController extends Controller
     {
         return view('packages.create');
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -71,13 +50,11 @@ class PackageController extends Controller
         ]);
 
         $data = $request->only(['name', 'location', 'duration', 'people', 'price', 'description']);
-
         if ($request->hasFile('photopath')) {
             $photoname = time() . '.' . $request->photopath->extension();
             $request->photopath->move(public_path('images'), $photoname);
             $data['photopath'] = $photoname;
         }
-
         Package::create($data);
 
         return redirect()->route('packages.index')->with('success', 'Package created successfully.');
@@ -139,4 +116,18 @@ class PackageController extends Controller
 
         return redirect()->route('packages.index')->with('success', 'Package deleted successfully.');
     }
+    public function showLocationPage(Package $package)
+    {
+        $locations = Package::select('location')->distinct()->get();
+        $packages = Package::where('id', '!=', $package->id)->get();
+        return view('location.index', compact('locations', 'packages', 'package'));
+    }
+    public function showPackagesByLocation(Request $request)
+{
+    $location = $request->input('location');
+    $packages = Package::where('location', $location)->get();
+
+    return view('location.package', compact('location', 'packages'));
+}
+
 }

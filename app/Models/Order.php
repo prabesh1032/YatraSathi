@@ -20,6 +20,9 @@ class Order extends Model
         'payment_method',
         'total_price',
         'status',
+        'travel_date',
+        'cancellation_status',
+        'cancelled_at',
     ];
 
     // Relationships
