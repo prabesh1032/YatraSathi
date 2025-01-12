@@ -15,33 +15,46 @@
                 Learn More
             </a>
         </div>
-
-        <!-- Package Details Section -->
-        <div class="w-full md:w-1/3 p-6 bg-white shadow-md rounded-lg">
+        <div class="w-full md:w-1/3  p-6 bg-white shadow-md rounded-lg">
             <div class="space-y-6">
-                <p class="text-lg text-gray-700 flex items-center">
+                <p class="text-lg text-gray-900 flex items-center">
                     <i class="ri ri-map-pin-2-fill text-blue-500 text-xl mr-3"></i>
                     <span><strong>Location:</strong> {{ $package->location }}</span>
                 </p>
-                <p class="text-lg text-gray-700 flex items-center">
+                <p class="text-lg text-gray-900  flex items-center">
                     <i class="ri ri-money-dollar-circle-line text-green-500 text-xl mr-3"></i>
-                    <span><strong>Price:</strong> ${{ number_format($package->price, 2) }} <span class="text-sm text-gray-500">Per Person</span></span>
+                    <span><strong>Price:</strong> ${{ number_format($package->price, 2) }}
+                        <span class="text-sm text-gray-500">Daily Charge Per Person</span></span>
                 </p>
-                <p class="text-lg text-gray-700 flex items-center">
-                    <i class="ri ri-time-line text-yellow-500 text-xl mr-3"></i>
-                    <span><strong>Duration:</strong> {{ $package->duration }} days</span>
-                </p>
+
+                <!-- Form with Duration Inside -->
                 <form method="POST" action="{{ route('bookmarks.store') }}">
                     @csrf
                     <input type="hidden" name="package_id" value="{{ $package->id }}">
-                    <label for="num_people" class="block text-gray-700 font-semibold mb-2">Number of People:</label>
+
+                    <!-- Duration Select -->
+                    <label for="duration_range" class="text-lg text-gray-900 font-bold flex items-center"><i class="ri ri-time-line text-yellow-500 text-xl mr-3"></i>Select Duration:</label>
+                    <div class="relative mb-4">
+                        <select id="duration_range" name="duration_range" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            @for ($i = $package->duration; $i <= $package->duration + 5; $i++)
+                                <option value="{{ $i }}">{{ $i }} days</option>
+                                @endfor
+                        </select>
+                    </div>
+
+                    <!-- Number of People -->
+                    <label for="num_people" class="block text-gray-900 font-bold mb-2"><i class="ri ri-user-line text-red-500 text-xl mr-3"></i>Number of People:</label>
                     <input type="number" id="num_people" name="num_people" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all mb-4" min="1" value="1" required>
-                    <button type="submit" class=" w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
                         <i class="ri ri-bookmark-line mr-2"></i> Add to My-Plan
                     </button>
                 </form>
             </div>
         </div>
+
+
 
         <!-- Sidebar Section -->
         <div class="w-full md:w-1/3 p-4 flex flex-col bg-white shadow-md rounded-lg">

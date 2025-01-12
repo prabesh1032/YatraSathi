@@ -16,7 +16,7 @@
                 <h3 class="text-xl font-bold text-gray-900">{{ $package->name }}</h3>
                 <div class="text-gray-700 mt-2 flex items-center"><i class="ri-map-pin-2-line text-green-500 mr-2"></i> {{ $package->location }}</div>
                 <div class="text-gray-700 mt-2 flex items-center"><i class="ri-calendar-line text-green-500 mr-2"></i> {{ $package->duration }} days</div>
-                <!--<div class="text-gray-700 mt-2 flex items-center"><i class="ri-group-line text-green-500 mr-2"></i> {{ $package->people }} Person</div>-->
+
                 <div class="flex justify-between items-center mt-4">
                     <span class="text-green-600 font-bold text-lg">${{ $package->price }}</span>
                     <div class="flex items-center space-x-2">

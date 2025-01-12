@@ -42,20 +42,24 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'location' => 'required',
-            'duration' => 'required|integer',
-            'price' => 'required|numeric',
-            'photopath' => 'nullable|image',
-            'description' => 'nullable',
+            'name' => 'required|string|max:255|unique:packages,name',
+            'location' => 'required|string|max:255',
+            'duration' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'nullable|string|max:5000',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        $data = $request->only(['name', 'location', 'duration', 'people', 'price', 'description']);
+        $data = $request->only(['name', 'location', 'duration', 'price', 'description', 'latitude', 'longitude']);
+
+        // Handle image upload using Laravel's Storage facade
         if ($request->hasFile('photopath')) {
-            $photoname = time() . '.' . $request->photopath->extension();
-            $request->photopath->move(public_path('images'), $photoname);
-            $data['photopath'] = $photoname;
+            $path = $request->file('photopath')->store('images', 'public');
+            $data['photopath'] = $path;
         }
+
         Package::create($data);
 
         return redirect()->route('packages.index')->with('success', 'Package created successfully.');
@@ -63,36 +67,43 @@ class PackageController extends Controller
 
     public function edit($id)
     {
-        $package = Package::find($id);
+        $package = Package::findOrFail($id); // Use findOrFail to handle invalid IDs
         return view('packages.edit', compact('package'));
     }
 
     public function update(Request $request, $id)
     {
+        $package = Package::findOrFail($id); // Use findOrFail for robust error handling
+
         $request->validate([
-            'name' => 'required',
-            'location' => 'required',
-            'duration' => 'required|integer',
-            'price' => 'required|numeric',
-            'photopath' => 'nullable|image',
-            'description' => 'nullable',
+            'name' => 'required|string|max:255|unique:packages,name,' . $package->id,
+            'location' => 'required|string|max:255',
+            'duration' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'nullable|string|max:5000',
+            'latitude' => 'nullable|numeric|between:-90,90',  // Validate latitude
+            'longitude' => 'nullable|numeric|between:-180,180',  // Validate longitude
         ]);
 
-        $package = Package::find($id);
         $package->name = $request->name;
         $package->location = $request->location;
         $package->duration = $request->duration;
         $package->price = $request->price;
         $package->description = $request->description;
+        $package->latitude = $request->latitude;
+        $package->longitude = $request->longitude;
 
+        // Handle image upload
         if ($request->hasFile('photopath')) {
             $photoname = time() . '.' . $request->photopath->extension();
             $request->photopath->move(public_path('images'), $photoname);
 
+            // Delete the old photo if it exists
             if ($package->photopath) {
-                $oldPhoto = public_path('images') . '/' . $package->photopath;
-                if (file_exists($oldPhoto)) {
-                    unlink($oldPhoto);
+                $oldPhotoPath = public_path('images') . '/' . $package->photopath;
+                if (file_exists($oldPhotoPath)) {
+                    unlink($oldPhotoPath);
                 }
             }
             $package->photopath = $photoname;

@@ -55,28 +55,35 @@
     </div>
 </div>
 
-    <h3 class="text-3xl font-extrabold text-left text-gray-900 py-5"><i class="ri-pie-chart-line text-4xl text-gray-700 mb-2"></i>Pie Chart of Travellers per package</h3>
-    <div class="flex ">
-        <div class="bg-white p-6 rounded-lg shadow-md w-3/4 md:w-3/3 lg:w-full">
-            <canvas id="myChart" class="rounded-lg"></canvas>
-        </div>
+<h3 class="text-4xl font-extrabold text-left text-gray-900 py-5">
+    <i class="ri-pie-chart-line text-4xl text-gray-700 mb-2"></i>Pie Chart of Travellers per package
+</h3>
+<div class="flex">
+    <div class="bg-white p-6 rounded-lg shadow-md w-full">
+        <canvas id="myChart" class="rounded-lg" style="max-width: 100%; height: 500px;"></canvas>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
     const ctx = document.getElementById('myChart').getContext('2d');
 
     new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: {!! json_encode($packageNames) !!}, // Updated and ensured variable name matches
+            labels: {!! json_encode($packageNames) !!}, // Ensure this variable is passed correctly
             datasets: [{
                 label: 'No of user per package',
                 data: {!! json_encode($userCounts) !!},
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
-                ],
+                backgroundColor: Array.from({ length: {!! json_encode($packageNames) !!}.length }, getRandomColor),
                 borderWidth: 2,
                 hoverOffset: 8
             }]

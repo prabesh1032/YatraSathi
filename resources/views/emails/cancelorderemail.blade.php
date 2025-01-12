@@ -7,8 +7,8 @@
     <div style="background-color: #fff; padding: 20px; border-radius: 10px; margin-top: 20px;">
         <p style="font-size: 18px; color: #333; margin-bottom: 15px;">Dear {{ $name }},</p>
         <p style="font-size: 16px; color: #666; line-height: 1.6;">We're sorry to inform you that your booking has been <strong style="color: #e74c3c;">cancelled</strong> by you.
-        We understand that plans change, and we're here to assist you with anything you might need.
-        </p>
+        We understand that plans change, and we're here to assist you with anything you might need.</p>
+
         <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
 
         <h3 style="color: #333; font-size: 18px; margin-bottom: 10px;">Booking Details:</h3>
@@ -23,7 +23,11 @@
 
         <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
 
-        <p style="font-size: 16px; color: #666; line-height: 1.6;">If you have any questions or require further assistance, feel free to contact our support team at <a href="mailto:support@yatrasathi.com" style="color: #2c7bf7; text-decoration: none;">support@yatrasathi.com</a>.</p>
+        <p style="font-size: 16px; color: #666; line-height: 1.6;">
+            If you have any questions, require further assistance, or need to inquire about a refund for your cancelled booking, please contact our support team at
+            <a href="mailto:support@yatrasathi.com" style="color: #2c7bf7; text-decoration: none;">support@yatrasathi.com</a>.
+            We're here to ensure a smooth process for you.
+        </p>
 
         <div style="text-align: center; margin-top: 30px;">
             <a href="{{ route('home') }}" style="background-color: #2c7bf7; color: #fff; padding: 10px 20px; font-size: 16px; border-radius: 5px; text-decoration: none;">Explore More Packages</a>

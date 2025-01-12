@@ -15,25 +15,27 @@ class OrderController extends Controller
     // Store a new booking order
     public function store(Request $request)
     {
-        //   dd($request->all());
+        // dd($request->all());
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'duration'=>'nullable|integer|min:1',
             'num_people' => 'nullable|integer|min:1',
             'travel_date' => 'required|date|after:today' // Ensure num_people is valid
         ]);
 
         // Default the num_people to 1 if not provided
         $data['num_people'] = $request->input('num_people', 1);
+        $data['duration'] = $request->input('duration', 1);
 
         // Additional data to be stored in the order
         $data['payment_method'] = "COD";
         $data['user_id'] = auth()->user()->id;
         $data['status'] = 'Pending';
-        $data['total_price'] = $request->price * $data['num_people'];
+        $data['total_price'] = $request->price * $data['num_people']*$data['duration'];
         // Create the order
         Order::create($data);
 
@@ -97,6 +99,7 @@ class OrderController extends Controller
             $order->package_id = $bookmark->package_id;
             $order->total_price = $bookmark->total_price;
             $order->num_people = $bookmark->num_people;
+            $order->duration = $bookmark->duration;
             $order->payment_method = "eSewa";
             $order->name = $bookmark->user->name;
             $order->phone = 'N/A';

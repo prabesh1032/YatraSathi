@@ -14,20 +14,32 @@ class BookmarkController extends Controller
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'num_people' => 'required|integer|min:1',
+            'duration_range' => 'required|integer|min:1', // Add validation for user-selected duration
         ]);
 
         $data['user_id'] = auth()->user()->id;
 
+        // Ensure the package exists
+        $package = Package::find($data['package_id']);
+
+        // Check if the bookmark already exists
         $check = Bookmark::where('user_id', $data['user_id'])
-                         ->where('package_id', $data['package_id'])
-                         ->count();
+            ->where('package_id', $data['package_id'])
+            ->count();
 
         if ($check > 0) {
             return back()->with('error', 'Package already bookmarked');
         }
-        $package = Package::find($data['package_id']);
-        $data['total_price'] = $package->price * $data['num_people'];
+
+        // Set the user-selected duration from the form
+        $data['duration'] = $data['duration_range']; // Use the selected duration from the form
+
+        // Calculate total price based on the user-selected duration, number of people, and base price
+        $data['total_price'] = $package->price * $data['num_people'] * $data['duration'];
+
+        // Create the bookmark
         Bookmark::create($data);
+
         return back()->with('success', 'Package added to your adventure successfully');
     }
 
@@ -35,6 +47,7 @@ class BookmarkController extends Controller
     public function myBookmarks()
     {
         $bookmarks = Bookmark::where('user_id', auth()->user()->id)->get();
+        // dd($bookmarks);
         return view('bookmark', compact('bookmarks'));
     }
 
@@ -48,6 +61,7 @@ class BookmarkController extends Controller
 
         // Delete the bookmark
         $bookmark->delete();
+
         return back()->with('success', 'Package removed from bookmarks successfully');
     }
 

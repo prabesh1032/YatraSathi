@@ -1,5 +1,5 @@
 @if(Session::has('success'))
-<div class="fixed left-4 bottom-4 bg-gradient-to-r from-green-400 via-blue-500 to-green-600 px-8 py-6 rounded-xl shadow-xl border-l-8 border-blue-700 z-20 transform scale-100 transition-all duration-500 flex items-center gap-4" id="success-alert">
+<div class="fixed left-4 bottom-4 bg-green-500 px-8 py-6 rounded-xl shadow-xl border-l-8 border-blue-700 z-20 transform scale-100 transition-all duration-500 flex items-center gap-4" id="success-alert">
     <i class="ri-suitcase-3-line text-4xl text-white animate-bounce"></i>
     <div>
         <p class="text-white text-lg font-bold">
@@ -18,7 +18,7 @@
 @endif
 
 @if(Session::has('error'))
-<div class="fixed left-4 bottom-4 bg-gradient-to-r from-red-400 via-orange-500 to-red-600 px-8 py-6 rounded-xl shadow-xl border-l-8 border-orange-700 z-20 transform scale-100 transition-all duration-500 flex items-center gap-4" id="error-alert">
+<div class="fixed left-4 bottom-4 bg-red-500 px-8 py-6 rounded-xl shadow-xl border-l-8 border-orange-700 z-20 transform scale-100 transition-all duration-500 flex items-center gap-4" id="error-alert">
     <i class="ri-flight-takeoff-line text-4xl text-white animate-pulse"></i>
     <div>
         <p class="text-white text-lg font-bold">

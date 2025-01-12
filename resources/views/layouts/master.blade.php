@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YatraSathi</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -13,7 +16,7 @@
 <body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
     @include('Layouts.alert')
     <!-- Navbar -->
-    <nav class="bg-black top-0 sticky z-10 text-white py-5">
+    <nav class="bg-black top-0 sticky z-20 text-white py-5">
         <div class="container mx-auto flex justify-between items-center px-0">
             <!-- Logo Section -->
             <div class="flex items-center">
@@ -38,9 +41,13 @@
                 <a href="{{ route('home') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-extrabold' : '' }}">
                     Home
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
-                </a>
+                </a> 
                 <a href="{{ route('packages') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-extrabold' : '' }}">
                     Packages
+                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="{{ route('route.show') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'route.show' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    Maps
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <a href="{{ route('about') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-extrabold' : '' }}">

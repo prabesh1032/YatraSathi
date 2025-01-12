@@ -36,7 +36,7 @@
             </p>
             <p class="text-gray-600 flex items-center gap-2">
                 <i class="ri-calendar-line text-blue-500"></i>
-                <span>Duration: <span class="font-semibold">{{ $bookmark->package->duration }} days</span></span>
+                <span>Duration: <span class="font-semibold">{{ $bookmark->duration }} days</span></span>
             </p>
             <p class="text-gray-600 flex items-center gap-2">
                 <i class="ri-map-pin-line text-red-500"></i>

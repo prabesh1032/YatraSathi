@@ -4,6 +4,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JourneyController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
@@ -28,6 +29,7 @@ Route::get('/allpackages', [PackageController::class, 'package'])->name('package
 Route::get('/readpackages/{package}', [PackageController::class, 'read'])->name('packages.read');
 Route::get('/packages/location', [PackageController::class, 'showPackagesByLocation'])->name('packages.byLocation');
 
+Route::get('route-planning', [MapController::class, 'showRoutePlanning'])->name('route.show');
 
 
 Route::middleware('auth')->group(function(){

@@ -9,7 +9,7 @@ class Package extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'location', 'duration', 'price', 'photopath', 'description'
+        'name', 'location', 'duration', 'price', 'photopath', 'description','latitude','longitude'
     ];
     public function orders()
     {

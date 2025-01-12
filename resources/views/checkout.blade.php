@@ -13,7 +13,7 @@
                 <span class="text-blue-500 font-semibold">${{ number_format($bookmark->total_price, 2) }}</span>
             </p>
             <p class="text-lg text-gray-600 mt-2">Duration:
-                <span class="text-blue-500 font-semibold">{{ $bookmark->package->duration }} Days</span>
+                <span class="text-blue-500 font-semibold">{{ $bookmark->duration }} Days</span>
             </p>
             <p class="text-lg text-gray-600 mt-2">Number of People:
                 <span class="text-blue-500 font-semibold">{{ $bookmark->num_people ?? 1 }}</span>
@@ -27,9 +27,10 @@
                 @csrf
                 <!-- Hidden Fields -->
                 <input type="hidden" name="package_id" value="{{ $bookmark->package_id }}">
-                <input type="hidden" name="price" value="{{ $bookmark->package->price * ($bookmark->num_people ?? 1) }}">
+                <input type="hidden" name="price" value="{{ $bookmark->total_price }}">
                 <input type="hidden" name="bookmark_id" value="{{ $bookmark->id }}">
                 <input type="hidden" name="num_people" value="{{ $bookmark->num_people ?? 1 }}">
+                <input type="hidden" name="duration" value="{{ $bookmark->duration?? 1 }}">
 
                 <!-- Name -->
                 <input type="text" name="name" placeholder="Full Name" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ auth()->user()->name }}" required>
@@ -51,7 +52,7 @@
             <h3 class="text-2xl font-semibold text-gray-800 mb-5">Order Summary</h3>
             @php
             $num_people = $bookmark->num_people ?? 1; // Fallback to 1 if num_people is not set
-            $total_price = $bookmark->package->price * $num_people;
+            $total_price = $bookmark->total_price;
             @endphp
 
             <h2 class="text-xl font-semibold text-gray-800 mb-5">Total:

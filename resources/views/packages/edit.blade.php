@@ -16,6 +16,7 @@
                 </div>
                 @enderror
             </div>
+
             <div class="mb-4">
                 <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
                 <input type="text" name="location" value="{{ $package->location }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
@@ -25,6 +26,7 @@
                 </div>
                 @enderror
             </div>
+
             <div class="mb-4">
                 <label for="duration" class="block text-sm font-medium text-gray-700">Duration (days)</label>
                 <input type="number" name="duration" value="{{ $package->duration }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
@@ -34,15 +36,7 @@
                 </div>
                 @enderror
             </div>
-            <!--<div class="mb-4">
-                <label for="people" class="block text-sm font-medium text-gray-700">People</label>
-                <input type="number" name="people" value="{{ $package->people }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                @error('people')
-                <div class="text-red-600 mt-2 text-sm">
-                    *{{ $message }}
-                </div>
-                @enderror
-            </div>-->
+
             <div class="mb-4">
                 <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
                 <input type="number" name="price" value="{{ $package->price }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
@@ -52,6 +46,7 @@
                 </div>
                 @enderror
             </div>
+
             <div class="mb-4">
                 <label for="photopath" class="block text-sm font-medium text-gray-700">Image</label>
                 <input type="file" name="photopath" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -61,6 +56,7 @@
                 </div>
                 @enderror
             </div>
+
             <div class="mb-4">
                 <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                 <textarea name="description" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>{{ $package->description }}</textarea>
@@ -70,6 +66,28 @@
                 </div>
                 @enderror
             </div>
+
+            <!-- Add Latitude and Longitude Fields -->
+            <div class="mb-4">
+                <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+                <input type="text" name="latitude" value="{{ $package->latitude }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                @error('latitude')
+                    <div class="text-red-600 mt-2 text-sm">
+                        *{{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+                <input type="text" name="longitude" value="{{ $package->longitude }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                @error('longitude')
+                    <div class="text-red-600 mt-2 text-sm">
+                        *{{ $message }}
+                    </div>
+                @enderror
+            </div>
+
             <div class="flex justify-end">
                 <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-700">Update</button>
             </div>

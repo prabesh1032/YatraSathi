@@ -48,7 +48,11 @@
                     <span class="text-green-600 font-bold">${{ number_format($order->total_price, 2) }}</span>
                 </p>
                 <p class="text-base text-gray-600 flex items-center">
-                    <i class="ri-calendar-event-line text-pink-500 mr-2"></i> <strong>Travels Date:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}</p>
+                    <i class="ri-time-line text-orange-500 mr-2"></i><strong>Duration:</strong> {{ $order->duration }} days
+                </p>
+                <p class="text-base text-gray-600 flex items-center">
+                    <i class="ri-calendar-event-line text-pink-500 mr-2"></i> <strong>Travels Date:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}
+                </p>
                 <p class="text-base text-gray-600 flex items-center">
                     <i class="ri-calendar-line text-indigo-500 mr-2"></i><strong>Booking Date:</strong> {{ $order->created_at->format('d M Y') }}
                 </p>
@@ -56,21 +60,21 @@
 
             <!-- Cancel Booking Button -->
             @if (\Carbon\Carbon::parse($order->created_at)->diffInDays(\Carbon\Carbon::now()) <= 6 && $order->status != 'Cancelled')
-            <div class="p-5">
-                <form action="{{ route('orders.cancel', $order->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300">
-                        Cancel Booking
+                <div class="p-5">
+                    <form action="{{ route('orders.cancel', $order->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300">
+                            Cancel Booking
+                        </button>
+                    </form>
+                </div>
+                @else
+                <div class="p-5">
+                    <button class="w-full bg-gray-400 text-white py-2 rounded-md text-lg font-semibold cursor-not-allowed">
+                        Cancellation Not Allowed
                     </button>
-                </form>
-            </div>
-            @else
-            <div class="p-5">
-                <button class="w-full bg-gray-400 text-white py-2 rounded-md text-lg font-semibold cursor-not-allowed">
-                    Cancellation Not Allowed
-                </button>
-            </div>
-            @endif
+                </div>
+                @endif
         </div>
         @empty
         <div class="col-span-full text-center py-12">
