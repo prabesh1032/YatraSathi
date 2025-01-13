@@ -34,34 +34,43 @@
 
         <!-- Button to explore packages -->
         <div class="text-center mt-6">
-            <a href="#" class="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+            <a href="{{route('packages')}}" class="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
                 <i class="ri-compass-2-line mr-2"></i> Explore Packages
             </a>
         </div>
 
         <!-- How It Works Section -->
-        <div class="mt-16 bg-blue-50 p-8 rounded-lg shadow-lg">
-            <h2 class="text-3xl font-bold text-gray-900 text-center">How It Works</h2>
-            <p class="text-lg text-indigo-700 text-center mt-4">
+        <div class="mt-16 bg-gray-50 p-10 rounded-lg shadow-lg">
+        <h2 class="text-4xl font-bold text-indigo-800 text-center">How It Works?</h2>
+            <p class="text-lg text-gray-900 font-bold text-center mt-4">
                 Our map offers a seamless way to explore the best travel packages. Click on any of the markers to learn more about exciting destinations and unique adventures.
             </p>
-            <div class="flex justify-between mt-8">
-                <div class="text-center">
-                    <i class="ri-map-pin-line text-4xl text-blue-600"></i>
-                    <h3 class="text-xl font-semibold text-gray-900 mt-4">Explore Locations</h3>
-                    <p class="mt-2 text-gray-600">Click on a location on the map to view detailed information about travel packages.</p>
-                </div>
-                <div class="text-center">
-                    <i class="ri-information-line text-4xl text-blue-600"></i>
-                    <h3 class="text-xl font-semibold text-gray-900 mt-4">Learn More</h3>
-                    <p class="mt-2 text-gray-600">Discover the features, benefits, and itineraries for each package.</p>
-                </div>
-                <div class="text-center">
-                    <i class="ri-rocket-line text-4xl text-blue-600"></i>
-                    <h3 class="text-xl font-semibold text-gray-900 mt-4">Book Your Adventure</h3>
-                    <p class="mt-2 text-gray-600">Ready to travel? Book your dream package directly from the details page.</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+        <!-- Step 1 -->
+        <div class="text-center flex flex-col items-center bg-indigo-50 p-6 rounded-lg shadow-sm">
+            <div class="bg-blue-100 p-4 rounded-full mb-4">
+                <i class="ri-map-pin-line text-4xl text-indigo-600"></i>
             </div>
+            <h3 class="text-xl font-semibold text-indigo-800 mt-2">Explore Locations</h3>
+            <p class="mt-2 text-gray-600">Click on a location on the map to view detailed information about travel packages.</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="text-center flex flex-col items-center bg-indigo-50 p-6 rounded-lg shadow-sm ">
+            <div class="bg-blue-100 p-4 rounded-full mb-4">
+                <i class="ri-information-line text-4xl text-indigo-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-indigo-800 mt-2">Learn More</h3>
+            <p class="mt-2 text-gray-600">Discover the features, benefits, and itineraries for each package.</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="text-center flex flex-col items-center bg-indigo-50 p-6 rounded-lg shadow-sm ">
+            <div class="bg-blue-100 p-4 rounded-full mb-4">
+                <i class="ri-rocket-line text-4xl text-indigo-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-indigo-800 mt-2">Book Your Adventure</h3>
+            <p class="mt-2 text-gray-600">Ready to travel? Book your dream package directly from the details page.</p>
+        </div>
+    </div>
         </div>
     </div>
 
@@ -77,8 +86,8 @@
             minZoom: 7,
             maxZoom: 18,
             maxBounds: [
-                [26.347, 80.058], // Southwest corner of Nepal
-                [30.422, 88.201]  // Northeast corner of Nepal
+                [26.347, 80.035], // Southwest corner of Nepal
+                [30.422, 88.175]  // Northeast corner of Nepal
             ],
             maxBoundsViscosity: 1.0
         });
