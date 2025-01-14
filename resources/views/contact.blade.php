@@ -79,15 +79,25 @@
         <form action="{{ route('messages.store') }}" method="POST" class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 border-t-4 border-yellow-500">
             @csrf
             <div class="mb-4">
-                <label for="name" class="block text-lg font-medium mb-2">Name</label>
+                <label for="name" class="block text-lg font-bold mb-2">Name</label>
+                @auth
+                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500" value="{{ auth()->user()->name }}" required>
+                @else
                 <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500" placeholder="Your Name" required>
+                @endauth
             </div>
+
             <div class="mb-4">
-                <label for="email" class="block text-lg font-medium mb-2">Email</label>
+                <label for="email" class="block text-lg font-bold mb-2">Email</label>
+                @auth
+                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500" value="{{ auth()->user()->email }}" required>
+                @else
                 <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500" placeholder="Your Email" required>
+                @endauth
             </div>
+
             <div class="mb-4">
-                <label for="message" class="block text-lg font-medium mb-2">Message</label>
+                <label for="message" class="block text-lg font-bold mb-2">Message</label>
                 <textarea id="message" name="message" class="w-full px-4 py-2 border border-gray-300 rounded-lg h-32 focus:ring-2 focus:ring-yellow-500" placeholder="Your Message" required></textarea>
             </div>
             <div class="text-center">

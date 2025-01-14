@@ -41,19 +41,35 @@
         </div>
         <!-- Carousel / Slider -->
         <div class="relative w-full lg:w-8/12 mx-auto overflow-hidden rounded-lg shadow-lg">
-            <div class="carousel flex transition-transform duration-500 ease-in-out">
-                @foreach($packages as $package)
-                <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="w-full flex-shrink-0 relative block">
-                    <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-96 h-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-all duration-300">
-                    <div class="absolute bottom-0 left-0 bg-gradient-to-t from-black  to-transparent text-white p-4">
-                        <h3 class="text-3xl text-yellow-500 font-bold">{{ $package->name }}</h3>
-                        <p class="text-xl text-green-600 font-bold">${{ $package->price }}</p>
-                    </div>
-                </a>
-                @endforeach
+            <div class="carousel-wrapper relative">
+                <!-- Carousel Items -->
+                <div class="carousel flex transition-transform duration-700 ease-in-out">
+                    @foreach($packages as $package)
+                    <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="w-full flex-shrink-0 relative block">
+                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-96 object-cover rounded-lg">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent text-white p-8">
+                            <h3 class="text-4xl text-yellow-500 font-extrabold">{{ $package->name }}</h3>
+                            <p class="text-3xl text-green-600 font-extrabold">${{ $package->price }}</p>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+                <!-- Navigation Buttons -->
+                <button class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow hover:bg-gray-600 focus:outline-none">
+                    <i class="ri-arrow-left-s-line text-2xl"></i>
+                </button>
+                <button class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow hover:bg-gray-600 focus:outline-none">
+                    <i class="ri-arrow-right-s-line text-2xl"></i>
+                </button>
+
+                <!-- Indicators -->
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    @foreach($packages as $index => $package)
+                    <div class="indicator w-3 h-3 rounded-full bg-gray-400 transition transform hover:scale-110 cursor-pointer" data-index="{{ $index }}"></div>
+                    @endforeach
+                </div>
             </div>
         </div>
-
         <!-- Call to Action -->
         <a href="{{ route('packages') }}" class="mt-6 inline-block bg-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full shadow-md hover:bg-yellow-300 transition duration-300">
             View All Packages
@@ -92,13 +108,46 @@
 <!-- Carousel Script -->
 <script>
     const carousel = document.querySelector('.carousel');
-    let currentIndex = 0;
-    const totalSlides = document.querySelectorAll('.carousel > a').length;
+    const slides = document.querySelectorAll('.carousel > a');
+    const totalSlides = slides.length;
+    const prevButton = document.querySelector('.carousel-prev');
+    const nextButton = document.querySelector('.carousel-next');
+    const indicators = document.querySelectorAll('.indicator');
 
+    let currentIndex = 0;
+
+    function updateCarousel(index) {
+        const offset = -index * 100;
+        carousel.style.transform = `translateX(${offset}%)`;
+        indicators.forEach((indicator, i) => {
+            indicator.style.backgroundColor = i === index ? 'yellow' : 'gray';
+        });
+    }
+
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateCarousel(currentIndex);
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateCarousel(currentIndex);
+    });
+
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel(currentIndex);
+        });
+    });
+
+    // Auto-slide functionality
     setInterval(() => {
         currentIndex = (currentIndex + 1) % totalSlides;
-        const offset = -currentIndex * 100;
-        carousel.style.transform = `translateX(${offset}%)`;
-    }, 3000); // Auto-slide every 3 seconds
+        updateCarousel(currentIndex);
+    }, 3000); // Auto-slide every 5 seconds
+
+    // Initialize the first indicator
+    updateCarousel(currentIndex);
 </script>
 @endsection

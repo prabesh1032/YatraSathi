@@ -9,7 +9,8 @@ class PageController extends Controller
 {
     public function home()
     {
-        $packages = Package::take(12)->get();;
+        // $packages = Package::take(20)->get();;
+        $packages = Package::all();
         return view('welcome', compact( 'packages'));
     }
     public function about()

@@ -74,34 +74,48 @@
             </div>
         </div>
     </div>
-    <!-- Reviews Section -->
+
     <div class="mt-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">User Reviews</h2>
-        @if ($reviews->count() > 0)
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($reviews as $review)
-            <div class="bg-gray-100 p-6 rounded-lg shadow-md">
-                <div class="flex items-center mb-4">
-                    <div class="mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8 h-8 text-yellow-400" viewBox="0 0 24 24">
-                            <path d="M12 .587l3.668 7.431 8.215 1.192-5.945 5.798 1.402 8.192L12 18.902l-7.34 3.798 1.402-8.192L.873 9.21l8.215-1.192L12 .587z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800">{{ $review->user->name }}</h3>
+    <h2 class="text-3xl font-bold text-gray-900 mb-4">User Reviews</h2>
+    @if ($reviews->count() > 0)
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach($reviews as $review)
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+            <div class="flex items-center mb-4">
+                <!-- Display Initial as Profile Image -->
+                <div class="mr-4 flex items-center justify-center bg-gray-400 w-12 h-12 rounded-full text-white font-semibold">
+                    <!-- Get First Character of the User's Name -->
+                    {{ strtoupper(substr($review->user->name, 0, 1)) }}
                 </div>
-                <p class="text-gray-700">{{ $review->review }}</p>
-                <div class="mt-2 text-yellow-500">
-                    Rating: {{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}
+                <div>
+                    <!-- Reviewer Name and Country -->
+                    <h3 class="text-xl font-bold text-gray-800">{{ $review->user->name }}</h3>
+                    <p class="text-gray-500">{{ $review->user->country }}</p>
                 </div>
             </div>
-            @endforeach
+            <!-- Review Text -->
+            <p class="text-gray-700 mb-2">{{ $review->review }}</p>
+            <div class="mt-2 text-yellow-500">
+                <!-- Rating -->
+                Rating:
+                <span class="text-yellow-400">
+                    {{ str_repeat('★', $review->rating) }}
+                </span>
+                <span class="text-gray-300">
+                    {{ str_repeat('☆', 5 - $review->rating) }}
+                </span>
+            </div>
+            <!-- Review Date -->
+            <p class="text-sm text-gray-500 mt-2">Reviewed on: {{ \Carbon\Carbon::parse($review->created_at)->format('F j, Y') }}</p>
         </div>
-        @else
-        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
-            <p>No reviews yet. Be the first to leave a review!</p>
-        </div>
-        @endif
+        @endforeach
     </div>
+    @else
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
+        <p>No reviews yet. Be the first to leave a review!</p>
+    </div>
+    @endif
+</div>
 
 
     <!-- Add Review Form -->

@@ -116,11 +116,14 @@
                 .addTo(map)
                 .bindPopup(`
                     <div class="p-4">
-                        <strong class="text-xl text-blue-800">${package.name}</strong><br>
-                        <a href="{{ url('/readpackages') }}/${package.id}" class="text-blue-600 underline hover:text-blue-800 transition duration-300">
-                            <i class="ri-eye-line mr-2"></i> View Package Details
-                        </a>
-                    </div>
+    <strong class="text-xl text-blue-800">${package.name}</strong><br>
+    <button
+        onclick="window.location.href='{{ url('/readpackages') }}/${package.id}'"
+        class="text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 px-4 py-2 rounded transition duration-300">
+        <i class="ri-eye-line mr-2"></i> View Package Details
+    </button>
+</div>
+
                 `);
         });
     }

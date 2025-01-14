@@ -97,13 +97,12 @@
                     <!-- Row 1 -->
                     <div class="flex justify-between space-x-4 ">
                         <a href="{{ route('packages.show', $package->id) }}"
-                            class="flex items-center justify-center bg-blue-500 text-white text-center py-3 px-4 rounded-lg shadow-md hover:bg-blue-600 transition transform hover:scale-105">
-                            <i class="ri-shopping-cart-line mr-2"></i> Book Now
+                            class="flex items-center justify-center bg-blue-500 text-white text-center py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition transform hover:scale-105">
+                            <i class="ri-shopping-cart-line mr-4"></i> Book Now
                         </a>
-
                         <a href="{{ route('traveltips') }}"
                             class="flex items-center justify-center bg-green-500 text-white text-center py-3 px-4 rounded-lg shadow-md hover:bg-green-600 transition transform hover:scale-105">
-                            <i class="ri-lightbulb-line mr-2"></i> Tips for Travel
+                            <i class="ri-lightbulb-line mr-4"></i> Tips for Travel
                         </a>
                     </div>
 

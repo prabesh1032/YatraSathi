@@ -38,14 +38,14 @@
 
             <!-- Action Buttons -->
             <div class="flex justify-between items-center p-2 bg-gray-100">
-                <a href="{{ route('orders.status', [$order->id, 'Pending']) }}" class="bg-blue-600 text-white text-sm py-2 px-4 rounded-lg shadow hover:bg-blue-700 flex items-center">
+                <a href="{{ route('orders.status', [$order->id, 'Pending']) }}" class="bg-blue-600 text-white text-sm py-2 px-1 rounded-lg shadow hover:bg-blue-700 flex items-center">
                     <i class="ri-time-line mr-2"></i> Pending
                 </a>
-                <a href="{{ route('orders.status', [$order->id, 'Processing']) }}" class="bg-green-600 text-white text-sm py-2 px-4 rounded-lg shadow hover:bg-green-700 flex items-center">
-                    <i class="ri-refresh-line mr-2"></i> Processing
+                <a href="{{ route('orders.status', [$order->id, 'InProgress']) }}" class="bg-green-600 text-white text-sm py-2 px-2 rounded-lg shadow hover:bg-green-700 flex items-center">
+                    <i class="ri-refresh-line mr-2"></i> InProgress
                 </a>
-                <a href="{{ route('orders.status', [$order->id, 'Delivered']) }}" class="bg-orange-600 text-white text-sm py-2 px-4 rounded-lg shadow hover:bg-orange-700 flex items-center">
-                    <i class="ri-checkbox-circle-line mr-2"></i> Delivered
+                <a href="{{ route('orders.status', [$order->id, 'Completed']) }}" class="bg-orange-600 text-white text-sm py-2 px-1 rounded-lg shadow hover:bg-orange-700 flex items-center">
+                    <i class="ri-checkbox-circle-line mr-2"></i> Completed
                 </a>
             </div>
         </div>

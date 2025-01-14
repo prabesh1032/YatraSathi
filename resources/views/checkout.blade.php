@@ -40,7 +40,7 @@
 
                 <!-- Phone -->
                 <input type="text" name="phone" placeholder="Phone Number" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ auth()->user()->phone }}" required>
-
+                <input type="email" name="email" placeholder="Email" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ auth()->user()->email }}" required>
                 <!-- Travel Date -->
                 <label for="travel_date" class="block text-gray-700 mb-2 font-medium">Travel Date:</label>
                 <input type="date" id="travel_date" name="travel_date" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
