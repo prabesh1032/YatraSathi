@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,14 @@ class Package extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'location', 'duration', 'price', 'photopath', 'description','latitude','longitude'
+        'name',
+        'location',
+        'duration',
+        'price',
+        'photopath',
+        'description',
+        'latitude',
+        'longitude'
     ];
     public function orders()
     {
@@ -19,7 +27,8 @@ class Package extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public function guides()
+    {
+        return $this->hasMany(Guide::class);
+    }
 }
-
-
-

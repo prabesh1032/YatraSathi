@@ -26,7 +26,9 @@ class PackageController extends Controller
 
         $reviews = $package->reviews()->latest()->take(3)->get();
 
-        return view('viewpackage', compact('package', 'relatedpackages', 'reviews'));
+        $guides = $package->guides;
+
+        return view('viewpackage', compact('package', 'relatedpackages', 'reviews','guides'));
     }
 
     public function read(Package $package)
@@ -56,8 +58,9 @@ class PackageController extends Controller
 
         // Handle image upload using Laravel's Storage facade
         if ($request->hasFile('photopath')) {
-            $path = $request->file('photopath')->store('images', 'public');
-            $data['photopath'] = $path;
+            $photoname = time() . '.' . $request->photopath->extension();
+            $request->photopath->move(public_path('images'), $photoname);
+            $data['photopath'] = $photoname;
         }
 
         Package::create($data);

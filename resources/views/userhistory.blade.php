@@ -61,7 +61,7 @@
             <!-- Cancel Booking Button -->
             @if (\Carbon\Carbon::parse($order->created_at)->diffInDays(\Carbon\Carbon::now()) <= 6 && $order->status != 'Cancelled')
                 <div class="p-5">
-                    <form action="{{ route('orders.cancel', $order->id) }}" method="POST">
+                    <form action="{{ route('orders.cancel', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this booking?')">
                         @csrf
                         <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300">
                             Cancel Booking

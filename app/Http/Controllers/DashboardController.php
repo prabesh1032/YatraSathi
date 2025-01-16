@@ -26,6 +26,7 @@ class DashboardController extends Controller
             $userCounts[] = Order::where('package_id', $package->id)->count(); // Count bookings for each package
         }
 
+
         return view('dashboard', compact(
             'totalBookings',
             'newReviews',

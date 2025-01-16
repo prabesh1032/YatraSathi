@@ -10,7 +10,7 @@ class Bookmark extends Model
     use HasFactory;
 
     // Specify which attributes are mass assignable
-    protected $fillable = ['user_id', 'package_id', 'num_people', 'total_price','duration'];
+    protected $fillable = ['user_id', 'package_id', 'guide_id','num_people', 'total_price','duration'];
 
     public function package()
     {

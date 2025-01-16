@@ -174,5 +174,6 @@ class OrderController extends Controller
             return redirect()->route('historyindex')->with('error', 'You can only cancel the booking within 6 days of placing the order.');
         }
     }
+    
 
 }

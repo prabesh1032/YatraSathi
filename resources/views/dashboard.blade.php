@@ -93,6 +93,7 @@
             maintainAspectRatio: false, // Ensures the chart is scalable
             plugins: {
                 legend: {
+                    display: false,
                     position: 'top',
                     labels: {
                         font: {
@@ -102,7 +103,7 @@
                     }
                 },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Packages',
                     font: {
                         size: 19

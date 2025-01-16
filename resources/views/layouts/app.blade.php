@@ -25,10 +25,9 @@
     <div class="flex">
         <!-- Sidebar -->
         <div class="w-56 h-screen sticky top-0 bg-cyan-200 shadow-lg">
-            <div class="flex flex-col items-center mt-5">
+            <div class="flex flex-col items-center mt-3">
                 <a href="{{ route('home') }}"><img src="{{ asset('SS2.png') }}" alt="Logo"
                         class="w-8/12 mx-auto bg-blue-400 p-2 rounded-lg shadow-lg"></a>
-                <a href="{{ route('home') }}" class="mt-3 font-bold text-xl">YatraSathi</a>
             </div>
             <div class="mt-5 space-y-1">
                 <a href="{{ route('dashboard') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
@@ -38,6 +37,10 @@
                 <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
     @if(Route::is('packages.index')) bg-yellow-200 @endif">
                     <i class="ri-suitcase-line text-orange-500 mr-2"></i> Packages
+                </a>
+                <a href="{{ route('guides.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('guides.index')) bg-yellow-200 @endif">
+                    <i class="ri-suitcase-line text-orange-500 mr-2"></i> Guides
                 </a>
                 <a href="{{route('orders.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
     @if(Route::is('orders.index')) bg-yellow-200 @endif">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\JourneyController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\PageController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TravellerController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Guide;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -56,6 +58,13 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index');
     Route::get('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::get('/travellers',[TravellerController::class,'index'])->name('travellers.index');
+
+    Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');
+    Route::get('/guides/create', [GuideController::class, 'create'])->name('guides.create');
+    Route::post('/guides/store', [GuideController::class, 'store'])->name('guides.store');
+    Route::get('/guides/{id}/edit', [GuideController::class, 'edit'])->name('guides.edit');
+    Route::put('/guides/{id}/update', [GuideController::class, 'update'])->name('guides.update');
+    Route::get('/guides/{id}/destroy', [GuideController::class, 'destroy'])->name('guides.destroy');
 
     Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
     Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
