@@ -29,20 +29,23 @@ class GuideController extends Controller
             'description' => 'nullable|string|max:5000',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'package_id' => 'required|exists:packages,id',
-            'email' => 'required|email|unique:guides,email' // email validation for guide model
+            'email' => 'required|email|unique:guides,email', // email validation for guide model
+            'experience' => 'required|integer|min:1|max:100', // Experience field validation
         ]);
 
-        $data = $request->only(['name', 'description', 'package_id', 'email']);
+        $data = $request->only(['name', 'description', 'package_id', 'email', 'experience']); // Including experience
 
         // Handling file upload
         if ($request->hasFile('photopath')) {
             $photoname = time() . '.' . $request->photopath->extension();
             $request->photopath->move(public_path('images'), $photoname);
             $data['photopath'] = $photoname;
+        }
+
+        // Creating a new guide
         Guide::create($data);
         return redirect()->route('guides.index')->with('success', 'Guide created successfully.');
     }
-}
 
     public function show($id)
     {
@@ -67,7 +70,8 @@ class GuideController extends Controller
             'description' => 'nullable|string|max:5000',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'package_id' => 'required|exists:packages,id',
-            'email' => 'required|email|unique:guides,email,' . $guide->id // Allow updating of email without violating unique constraint
+            'email' => 'required|email|unique:guides,email,' . $guide->id, // Allow updating of email without violating unique constraint
+            'experience' => 'required|integer|min:1|max:100', // Experience field validation
         ]);
 
         // Update guide details
@@ -75,6 +79,7 @@ class GuideController extends Controller
         $guide->email = $request->email;
         $guide->description = $request->description;
         $guide->package_id = $request->package_id;
+        $guide->experience = $request->experience; // Update experience
 
         // Handle photo upload
         if ($request->hasFile('photopath')) {

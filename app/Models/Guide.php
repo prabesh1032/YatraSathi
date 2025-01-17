@@ -9,7 +9,7 @@ class Guide extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'photopath', 'package_id','email'];
+    protected $fillable = ['name', 'description', 'photopath', 'package_id','email','experience'];
 
     public function package()
     {

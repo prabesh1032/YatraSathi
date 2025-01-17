@@ -12,6 +12,7 @@ class Package extends Model
     protected $fillable = [
         'name',
         'location',
+        'starting_location',
         'duration',
         'price',
         'photopath',

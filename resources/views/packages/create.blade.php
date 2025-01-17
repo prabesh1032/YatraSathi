@@ -27,6 +27,16 @@
             </div>
 
             <div class="mb-4">
+                <label for="starting_location" class="block text-sm font-medium text-gray-700">Stating Location</label>
+                <input type="text" name="starting_location" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                @error('starting_location')
+                <div class="text-red-600 mt-2 text-sm">
+                    *{{$message}}
+                </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label for="duration" class="block text-sm font-medium text-gray-700">Duration (days)</label>
                 <input type="number" name="duration" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 @error('duration')

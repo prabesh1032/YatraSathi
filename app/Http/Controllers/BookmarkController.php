@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bookmark;
 use App\Models\Package;
+use App\Models\Guide;
 use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
@@ -14,7 +15,8 @@ class BookmarkController extends Controller
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'num_people' => 'required|integer|min:1',
-            'duration_range' => 'required|integer|min:1', // Add validation for user-selected duration
+            'duration_range' => 'required|integer|min:1', // User-selected duration
+            'guide_id' => 'nullable|exists:guides,id', // Optional guide_id validation
         ]);
 
         $data['user_id'] = auth()->user()->id;
@@ -23,31 +25,44 @@ class BookmarkController extends Controller
         $package = Package::find($data['package_id']);
 
         // Check if the bookmark already exists
-        $check = Bookmark::where('user_id', $data['user_id'])
-            ->where('package_id', $data['package_id'])
-            ->count();
+        $query = Bookmark::where('user_id', $data['user_id'])
+            ->where('package_id', $data['package_id']);
 
-        if ($check > 0) {
-            return back()->with('error', 'Package already bookmarked');
+        if (!empty($data['guide_id'])) {
+            $query->where('guide_id', $data['guide_id']);
+        } else {
+            $query->whereNull('guide_id');
         }
 
-        // Set the user-selected duration from the form
-        $data['duration'] = $data['duration_range']; // Use the selected duration from the form
+        $check = $query->count();
 
-        // Calculate total price based on the user-selected duration, number of people, and base price
+        if ($check > 0) {
+            return back()->with('error', 'This combination of package and guide is already bookmarked.');
+        }
+
+        // Set the user-selected duration
+        $data['duration'] = $data['duration_range'];
+
+        // Calculate total price
         $data['total_price'] = $package->price * $data['num_people'] * $data['duration'];
+
+        // Check if guide_id is provided and valid
+        if (!empty($data['guide_id'])) {
+            $guide = Guide::find($data['guide_id']);
+            if (!$guide) {
+                return back()->with('error', 'Selected guide is invalid.');
+            }
+        }
 
         // Create the bookmark
         Bookmark::create($data);
 
-        return back()->with('success', 'Package added to your adventure successfully');
+        return back()->with('success', 'Package added to your adventure successfully.');
     }
-
     // Display all bookmarks for the user
     public function myBookmarks()
     {
         $bookmarks = Bookmark::where('user_id', auth()->user()->id)->get();
-        // dd($bookmarks);
         return view('bookmark', compact('bookmarks'));
     }
 

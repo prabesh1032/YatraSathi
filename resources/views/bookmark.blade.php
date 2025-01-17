@@ -22,8 +22,6 @@
     </div>
 </div>
 
-
-
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 md:px-20 mb-16">
     @forelse($bookmarks as $bookmark)
     <div class="p-5 border shadow-lg rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
@@ -46,6 +44,14 @@
                 <i class="ri-user-line text-yellow-500"></i>
                 <span>People: <span class="font-semibold">{{ $bookmark->num_people }}</span></span>
             </p>
+            <p class="text-gray-600 flex items-center gap-2">
+                <i class="ri-user-smile-line text-green-500"></i>
+                <span>Guide:
+                    <span class="font-semibold">
+                        {{ $bookmark->guide ? $bookmark->guide->name : 'Not Selected' }}
+                    </span>
+                </span>
+            </p>
         </div>
         <div class="flex justify-between mt-5">
             <button onclick="showModal('{{ $bookmark->id }}')" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 shadow-md transition">
@@ -55,7 +61,6 @@
                 <i class="ri-shopping-cart-line mr-2"></i>Book Now
             </a>
         </div>
-
     </div>
     @empty
     <div class="col-span-full text-center py-12">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Bookmark;
 use App\Models\Package;
+use App\Models\Guide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +19,14 @@ class OrderController extends Controller
         // dd($request->all());
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
+            'guide_id' => 'nullable|exists:guides,id', // Add validation for guide_id
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'duration'=>'nullable|integer|min:1',
+            'duration' => 'nullable|integer|min:1',
             'num_people' => 'nullable|integer|min:1',
-            'travel_date' => 'required|date|after:today' // Ensure num_people is valid
+            'travel_date' => 'required|date|after:today', // Ensure num_people is valid
         ]);
 
         // Default the num_people to 1 if not provided
@@ -35,7 +37,8 @@ class OrderController extends Controller
         $data['payment_method'] = "COD";
         $data['user_id'] = auth()->user()->id;
         $data['status'] = 'Pending';
-        $data['total_price'] = $request->price * $data['num_people']*$data['duration'];
+        $data['total_price'] = $request->price * $data['num_people'] * $data['duration'];
+
         // Create the order
         Order::create($data);
 
@@ -43,11 +46,28 @@ class OrderController extends Controller
         Bookmark::where('user_id', $data['user_id'])
             ->where('package_id', $data['package_id'])
             ->delete();
+            
+        if ($data['guide_id']) {
+            $emailData = [
+                'userName' => $data['name'], // Name of the user who made the booking
+                'userPhone' => $data['phone'], // Phone number of the user
+                'userAddress' => $data['address'], // Address of the user
+                'packageName' => $data['package_id'], // The booked package name
+                'travelDate' => $data['travel_date'], // Travel date
+                'numPeople' => $data['num_people'], // Number of people
+                'totalPrice' => $data['total_price'], // Total price
+            ];
+
+            $guide = Guide::find($data['guide_id']); // Find the guide by ID
+
+            Mail::send('emails.guide_email', $emailData, function ($message) use ($guide) {
+                $message->to($guide->email, $guide->name)
+                    ->subject('You have a new booking!');
+            });
+        }
 
         return redirect('/')->with('success', 'Booking has been placed successfully.');
     }
-
-
     public function index()
     {
         // Fetch orders with pagination (10 items per page)
@@ -56,11 +76,10 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
-
     // Update the booking status
     public function status($id, $status)
     {
-        $order = Order::with('package')->findOrFail($id);
+        $order = Order::with('package', 'guide')->findOrFail($id); // Include guide in the query
         $order->status = $status;
         $order->save();
 
@@ -69,6 +88,7 @@ class OrderController extends Controller
             'status' => $status,
             'order' => $order,
             'package' => $order->package,
+            'guide' => $order->guide, // Include guide details in the email data
             'payment_method' => $order->payment_method,
         ];
 
@@ -84,7 +104,6 @@ class OrderController extends Controller
     // Handle eSewa payment and booking confirmation
     public function storeEsewa(Request $request, $bookmarkId)
     {
-
         $data = $request->data;
         $data = base64_decode($data);
         $data = json_decode($data);
@@ -105,6 +124,7 @@ class OrderController extends Controller
             $order->phone = 'N/A';
             $order->address = 'N/A';
             $order->travel_date = $request->input('travel_date', now()->addDays(7));
+            $order->guide_id = $bookmark->guide_id; // Assign guide_id from the bookmark
             $order->user_id = auth()->user()->id;
             $order->status = "Pending";
             $order->save();
@@ -114,6 +134,7 @@ class OrderController extends Controller
                 'status' => 'Pending',
                 'order' => $order,
                 'package' => $order->package,
+                'guide' => $order->guide, // Include guide in the email
                 'paymentMethod' => $order->payment_method,
             ];
 
@@ -128,14 +149,18 @@ class OrderController extends Controller
 
         return redirect('/')->with('error', 'eSewa payment failed.');
     }
+
     public function userHistory()
     {
         $user = Auth::user(); // Get the authenticated user
-        $orders = Order::where('user_id', $user->id)->with('package')->latest()->get(); // Fetch orders for the user
+        $orders = Order::where('user_id', $user->id)
+            ->with('package', 'guide') // Include guide in the query
+            ->latest()
+            ->get(); // Fetch orders for the user
 
         return view('userhistory', compact('orders')); // Pass orders to the view
-
     }
+
     public function cancel($orderId)
     {
         // Retrieve the order by its ID
@@ -158,6 +183,7 @@ class OrderController extends Controller
                 'status' => 'Cancelled',
                 'order' => $order,
                 'package' => $order->package,
+                'guide' => $order->guide, // Include guide in cancellation email
                 'payment_method' => $order->payment_method,
             ];
 
@@ -174,6 +200,4 @@ class OrderController extends Controller
             return redirect()->route('historyindex')->with('error', 'You can only cancel the booking within 6 days of placing the order.');
         }
     }
-    
-
 }

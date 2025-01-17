@@ -6,123 +6,177 @@
     <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-4">{{ $package->name }}</h1>
     <p class="text-center text-lg text-gray-600">Discover the wonders of {{ $package->location }} with this exclusive package!</p>
 
-    <!-- Main Content -->
-    <div class="flex flex-wrap mt-12 gap-y-8">
-        <!-- Package Image Section -->
-        <div class="w-full md:w-1/3 p-4 flex flex-col items-center bg-white shadow-md rounded-lg">
-            <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="rounded-lg shadow-lg w-full h-64 object-cover transition-transform duration-500 hover:scale-105">
-            <a href="{{ route('packages.read', $package->id) }}" class="block bg-gradient-to-r from-indigo-500 to-blue-600 text-white text-center mt-6 px-6 py-3 rounded-md shadow-lg hover:from-indigo-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
-                Learn More
-            </a>
+    <form method="POST" action="{{ route('bookmarks.store') }}">
+        @csrf
+        <!-- Hidden Input for Package ID -->
+        <input type="hidden" name="package_id" value="{{ $package->id }}">
+
+        <!-- Package Image and Details Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mt-8">
+            <!-- Package Image Section -->
+            <div class="p-4 bg-white ">
+                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="rounded-lg shadow-lg w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
+                <a href="{{ route('packages.read', $package->id) }}" class="block bg-gradient-to-r from-indigo-500 to-blue-600 text-white text-center mt-6 px-6 py-3 rounded-md shadow-lg hover:from-indigo-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+                    Learn More About This Package
+                </a>
+            </div>
+
+            <!-- Package Details Section -->
+            <div class="p-6 bg-white ">
+                <div class="space-y-4">
+                    <p class="text-lg text-gray-900 flex items-center">
+                        <i class="ri-map-pin-2-fill text-blue-500 text-xl mr-3"></i>
+                        <span><strong>Location:</strong> {{ $package->location }}</span>
+                    </p>
+                    <p class="text-lg text-gray-900 flex items-center">
+                        <i class="ri-money-dollar-circle-line text-green-500 text-xl mr-3"></i>
+                        <span><strong>Price:</strong> ${{ number_format($package->price, 2) }} <span class="text-sm text-gray-500">Daily Charge Per Person</span></span>
+                    </p>
+
+                    <label for="duration_range" class="text-lg font-bold flex items-center">
+                        <i class="ri-time-line text-yellow-500 text-xl mr-3"></i> Select Duration:
+                    </label>
+                    <select id="duration_range" name="duration_range" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                        @for ($i = $package->duration; $i <= $package->duration + 5; $i++)
+                            <option value="{{ $i }}">{{ $i }} days</option>
+                            @endfor
+                    </select>
+
+                    <label for="num_people" class="block text-lg font-bold mt-4">
+                        <i class="ri-user-line text-red-500 text-xl mr-3"></i> Number of People:
+                    </label>
+                    <input type="number" id="num_people" name="num_people" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all" min="1" value="1" required>
+                </div>
+            </div>
+
+            <!-- Sidebar Section -->
+            <div class="p-4 bg-white">
+                <div class="space-y-4">
+                    <a href="{{ route('whyToChooseUs') }}" class="block p-6 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-200 transition-all duration-300 rounded-lg shadow-md">
+                        <p class="font-bold text-xl">Why Choose Us</p>
+                        <p class="text-sm mt-1">See why this package stands out.</p>
+                    </a>
+                    <a href="{{ route('adventure') }}" class="block p-6 bg-green-50 border-l-4 border-green-500 text-green-700 hover:bg-green-200 transition-all duration-300 rounded-lg shadow-md">
+                        <p class="font-bold text-xl">Adventure Activities</p>
+                        <p class="text-sm mt-1">Experience exciting adventures like trekking.</p>
+                    </a>
+                    <a href="{{ route('traveltips') }}" class="block p-6 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 hover:bg-yellow-200 transition-all duration-300 rounded-lg shadow-md">
+                        <p class="font-bold text-xl">Travel Tips</p>
+                        <p class="text-sm mt-1">Get the best tips for a memorable journey.</p>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="w-full md:w-1/3  p-6 bg-white shadow-md rounded-lg">
-            <div class="space-y-6">
-                <p class="text-lg text-gray-900 flex items-center">
-                    <i class="ri ri-map-pin-2-fill text-blue-500 text-xl mr-3"></i>
-                    <span><strong>Location:</strong> {{ $package->location }}</span>
-                </p>
-                <p class="text-lg text-gray-900  flex items-center">
-                    <i class="ri ri-money-dollar-circle-line text-green-500 text-xl mr-3"></i>
-                    <span><strong>Price:</strong> ${{ number_format($package->price, 2) }}
-                        <span class="text-sm text-gray-500">Daily Charge Per Person</span></span>
-                </p>
 
-                <!-- Form with Duration Inside -->
-                <form method="POST" action="{{ route('bookmarks.store') }}">
-                    @csrf
-                    <input type="hidden" name="package_id" value="{{ $package->id }}">
-
-                    <!-- Duration Select -->
-                    <label for="duration_range" class="text-lg text-gray-900 font-bold flex items-center"><i class="ri ri-time-line text-yellow-500 text-xl mr-3"></i>Select Duration:</label>
-                    <div class="relative mb-4">
-                        <select id="duration_range" name="duration_range" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                            @for ($i = $package->duration; $i <= $package->duration + 5; $i++)
-                                <option value="{{ $i }}">{{ $i }} days</option>
-                                @endfor
-                        </select>
+        <!-- Guide Selection Section -->
+        <div class="bg-white shadow-lg ">
+            <h2 class="text-4xl font-bold text-gray-900 mb-2 text-center">Select Guide </h2>
+            <p class="text-center text-lg text-gray-600 font-bold mb-4">Select a guide to accompany you on your journey. Guides are optional and can be added later.</p>
+            @if ($guides->count() > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($guides as $guide)
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow relative">
+                    <!-- Tick Icon -->
+                    <div id="tick_{{ $guide->id }}" class="absolute top-4 right-4 bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center hidden">
+                        <i class="ri-check-line"></i>
                     </div>
-
-                    <!-- Number of People -->
-                    <label for="num_people" class="block text-gray-900 font-bold mb-2"><i class="ri ri-user-line text-red-500 text-xl mr-3"></i>Number of People:</label>
-                    <input type="number" id="num_people" name="num_people" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all mb-4" min="1" value="1" required>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-                        <i class="ri ri-bookmark-line mr-2"></i> Add to My-Plan
-                    </button>
-                </form>
+                    <div class="flex items-center mb-4">
+                        <img src="{{ asset('images/' . $guide->photopath) }}" alt="{{ $guide->name }}" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">{{ $guide->name }}</h3>
+                            <p class="text-gray-500">{{ $guide->experience }} years of experience</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">{{ $guide->bio }}</p>
+                    <div class="flex items-center">
+                        <input type="radio" id="guide_{{ $guide->id }}" name="guide_id" value="{{ $guide->id }}" class="hidden peer" onchange="showTick({{ $guide->id }})">
+                        <label for="guide_{{ $guide->id }}" class="cursor-pointer flex items-center p-3 border rounded-lg peer-checked:border-green-500 peer-checked:bg-green-50 peer-checked:shadow-md transition-all">
+                            <span>Select {{ $guide->name }}</span>
+                        </label>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            @else
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
+                <p>No guides available for this package.</p>
+            </div>
+            @endif
+            <!-- Add to Plan Button -->
+            <div class="mt-8 flex justify-center">
+                <button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white mb-2 px-8 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center">
+                    <i class="ri-bookmark-line mr-2"></i> Add to My Plan
+                </button>
             </div>
         </div>
 
+        <script>
+            // Function to show tick icon when a guide is selected
+            function showTick(guideId) {
+                // Hide all tick icons
+                document.querySelectorAll('[id^="tick_"]').forEach(tick => tick.classList.add('hidden'));
 
+                // Show the selected guide's tick icon
+                const selectedTick = document.getElementById(`tick_${guideId}`);
+                if (selectedTick) selectedTick.classList.remove('hidden');
+            }
+        </script>
+    </form>
 
-        <!-- Sidebar Section -->
-        <div class="w-full md:w-1/3 p-4 flex flex-col bg-white shadow-md rounded-lg">
-            <div class="space-y-6">
-                <a href="{{ route('whyToChooseUs') }}" class="block p-6 bg-blue-50 border-l-4 border-blue-500 text-blue-700 hover:bg-blue-200 transition-all duration-300 rounded-lg shadow-md">
-                    <p class="font-bold text-xl">Why Choose Us</p>
-                    <p class="text-sm mt-1">See why this package stands out.</p>
-                </a>
-                <a href="{{ route('adventure') }}" class="block p-6 bg-green-50 border-l-4 border-green-500 text-green-700 hover:bg-green-200 transition-all duration-300 rounded-lg shadow-md">
-                    <p class="font-bold text-xl">Adventure Activities</p>
-                    <p class="text-sm mt-1">Experience exciting adventures like trekking.</p>
-                </a>
-                <a href="{{ route('traveltips') }}" class="block p-6 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 hover:bg-yellow-200 transition-all duration-300 rounded-lg shadow-md">
-                    <p class="font-bold text-xl">Travel Tips</p>
-                    <p class="text-sm mt-1">Get the best tips for a memorable journey.</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
+    <!-- Reviews Section -->
     <div class="mt-12">
-    <h2 class="text-3xl font-bold text-gray-900 mb-4">User Reviews</h2>
-    @if ($reviews->count() > 0)
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach($reviews as $review)
-        <div class="bg-gray-50 p-6 rounded-lg shadow-md">
-            <div class="flex items-center mb-4">
-                <!-- Display Initial as Profile Image -->
-                <div class="mr-4 flex items-center justify-center bg-gray-400 w-12 h-12 rounded-full text-white font-semibold">
-                    <!-- Get First Character of the User's Name -->
-                    {{ strtoupper(substr($review->user->name, 0, 1)) }}
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">User Reviews</h2>
+        @if ($reviews->count() > 0)
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($reviews as $review)
+            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <!-- Display Initial as Profile Image -->
+                    <div class="mr-4 flex items-center justify-center bg-gray-400 w-12 h-12 rounded-full text-white font-semibold">
+                        <!-- Get First Character of the User's Name -->
+                        {{ strtoupper(substr($review->user->name, 0, 1)) }}
+                    </div>
+                    <div>
+                        <!-- Reviewer Name and Country -->
+                        <h3 class="text-xl font-bold text-gray-800">{{ $review->user->name }}</h3>
+                        <p class="text-gray-500">{{ $review->user->country }}</p>
+                    </div>
                 </div>
-                <div>
-                    <!-- Reviewer Name and Country -->
-                    <h3 class="text-xl font-bold text-gray-800">{{ $review->user->name }}</h3>
-                    <p class="text-gray-500">{{ $review->user->country }}</p>
+                <!-- Review Text -->
+                <p class="text-gray-700 mb-2">{{ $review->review }}</p>
+                <div class="mt-2 text-yellow-500">
+                    <!-- Rating -->
+                    Rating:
+                    <span class="text-yellow-400">
+                        {{ str_repeat('★', $review->rating) }}
+                    </span>
+                    <span class="text-gray-300">
+                        {{ str_repeat('☆', 5 - $review->rating) }}
+                    </span>
                 </div>
+                <!-- Review Date -->
+                <p class="text-sm text-gray-500 mt-2">Reviewed on: {{ \Carbon\Carbon::parse($review->created_at)->format('F j, Y') }}</p>
             </div>
-            <!-- Review Text -->
-            <p class="text-gray-700 mb-2">{{ $review->review }}</p>
-            <div class="mt-2 text-yellow-500">
-                <!-- Rating -->
-                Rating:
-                <span class="text-yellow-400">
-                    {{ str_repeat('★', $review->rating) }}
-                </span>
-                <span class="text-gray-300">
-                    {{ str_repeat('☆', 5 - $review->rating) }}
-                </span>
-            </div>
-            <!-- Review Date -->
-            <p class="text-sm text-gray-500 mt-2">Reviewed on: {{ \Carbon\Carbon::parse($review->created_at)->format('F j, Y') }}</p>
+            @endforeach
         </div>
-        @endforeach
+        @else
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
+            <p>No reviews yet. Be the first to leave a review!</p>
+        </div>
+        @endif
     </div>
-    @else
-    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
-        <p>No reviews yet. Be the first to leave a review!</p>
-    </div>
-    @endif
-</div>
 
 
     <!-- Add Review Form -->
-    <div class="mt-12">
-        <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center">Add Your Review</h2>
 
-        @auth
+    @auth
+    <div class="mt-12">
+        @php
+        $user_id = auth()->user()->id;
+        $count=\App\Models\Order::where('user_id', $user_id)->where('package_id', $package->id)->count();
+        @endphp
+        @if($count > 0)
+        <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center">Add Your Review</h2>
         <div class="bg-gradient-to-r from-white to-blue-50 rounded-xl shadow-lg p-8 max-w-3xl mx-auto">
             <form action="{{ route('reviews.store') }}" method="POST" class="space-y-8">
                 @csrf
@@ -159,10 +213,11 @@
         </div>
         @else
         <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg max-w-3xl mx-auto">
-            <p class="text-center text-lg font-medium">Please <a href="{{ route('login') }}" class="text-blue-600 underline hover:text-blue-800">log in</a> to leave a review.</p>
+            <p class="text-center text-lg font-medium">Please <a href="{{ route('packages') }}" class="text-blue-600 underline hover:text-blue-800">Book a Package </a> to leave a review.</p>
         </div>
-        @endauth
+        @endif
     </div>
+    @endauth
     <!-- Related Packages Section -->
     <h2 class="text-3xl font-bold text-gray-800 mt-12 mb-6">Related Packages</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

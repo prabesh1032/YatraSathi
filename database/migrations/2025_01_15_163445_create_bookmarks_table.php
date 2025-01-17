@@ -16,8 +16,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('package_id')->constrained()->onDelete('cascade');
-            $table->integer('duration')->after('package_id'); // Added duration column
-            $table->foreignId('guide_id')->constrained()->onDelete('cascade')->after('duration'); // Added guide_id column
+            $table->foreignId('guide_id')->nullable()->constrained()->onDelete('cascade'); // Guide can be optional
+            $table->integer('duration'); // Duration of the trip
+            $table->integer('num_people'); // Number of people
+            $table->decimal('total_price', 8, 2); // Total price of the package
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ class CreateGuidesTable extends Migration
             $table->string('email')->unique();
             $table->text('description');
             $table->string('photopath'); // For storing the path to the guide's photo
+            $table->integer('experience')->unsigned()->comment('Years of experience'); // Added experience column
             $table->foreignId('package_id')->constrained('packages')->onDelete('cascade'); // Ensures referential integrity
             $table->timestamps();
         });

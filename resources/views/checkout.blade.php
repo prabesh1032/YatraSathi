@@ -18,8 +18,10 @@
             <p class="text-lg text-gray-600 mt-2">Number of People:
                 <span class="text-blue-500 font-semibold">{{ $bookmark->num_people ?? 1 }}</span>
             </p>
+            <p class="text-lg text-gray-600 mt-2">Guide:
+                <span class="text-blue-500 font-semibold">{{ $bookmark->guide ? $bookmark->guide->name : 'Not Selected' }}</span>
+            </p>
         </div>
-
         <!-- User Information -->
         <div class="col-span-1 bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out">
             <h3 class="text-2xl font-semibold text-gray-800 mb-5">Your Information</h3>
@@ -31,6 +33,8 @@
                 <input type="hidden" name="bookmark_id" value="{{ $bookmark->id }}">
                 <input type="hidden" name="num_people" value="{{ $bookmark->num_people ?? 1 }}">
                 <input type="hidden" name="duration" value="{{ $bookmark->duration?? 1 }}">
+                <!-- Guide ID (If available) -->
+                <input type="hidden" name="guide_id" value="{{ $bookmark->guide->id ?? '' }}">
 
                 <!-- Name -->
                 <input type="text" name="name" placeholder="Full Name" class="w-full border rounded-lg p-4 mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ auth()->user()->name }}" required>

@@ -56,6 +56,9 @@
                 <p class="text-base text-gray-600 flex items-center">
                     <i class="ri-calendar-line text-indigo-500 mr-2"></i><strong>Booking Date:</strong> {{ $order->created_at->format('d M Y') }}
                 </p>
+                <p class="text-base text-gray-600 flex items-center"><i class="ri-user-line text-purple-500 mr-2"></i> <strong>Guide:</strong>
+                    <span class="text-blue-600 font-semibold">{{ $order->guide ? $order->guide->name : 'Not Selected' }}</span>
+                </p>
             </div>
 
             <!-- Cancel Booking Button -->

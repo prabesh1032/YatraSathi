@@ -36,6 +36,4 @@ class DashboardController extends Controller
             'userCounts'
         ));
     }
-
-
 }

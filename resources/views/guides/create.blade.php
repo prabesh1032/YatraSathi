@@ -37,6 +37,16 @@
             </div>
 
             <div class="mb-4">
+                <label for="experience" class="block text-sm font-medium text-gray-700">Experience</label>
+                <input type="number" name="experience" id="experience" value="{{ old('experience') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                @error('experience')
+                    <div class="text-red-600 mt-2 text-sm">
+                        *{{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label for="photopath" class="block text-sm font-medium text-gray-700">Photo</label>
                 <input type="file" name="photopath" id="photopath" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 @error('photopath')

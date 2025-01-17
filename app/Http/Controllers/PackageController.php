@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 
 class PackageController extends Controller
 {
@@ -28,7 +29,7 @@ class PackageController extends Controller
 
         $guides = $package->guides;
 
-        return view('viewpackage', compact('package', 'relatedpackages', 'reviews','guides'));
+        return view('viewpackage', compact('package', 'relatedpackages', 'reviews', 'guides'));
     }
 
     public function read(Package $package)
@@ -44,8 +45,16 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:packages,name',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('packages', 'name')->where(function ($query) use ($request) {
+                    return $query->whereRaw('LOWER(name) = ?', [strtolower($request->name)]);
+                }),
+            ],
             'location' => 'required|string|max:255',
+            'starting_location' => 'required|string|max:255', // Validate starting location
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -54,9 +63,18 @@ class PackageController extends Controller
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        $data = $request->only(['name', 'location', 'duration', 'price', 'description', 'latitude', 'longitude']);
+        $data = $request->only([
+            'name',
+            'location',
+            'starting_location',
+            'duration',
+            'price',
+            'description',
+            'latitude',
+            'longitude',
+        ]);
 
-        // Handle image upload using Laravel's Storage facade
+        // Handle image upload
         if ($request->hasFile('photopath')) {
             $photoname = time() . '.' . $request->photopath->extension();
             $request->photopath->move(public_path('images'), $photoname);
@@ -68,6 +86,7 @@ class PackageController extends Controller
         return redirect()->route('packages.index')->with('success', 'Package created successfully.');
     }
 
+
     public function edit($id)
     {
         $package = Package::findOrFail($id); // Use findOrFail to handle invalid IDs
@@ -76,21 +95,30 @@ class PackageController extends Controller
 
     public function update(Request $request, $id)
     {
-        $package = Package::findOrFail($id); // Use findOrFail for robust error handling
+        $package = Package::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:255|unique:packages,name,' . $package->id,
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('packages', 'name')->where(function ($query) use ($request) {
+                    return $query->whereRaw('LOWER(name) = ?', [strtolower($request->name)]);
+                }),
+            ],
             'location' => 'required|string|max:255',
+            'starting_location' => 'required|string|max:255', // Validate starting location
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string|max:5000',
-            'latitude' => 'nullable|numeric|between:-90,90',  // Validate latitude
-            'longitude' => 'nullable|numeric|between:-180,180',  // Validate longitude
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
         $package->name = $request->name;
         $package->location = $request->location;
+        $package->starting_location = $request->starting_location; // Set starting location
         $package->duration = $request->duration;
         $package->price = $request->price;
         $package->description = $request->description;
@@ -116,7 +144,7 @@ class PackageController extends Controller
 
         return redirect()->route('packages.index')->with('success', 'Package updated successfully.');
     }
-
+    
     public function destroy($id)
     {
         $package = Package::find($id);
