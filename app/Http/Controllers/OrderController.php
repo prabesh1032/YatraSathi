@@ -46,21 +46,23 @@ class OrderController extends Controller
         Bookmark::where('user_id', $data['user_id'])
             ->where('package_id', $data['package_id'])
             ->delete();
-            
+
+        $guide = Guide::find($data['guide_id']);
         if ($data['guide_id']) {
             $emailData = [
-                'userName' => $data['name'], // Name of the user who made the booking
-                'userPhone' => $data['phone'], // Phone number of the user
-                'userAddress' => $data['address'], // Address of the user
-                'packageName' => $data['package_id'], // The booked package name
-                'travelDate' => $data['travel_date'], // Travel date
-                'numPeople' => $data['num_people'], // Number of people
-                'totalPrice' => $data['total_price'], // Total price
+                'userName' => $data['name'],
+                'userPhone' => $data['phone'],
+                'userAddress' => $data['address'],
+                'packageName' => Package::find($data['package_id'])->name, // Fetch package name
+                'travelDate' => $data['travel_date'],
+                'numPeople' => $data['num_people'],
+                'totalPrice' => $data['total_price'],
+                'guide' => $guide, // Pass the guide object to the email
             ];
 
             $guide = Guide::find($data['guide_id']); // Find the guide by ID
 
-            Mail::send('emails.guide_email', $emailData, function ($message) use ($guide) {
+            Mail::send('emails.orderguidemail', $emailData, function ($message) use ($guide) {
                 $message->to($guide->email, $guide->name)
                     ->subject('You have a new booking!');
             });

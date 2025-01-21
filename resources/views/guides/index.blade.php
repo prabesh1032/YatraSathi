@@ -20,9 +20,9 @@
                     <i class="ri-map-pin-2-line text-green-500 mr-2"></i> Package: {{ $guide->package->name }}
                 </div>
                 <!-- Email -->
-                <div class="text-gray-700 mt-2 flex items-center">
+                <!-- <div class="text-gray-700 mt-2 flex items-center">
                     <i class="ri-mail-line text-blue-500 mr-2"></i> Email: {{ $guide->email }}
-                </div>
+                </div> -->
                 <!-- Experience -->
                 <div class="text-gray-700 mt-2 flex items-center">
                     <i class="ri-award-line text-yellow-500 mr-2"></i> Experience: {{ $guide->experience }} years

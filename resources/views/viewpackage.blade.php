@@ -69,30 +69,29 @@
         </div>
 
         <!-- Guide Selection Section -->
-        <div class="bg-white shadow-lg ">
-            <h2 class="text-4xl font-bold text-gray-900 mb-2 text-center">Select Guide </h2>
+        <div class="bg-white py-2 px-2 shadow-lg">
+            <h2 class="text-4xl font-bold text-gray-900 mb-2 text-center">Select Guide</h2>
             <p class="text-center text-lg text-gray-600 font-bold mb-4">Select a guide to accompany you on your journey. Guides are optional and can be added later.</p>
+
             @if ($guides->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($guides as $guide)
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow relative">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow relative" id="guide_card_{{ $guide->id }}" onclick="toggleGuideSelection({{ $guide->id }})">
                     <!-- Tick Icon -->
                     <div id="tick_{{ $guide->id }}" class="absolute top-4 right-4 bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center hidden">
                         <i class="ri-check-line"></i>
                     </div>
+
                     <div class="flex items-center mb-4">
                         <img src="{{ asset('images/' . $guide->photopath) }}" alt="{{ $guide->name }}" class="w-16 h-16 rounded-full object-cover mr-4">
                         <div>
-                            <h3 class="text-xl font-bold text-gray-800">{{ $guide->name }}</h3>
-                            <p class="text-gray-500">{{ $guide->experience }} years of experience</p>
+                            <h3 class="text-2xl font-extrabold text-gray-900">{{ $guide->name }}</h3>
+                            <p class="font-bold text-gray-500">{{ $guide->experience }} years of experience</p>
                         </div>
                     </div>
-                    <p class="text-gray-700 mb-4">{{ $guide->bio }}</p>
-                    <div class="flex items-center">
-                        <input type="radio" id="guide_{{ $guide->id }}" name="guide_id" value="{{ $guide->id }}" class="hidden peer" onchange="showTick({{ $guide->id }})">
-                        <label for="guide_{{ $guide->id }}" class="cursor-pointer flex items-center p-3 border rounded-lg peer-checked:border-green-500 peer-checked:bg-green-50 peer-checked:shadow-md transition-all">
-                            <span>Select {{ $guide->name }}</span>
-                        </label>
+
+                    <div class="w-full bg-yellow-200 hover:bg-yellow-300 text-gray-700 py-2 rounded-lg text-center transition-all">
+                        <span id="select_button_{{ $guide->id }}">Select {{ $guide->name }}</span>
                     </div>
                 </div>
                 @endforeach
@@ -102,6 +101,7 @@
                 <p>No guides available for this package.</p>
             </div>
             @endif
+
             <!-- Add to Plan Button -->
             <div class="mt-8 flex justify-center">
                 <button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white mb-2 px-8 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center">
@@ -111,16 +111,42 @@
         </div>
 
         <script>
-            // Function to show tick icon when a guide is selected
-            function showTick(guideId) {
-                // Hide all tick icons
-                document.querySelectorAll('[id^="tick_"]').forEach(tick => tick.classList.add('hidden'));
+            // Store selected guide id
+            let selectedGuideId = null;
 
-                // Show the selected guide's tick icon
-                const selectedTick = document.getElementById(`tick_${guideId}`);
-                if (selectedTick) selectedTick.classList.remove('hidden');
+            function toggleGuideSelection(guideId) {
+                const guideCard = document.getElementById(`guide_card_${guideId}`);
+                const tickIcon = document.getElementById(`tick_${guideId}`);
+                const selectButton = document.getElementById(`select_button_${guideId}`);
+
+                // Check if the guide is already selected
+                if (selectedGuideId === guideId) {
+                    // Unselect the guide
+                    tickIcon.classList.add('hidden');
+                    guideCard.classList.remove('border-green-500', 'bg-green-50');
+                    selectButton.textContent = `Select ${guideCard.querySelector('h3').textContent}`;
+                    selectedGuideId = null;
+                } else {
+                    // Unselect the previous guide if any
+                    if (selectedGuideId !== null) {
+                        const previousTickIcon = document.getElementById(`tick_${selectedGuideId}`);
+                        const previousGuideCard = document.getElementById(`guide_card_${selectedGuideId}`);
+                        const previousButton = document.getElementById(`select_button_${selectedGuideId}`);
+
+                        previousTickIcon.classList.add('hidden');
+                        previousGuideCard.classList.remove('border-green-500', 'bg-green-100');
+                        previousButton.textContent = `Select ${previousGuideCard.querySelector('h3').textContent}`;
+                    }
+
+                    // Select the new guide
+                    tickIcon.classList.remove('hidden');
+                    guideCard.classList.add('border-green-500', 'bg-green-50');
+                    selectButton.textContent = `Unselect ${guideCard.querySelector('h3').textContent}`;
+                    selectedGuideId = guideId;
+                }
             }
         </script>
+
     </form>
 
     <!-- Reviews Section -->

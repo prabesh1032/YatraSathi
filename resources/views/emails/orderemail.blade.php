@@ -1,37 +1,77 @@
-<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #f8f9fa; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
-    <div style="text-align: center; padding: 10px 0;">
-        <h1 style="color: #2c7bf7; font-size: 28px; margin: 0;">YatraSathi</h1>
-        <p style="font-size: 14px; color: #555;">Your trusted travel companion</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden mt-8">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-center py-6">
+            <div class="flex justify-center items-center space-x-3">
+                <i class="ri-map-pin-line text-4xl"></i>
+                <h1 class="text-3xl font-bold">YatraSathi</h1>
+            </div>
+            <p class="text-sm mt-2">Your Trusted Travel Companion</p>
+        </div>
 
-    <div style="background-color: #fff; padding: 20px; border-radius: 10px; margin-top: 20px;">
-        <p style="font-size: 18px; color: #333; margin-bottom: 15px;">Dear {{ $name }},</p>
-        <p style="font-size: 16px; color: #666; line-height: 1.6;">We are happy to let you know that your booking is now <strong style="color: #2c7bf7;">{{ $status }}</strong>.
-        Thank you for choosing us for your travel journey!
-        </p>
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
+        <!-- Main Content -->
+        <div class="p-8">
+            <p class="text-lg font-semibold text-gray-700 mb-4">Dear {{ $name }},</p>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                We are thrilled to inform you that your booking status is now
+                <span class="font-bold text-blue-600">{{ $status }}</span>. Thank you for choosing YatraSathi for your travel needs!
+            </p>
 
-        <h3 style="color: #333; font-size: 18px; margin-bottom: 10px;">Order Details:</h3>
-        <p style="font-size: 16px; color: #555; line-height: 1.6;">
-            <strong>Package Name:</strong> {{ $package->name }} <br>
-            <strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }} <br>
-            <strong>Number of Travelers:</strong> {{ $order->num_people }} <br>
-            <strong>Duration:</strong> {{ $package->duration }} Days <br>
-            <strong>Traveling On:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }} <br>
-            <strong>Payment Method:</strong> {{ $order->payment_method }}
-        </p>
+            <hr class="border-gray-300 my-6">
 
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
+            <!-- Order Details -->
+            <h2 class="text-xl font-semibold text-blue-600 mb-4">
+                <i class="ri-file-list-line align-middle text-lg"></i> Order Details
+            </h2>
+            <ul class="space-y-3 text-gray-700">
+                <li><strong>Package Name:</strong> {{ $package->name }}</li>
+                <li><strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }}</li>
+                <li><strong>Number of Travelers:</strong> {{ $order->num_people }}</li>
+                <li><strong>Duration:</strong> {{ $package->duration }} Days</li>
+                <li><strong>Traveling On:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}</li>
+                <li><strong>Payment Method:</strong> {{ $order->payment_method }}</li>
+            </ul>
 
-        <p style="font-size: 16px; color: #666; line-height: 1.6;">If you have any questions, feel free to contact our support team at <a href="mailto:support@yatrasathi.com" style="color: #2c7bf7; text-decoration: none;">support@yatrasathi.com</a>.</p>
+            <hr class="border-gray-300 my-6">
 
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="{{ route('home') }}" style="background-color: #2c7bf7; color: #fff; padding: 10px 20px; font-size: 16px; border-radius: 5px; text-decoration: none;">Explore More Packages</a>
+            <p class="text-gray-600 leading-relaxed">
+                If you have any questions or require further assistance, feel free to contact our support team at
+                <a href="mailto:support@yatrasathi.com" class="text-blue-600 hover:underline">support@yatrasathi.com</a>.
+            </p>
+
+            <div class="text-center mt-8">
+                <a href="{{ route('home') }}" class="bg-blue-600 text-white px-6 py-3 rounded-md text-lg font-semibold shadow hover:bg-blue-700 transition">
+                    <i class="ri-compass-line align-middle mr-2"></i> Explore More Packages
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-gray-100 text-center py-4 border-t border-gray-300">
+            <p class="text-gray-600 text-sm">
+                © 2025 YatraSathi. All rights reserved.
+            </p>
+            <div class="flex justify-center space-x-4 mt-2">
+                <a href="https://twitter.com/yatrasathi" class="text-blue-600 hover:underline">
+                    <i class="ri-twitter-line text-lg"></i> Twitter
+                </a>
+                <a href="https://facebook.com/yatrasathi" class="text-blue-600 hover:underline">
+                    <i class="ri-facebook-line text-lg"></i> Facebook
+                </a>
+                <a href="https://instagram.com/yatrasathi" class="text-blue-600 hover:underline">
+                    <i class="ri-instagram-line text-lg"></i> Instagram
+                </a>
+            </div>
         </div>
     </div>
-
-    <footer style="text-align: center; margin-top: 20px; font-size: 14px; color: #888;">
-        <p>© 2024 YatraSathi. All rights reserved.</p>
-        <p>Follow us: <a href="https://twitter.com/yatrasathi" style="color: #2c7bf7; text-decoration: none;">Twitter</a> | <a href="https://facebook.com/yatrasathi" style="color: #2c7bf7; text-decoration: none;">Facebook</a></p>
-    </footer>
-</div>
+</body>
+</html>

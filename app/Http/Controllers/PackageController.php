@@ -20,14 +20,16 @@ class PackageController extends Controller
         $packages = Package::all();
         return view('package', compact('packages'));
     }
-
     public function show(Package $package)
     {
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
 
         $reviews = $package->reviews()->latest()->take(3)->get();
 
-        $guides = $package->guides;
+        // Filter guides who are not booked or whose bookings are completed
+        $guides = $package->guides()->whereDoesntHave('orders', function ($query) {
+            $query->where('status', '!=', 'Completed'); // Exclude guides with incomplete bookings
+        })->get();
 
         return view('viewpackage', compact('package', 'relatedpackages', 'reviews', 'guides'));
     }
@@ -144,7 +146,7 @@ class PackageController extends Controller
 
         return redirect()->route('packages.index')->with('success', 'Package updated successfully.');
     }
-    
+
     public function destroy($id)
     {
         $package = Package::find($id);
