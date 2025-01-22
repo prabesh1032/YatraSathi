@@ -113,9 +113,9 @@ class OrderController extends Controller
 
         if ($status === "COMPLETE") {
             $bookmark = Bookmark::find($bookmarkId);
-            if (!$bookmark) {
-                return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
-            }
+            // if (!$bookmark) {
+            //     return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
+            // }
             $order = new Order();
             $order->package_id = $bookmark->package_id;
             $order->total_price = $bookmark->total_price;
@@ -123,9 +123,9 @@ class OrderController extends Controller
             $order->duration = $bookmark->duration;
             $order->payment_method = "eSewa";
             $order->name = $bookmark->user->name;
-            $order->phone = 'N/A';
-            $order->address = 'N/A';
-            $order->travel_date = $request->input('travel_date', now()->addDays(7));
+            $order->phone =  $bookmark->user->phone;
+            $order->address = $bookmark->user->address;
+            $order->travel_date = $request->input('travel_date');
             $order->guide_id = $bookmark->guide_id; // Assign guide_id from the bookmark
             $order->user_id = auth()->user()->id;
             $order->status = "Pending";

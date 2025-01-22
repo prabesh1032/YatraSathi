@@ -21,9 +21,7 @@
                     <span class="text-green-600 font-bold text-lg">${{ $package->price }}</span>
                     <div class="flex items-center space-x-2">
                         <a href="{{ route('packages.edit', $package->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-yellow-600 transition duration-300">Edit</a>
-                        <a href="{{route('packages.destroy',$package->id)}}"
-                            class="bg-red-700 text-white px-3 py-1.5 rounded-lg shadow-md hover:bg-red-800 transition duration-300"
-                            onclick= "return confirm('Are you sure to delete')">Delete</a>
+                        <button onclick="showModal('{{ $package->id }}')" class="bg-red-700 text-white px-3 py-1.5 rounded-lg shadow-md hover:bg-red-800 transition duration-300">Delete</button>
                     </div>
                 </div>
             </div>
@@ -31,4 +29,38 @@
         @endforeach
     </div>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div class="fixed hidden inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50" id="deleteModal">
+    <form id="deleteForm" method="POST" class="bg-white p-6 rounded-lg shadow-2xl max-w-md">
+        @csrf
+        @method('GET')
+        <h1 class="text-2xl font-bold text-center text-blue-700 mb-4">
+            <i class="ri-error-warning-line text-yellow-500 mr-2"></i> Confirm Deletion
+        </h1>
+        <p class="text-gray-600 text-center mb-6">Are you sure you want to remove this package? This action cannot be undone.</p>
+        <div class="flex justify-center gap-5">
+            <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-400">
+                <i class="ri-check-line mr-2"></i>Yes, Delete
+            </button>
+            <button type="button" onclick="hideModal()" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 focus:ring-2 focus:ring-gray-400">
+                <i class="ri-close-line mr-2"></i>Cancel
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function showModal(packageId) {
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteForm = document.getElementById('deleteForm');
+        deleteForm.action = `/packages/${packageId}/destroy`; // Set action to delete route for package
+        deleteModal.classList.remove('hidden');
+    }
+
+    function hideModal() {
+        const deleteModal = document.getElementById('deleteModal');
+        deleteModal.classList.add('hidden');
+    }
+</script>
 @endsection

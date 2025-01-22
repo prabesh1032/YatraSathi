@@ -59,5 +59,8 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-
+    public function packages()
+    {
+        return $this->belongsToMany(Package::class, 'user_package', 'user_id', 'package_id');
+    }
 }

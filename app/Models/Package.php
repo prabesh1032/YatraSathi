@@ -32,4 +32,10 @@ class Package extends Model
     {
         return $this->hasMany(Guide::class);
     }
+    // Package Model
+public function users()
+{
+    return $this->belongsToMany(User::class, 'user_package', 'package_id', 'user_id');
+}
+
 }

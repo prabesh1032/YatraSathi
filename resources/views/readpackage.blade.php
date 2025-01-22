@@ -17,47 +17,35 @@
 
             <!-- Package Title -->
             <h1 class="text-5xl font-extrabold text-gray-800 mb-4">{{ $package->name }}</h1>
-            <p class="text-lg text-gray-700 leading-relaxed mb-8">
-                {{ $package->description }}
-            </p>
             <div class="bg-gray-50 p-6 rounded-lg shadow-lg mb-6">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">About this Activity</h3>
-
-                <!-- Free cancellation -->
-                <div class="flex items-start mb-4">
-                    <i class="ri-refresh-line text-blue-500 text-3xl mr-4"></i>
-                    <div>
-                        <span class="text-lg font-medium">Free cancellation:</span>
-                        <p class="text-gray-600 text-base">Cancel booking up to 24 hours in advance for a full refund.</p>
-                    </div>
-                </div>
-
-                <!-- Reserve now & pay later -->
-                <div class="flex items-start mb-4">
-                    <i class="ri-wallet-2-line text-green-500 text-3xl mr-4"></i>
-                    <div>
-                        <span class="text-lg font-medium">Reserve now & pay later:</span>
-                        <p class="text-gray-600 text-base">Keep your travel plans flexible — book your spot and pay nothing today.</p>
-                    </div>
-                </div>
-                <!-- Starting Location -->
-                <div class="flex items-start mb-4">
-                    <i class="ri-map-pin-2-line text-red-500 text-3xl mr-4"></i>
-                    <div>
-                        <span class="text-lg font-medium">Starting Location:</span>
-                        <p class="text-gray-600 text-base">{{ $package->starting_location }}.</p>
-                    </div>
-                </div>
-
-                <!-- More Info About the Package -->
-                <div class="flex items-start mb-4">
-                    <i class="ri-information-line text-orange-500 text-3xl mr-4"></i>
-                    <div>
-                        <span class="text-lg font-medium">More Information:</span>
-                        <p class="text-gray-600 text-base">This package includes unique experiences like hiking, sightseeing tours, and much more.</p>
-                    </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-6"><i class="ri-calendar-event-line text-blue-500 text-3xl mr-2"></i>Itinerary</h3>
+                <div class="itinerary text-gray-700 text-base leading-relaxed">
+                    {!! $package->description !!}
                 </div>
             </div>
+            <style>
+                .itinerary h3 {
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    color: #2c3e50;
+                    margin-bottom: 0.5rem;
+                }
+
+                .itinerary p {
+                    margin: 0.25rem 0;
+                    line-height: 1.6;
+                }
+
+                .itinerary strong {
+                    color: #16a085;
+                    font-weight: 600;
+                }
+
+                .bg-gray-50 {
+                    background-color: #f9f9f9;
+                }
+            </style>
+
             <!-- Importance Section -->
             <div class=" p-6 rounded-lg shadow-lg mb-8 border border-gray-300">
                 <h3 class="text-3xl font-semibold text-blue-700 mb-4">
@@ -95,25 +83,27 @@
 
                 <div class="grid grid-rows-2 gap-4">
                     <!-- Row 1 -->
-                    <div class="flex justify-between space-x-4 ">
+                    <div class="flex justify-between items-stretch space-x-4">
                         <a href="{{ route('packages.show', $package->id) }}"
-                            class="flex items-center justify-center bg-blue-500 text-white text-center py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition transform hover:scale-105">
+                            class="flex items-center justify-center bg-blue-500 text-white text-center py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition transform hover:scale-105 flex-grow">
                             <i class="ri-shopping-cart-line mr-4"></i> Book Now
                         </a>
                         <a href="{{ route('traveltips') }}"
-                            class="flex items-center justify-center bg-green-500 text-white text-center py-3 px-4 rounded-lg shadow-md hover:bg-green-600 transition transform hover:scale-105">
+                            class="flex items-center justify-center bg-green-500 text-white text-center py-3 px-4 rounded-lg shadow-md hover:bg-green-600 transition transform hover:scale-105 flex-grow">
                             <i class="ri-lightbulb-line mr-4"></i> Tips for Travel
                         </a>
                     </div>
 
                     <!-- Row 2 -->
-                    <div class="flex justify-center mb-4">
+                    <div class="flex justify-center items-stretch mb-4">
                         <a href="{{ route('route.show') }}"
-                            class="flex items-center justify-center bg-indigo-500 text-white text-center py-3 px-4 rounded-lg shadow-md hover:bg-indigo-600 transition transform hover:scale-105">
+                            class="flex items-center justify-center bg-indigo-500 text-white text-center py-3 px-4 rounded-lg shadow-md hover:bg-indigo-600 transition transform hover:scale-105 flex-grow">
                             <i class="ri-map-pin-line mr-2"></i> View Package on Map
                         </a>
                     </div>
                 </div>
+
+
                 <!-- Contact Section -->
                 <div class="p-4 rounded-lg shadow">
                     <h3 class="text-xl font-semibold text-gray-800 mb-2 flex items-center">
@@ -121,27 +111,27 @@
                     </h3>
                     <p class="text-gray-700 mb-4">For inquiries or further details, please contact us directly.</p>
                     <div class="flex space-x-5">
-                    <!-- Facebook -->
-                    <a href="https://facebook.com/prabesh.ach" class="text-blue-600 hover:text-blue-500">
-                        <i class="ri-facebook-line ri-2x"></i>
-                    </a>
-                    <!-- Twitter -->
-                    <a href="https://twitter.com/PrabeshAch33319" class="text-blue-400 hover:text-blue-300">
-                        <i class="ri-twitter-line ri-2x"></i>
-                    </a>
-                    <!-- Instagram -->
-                    <a href="https://instagram.com/prabesh_ach" class="text-pink-500 hover:text-pink-400">
-                        <i class="ri-instagram-line ri-2x"></i>
-                    </a>
-                    <!-- Email -->
-                    <a href="mailto:prabesh11100@gmail.com" class="text-gray-700 hover:text-gray-600">
-                        <i class="ri-mail-line ri-2x"></i>
-                    </a>
-                    <!-- Phone -->
-                    <a href="tel:+9779812965110" class="text-green-500 hover:text-green-400">
-                        <i class="ri-phone-line ri-2x"></i>
-                    </a>
-                </div>
+                        <!-- Facebook -->
+                        <a href="https://facebook.com/prabesh.ach" class="text-blue-600 hover:text-blue-500">
+                            <i class="ri-facebook-line ri-2x"></i>
+                        </a>
+                        <!-- Twitter -->
+                        <a href="https://twitter.com/PrabeshAch33319" class="text-blue-400 hover:text-blue-300">
+                            <i class="ri-twitter-line ri-2x"></i>
+                        </a>
+                        <!-- Instagram -->
+                        <a href="https://instagram.com/prabesh_ach" class="text-pink-500 hover:text-pink-400">
+                            <i class="ri-instagram-line ri-2x"></i>
+                        </a>
+                        <!-- Email -->
+                        <a href="mailto:prabesh11100@gmail.com" class="text-gray-700 hover:text-gray-600">
+                            <i class="ri-mail-line ri-2x"></i>
+                        </a>
+                        <!-- Phone -->
+                        <a href="tel:+9779812965110" class="text-green-500 hover:text-green-400">
+                            <i class="ri-phone-line ri-2x"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

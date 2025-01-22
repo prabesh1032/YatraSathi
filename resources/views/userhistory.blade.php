@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container mx-auto mt-10">
+<div class="container px-10 py-10 mt-10">
     <!-- Intro Section -->
-    <div class="text-center mb-12">
+    <div class="text-center mb-2">
         <h1 class="text-5xl font-extrabold text-indigo-700">
             <i class="ri-road-map-line mr-3 text-yellow-500"></i>Your Travel History
         </h1>
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Bookings Grid -->
-    <div class="grid grid-cols-1 mb-4 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 mb-2 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         @forelse ($orders as $order)
         <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transform hover:scale-105 transition duration-300">
             <!-- Image Section -->
@@ -62,22 +62,19 @@
             </div>
 
             <!-- Cancel Booking Button -->
-            @if (\Carbon\Carbon::parse($order->created_at)->diffInDays(\Carbon\Carbon::now()) <= 6 && $order->status != 'Cancelled')
+            @if (\Carbon\Carbon::parse($order->created_at)->diffInDays(\Carbon\Carbon::now()) <= 2 && $order->status != 'Cancelled')
                 <div class="p-5">
-                    <form action="{{ route('orders.cancel', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this booking?')">
-                        @csrf
-                        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300">
-                            Cancel Booking
-                        </button>
-                    </form>
+                    <button data-action="{{ route('orders.cancel', $order->id) }}" class="cancel-booking-btn w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300">
+                        Cancel Booking
+                    </button>
                 </div>
-                @else
+            @else
                 <div class="p-5">
                     <button class="w-full bg-gray-400 text-white py-2 rounded-md text-lg font-semibold cursor-not-allowed">
                         Cancellation Not Allowed
                     </button>
                 </div>
-                @endif
+            @endif
         </div>
         @empty
         <div class="col-span-full text-center py-12">
@@ -91,4 +88,56 @@
         @endforelse
     </div>
 </div>
+
+<!-- Modal for Confirmation -->
+<div id="cancelBookingModal" class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 justify-center items-center flex">
+    <div class="bg-white p-8 rounded-lg max-w-lg w-full space-y-4">
+        <h3 class="text-2xl font-semibold text-gray-800">Cancel Booking</h3>
+        <p class="text-gray-600">Are you sure you want to cancel this booking? This action cannot be undone.</p>
+        <div class="flex justify-between">
+            <button id="closeModal" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md">Cancel</button>
+            <form id="cancelBookingForm" action="" method="POST" class="inline">
+                @csrf
+                <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition duration-300">
+                    Confirm Cancellation
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get modal elements
+        const modal = document.getElementById('cancelBookingModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelButtons = document.querySelectorAll('.cancel-booking-btn');
+        const cancelBookingForm = document.getElementById('cancelBookingForm');
+
+        // Show modal
+        cancelButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const actionUrl = this.getAttribute('data-action');
+                cancelBookingForm.action = actionUrl; // Set form action dynamically
+                modal.classList.remove('hidden');
+            });
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+
+        // Prevent modal from closing when clicked inside
+        modal.querySelector('.bg-white').addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        // Close modal on clicking outside
+        modal.addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+    });
+</script>
 @endsection

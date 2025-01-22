@@ -4,11 +4,12 @@
 <div class="container mx-auto p-8">
     <!-- Package Title -->
     <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-4">{{ $package->name }}</h1>
-    <p class="text-center text-lg text-gray-600">Discover the wonders of {{ $package->location }} with this exclusive package!</p>
+    <p class="text-center font-bold text-lg text-gray-600">Discover the wonders of {{ $package->location }} with this exclusive package!</p>
 
     <form method="POST" action="{{ route('bookmarks.store') }}">
         @csrf
         <!-- Hidden Input for Package ID -->
+        <input type="hidden" name="guide_id" id="hidden_guide_id" value="">
         <input type="hidden" name="package_id" value="{{ $package->id }}">
 
         <!-- Package Image and Details Section -->
@@ -30,7 +31,7 @@
                     </p>
                     <p class="text-lg text-gray-900 flex items-center">
                         <i class="ri-money-dollar-circle-line text-green-500 text-xl mr-3"></i>
-                        <span><strong>Price:</strong> ${{ number_format($package->price, 2) }} <span class="text-sm text-gray-500">Daily Charge Per Person</span></span>
+                        <span><strong>Price:</strong> ${{ number_format($package->price, 2) }} <span class="text-sm font-bold text-gray-600">Daily Charge Per Person</span></span>
                     </p>
 
                     <label for="duration_range" class="text-lg font-bold flex items-center">
@@ -97,7 +98,7 @@
                 @endforeach
             </div>
             @else
-            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
+            <div class="bg-yellow-100 border-l-4 text-lg font-bold border-yellow-500 text-yellow-700 p-6 rounded-lg">
                 <p>No guides available for this package.</p>
             </div>
             @endif
@@ -118,16 +119,16 @@
                 const guideCard = document.getElementById(`guide_card_${guideId}`);
                 const tickIcon = document.getElementById(`tick_${guideId}`);
                 const selectButton = document.getElementById(`select_button_${guideId}`);
+                const hiddenInput = document.getElementById("hidden_guide_id");
 
-                // Check if the guide is already selected
                 if (selectedGuideId === guideId) {
                     // Unselect the guide
                     tickIcon.classList.add('hidden');
-                    guideCard.classList.remove('border-green-500', 'bg-green-50');
+                    guideCard.classList.remove('border-green-500', 'bg-green-100');
                     selectButton.textContent = `Select ${guideCard.querySelector('h3').textContent}`;
+                    hiddenInput.value = ''; // Reset the hidden input
                     selectedGuideId = null;
                 } else {
-                    // Unselect the previous guide if any
                     if (selectedGuideId !== null) {
                         const previousTickIcon = document.getElementById(`tick_${selectedGuideId}`);
                         const previousGuideCard = document.getElementById(`guide_card_${selectedGuideId}`);
@@ -138,10 +139,10 @@
                         previousButton.textContent = `Select ${previousGuideCard.querySelector('h3').textContent}`;
                     }
 
-                    // Select the new guide
                     tickIcon.classList.remove('hidden');
-                    guideCard.classList.add('border-green-500', 'bg-green-50');
+                    guideCard.classList.add('border-green-500', 'bg-green-100');
                     selectButton.textContent = `Unselect ${guideCard.querySelector('h3').textContent}`;
+                    hiddenInput.value = guideId; // Set the hidden input value
                     selectedGuideId = guideId;
                 }
             }
@@ -186,7 +187,7 @@
             @endforeach
         </div>
         @else
-        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-lg font-bold text-yellow-700 p-6 rounded-lg">
             <p>No reviews yet. Be the first to leave a review!</p>
         </div>
         @endif
@@ -238,8 +239,8 @@
             </form>
         </div>
         @else
-        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg max-w-3xl mx-auto">
-            <p class="text-center text-lg font-medium">Please <a href="{{ route('packages') }}" class="text-blue-600 underline hover:text-blue-800">Book a Package </a> to leave a review.</p>
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 rounded-lg">
+            <p class=" text-lg font-bold">Please <a href="{{ route('packages.show', $package->id) }}" class="text-blue-600 underline hover:text-blue-800">Book this Package </a>and  leave a review.</p>
         </div>
         @endif
     </div>

@@ -1,32 +1,61 @@
 @extends('layouts.app')
-@section('title') Users
-@endsection
+@section('title', 'Travellers')
 
 @section('content')
 
-<div class="overflow-hidden shadow-xl rounded-lg mt-4">
-    <!-- Table Header -->
-    <div class="grid grid-cols-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-4 rounded-t-lg">
-        <div class="text-center font-semibold">S.N</div>
-        <div class="text-center font-semibold">User Name</div>
-        <div class="text-center font-semibold">Actions</div>
-    </div>
+<div class="container mx-auto px-6 py-10">
+    <h1 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Our Travellers</h1>
 
-    <!-- Users List -->
-    @foreach($users as $user)
-    <div class="grid grid-cols-3 bg-gray-900 text-white p-4 rounded-lg mt-2 mb-2 hover:bg-gray-800 transition-all duration-300">
-        <div class="text-center">{{ $loop->iteration }}</div>
-        <div class="text-center">{{ $user->name }}</div>
-        <div class="flex justify-center space-x-4">
-            <a href="" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Edit</a>
-            <a href="" class="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition duration-200" onclick="return confirm('Are you sure you want to delete')">Delete</a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+        @foreach($users as $user)
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transform hover:scale-105 transition duration-300 ease-in-out">
+            <div class="p-6 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-t-lg">
+                <h3 class="text-2xl font-bold">
+                    SN: {{ $loop->iteration }} - {{ $user->name }} <!-- Display serial number -->
+                </h3>
+            </div>
+
+            <div class="p-6 bg-white">
+                <!-- Moved Email, Address, and other info below the name -->
+                <div class="flex items-center text-xl text-gray-700 mt-4">
+                    <i class="ri-mail-line mr-2"></i>
+                    <span><strong>Email:</strong> {{ $user->email }}</span>
+                </div>
+
+                <div class="flex items-center text-xl text-gray-700 mt-4">
+                    <i class="ri-map-pin-2-line text-green-500 mr-2"></i>
+                    <span><strong>Address:</strong> {{ $user->address }}</span>
+                </div>
+
+                <div class="flex items-center text-xl text-gray-700 mt-4">
+                    <i class="ri-calendar-line text-yellow-500 mr-2"></i>
+                    <span><strong>Joined:</strong> {{ \Carbon\Carbon::parse($user->created_at)->format('d M, Y') }}</span>
+                </div>
+
+                <!-- Display the total number of bookings -->
+                <div class="flex items-center text-xl text-gray-700 mt-4">
+                    <i class="ri-ticket-2-line text-indigo-500 mr-2"></i>
+                    <span><strong>Total Bookings:</strong> {{ $user->orders->count() }}</span>
+                </div>
+                <div class="flex items-center text-xl text-gray-700 mt-4">
+                    <i class="ri-star-half-line text-lime-500 mr-2"></i>
+                    <span><strong>Total Reviews:</strong> {{ $user->reviews->count() }}</span>
+                </div>
+
+                <!-- Display the user's travelled package -->
+                <!-- @if($user->packages->isNotEmpty())
+                <div class="flex items-center text-gray-700 mt-4">
+                    <i class="ri-plane-line text-red-500 mr-2"></i>
+                    <span><strong>Travelled Package:</strong> {{ $user->packages->first()->name }}</span>
+                </div>
+                @else
+                <div class="text-gray-700 mt-4">
+                    <strong>Travelled Package:</strong> N/A
+                </div>
+                @endif -->
+            </div>
         </div>
-    </div>
-    @endforeach
-
-    <!-- Pagination -->
-    <div class="mt-6 text-center">
-        {{ $users->links('pagination::tailwind') }}
+        @endforeach
     </div>
 </div>
 

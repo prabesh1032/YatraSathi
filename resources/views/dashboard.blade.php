@@ -60,7 +60,7 @@
 </h3>
 <div class="flex">
     <div class="bg-white p-6 rounded-lg shadow-md w-full">
-        <canvas id="myChart" class="rounded-lg" style="max-width: 100%; height: 500px;"></canvas>
+        <canvas id="myChart" class="rounded-lg" style="max-width: 100%; height: 300px;"></canvas>
     </div>
 </div>
 

@@ -40,7 +40,7 @@
                 </a>
                 <a href="{{ route('guides.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
     @if(Route::is('guides.index')) bg-yellow-200 @endif">
-                    <i class="ri-suitcase-line text-orange-500 mr-2"></i> Guides
+                    <i class="ri-user-heart-line text-indigo-500 mr-2"></i> Guides
                 </a>
                 <a href="{{route('orders.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
     @if(Route::is('orders.index')) bg-yellow-200 @endif">

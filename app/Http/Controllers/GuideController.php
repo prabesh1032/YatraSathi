@@ -115,6 +115,9 @@ class GuideController extends Controller
 
         // Delete the guide record
         $guide->delete();
+
+        // Flash success message and redirect to the index
         return redirect()->route('guides.index')->with('success', 'Guide deleted successfully.');
     }
+
 }

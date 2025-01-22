@@ -25,6 +25,7 @@ Route::get('/whyToChooseUs', [PageController::class, 'whyToChooseUs'])->name('wh
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/journey/location', [PackageController::class, 'showLocationPage'])->name('location.index');
+Route::post('/travellers/{userId}/assign-package', [TravellerController::class, 'attachPackage'])->name('travellers.assignPackage');
 
 Route::get('/packages/{package}/show', [PackageController::class, 'show'])->name('packages.show');
 Route::get('/guides/{guide}/show', [GuideController::class, 'show'])->name('guides.show');

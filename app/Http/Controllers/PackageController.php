@@ -22,18 +22,20 @@ class PackageController extends Controller
     }
     public function show(Package $package)
     {
+        // Get related packages excluding the current package
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
 
+        // Get the latest reviews for the package
         $reviews = $package->reviews()->latest()->take(3)->get();
 
-        // Filter guides who are not booked or whose bookings are completed
-        $guides = $package->guides()->whereDoesntHave('orders', function ($query) {
-            $query->where('status', '!=', 'Completed'); // Exclude guides with incomplete bookings
+        // Filter guides based on the specific package
+        $guides = $package->guides()->whereDoesntHave('orders', function ($query) use ($package) {
+            $query->where('status', '!=', 'Completed')
+                ->where('package_id', $package->id); // Filter only for the current package
         })->get();
 
         return view('viewpackage', compact('package', 'relatedpackages', 'reviews', 'guides'));
     }
-
     public function read(Package $package)
     {
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
@@ -47,20 +49,13 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('packages', 'name')->where(function ($query) use ($request) {
-                    return $query->whereRaw('LOWER(name) = ?', [strtolower($request->name)]);
-                }),
-            ],
+            'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'starting_location' => 'required|string|max:255', // Validate starting location
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'nullable|string|max:5000',
+            'description' => 'nullable|string|max:50000',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
@@ -100,20 +95,13 @@ class PackageController extends Controller
         $package = Package::findOrFail($id);
 
         $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('packages', 'name')->where(function ($query) use ($request) {
-                    return $query->whereRaw('LOWER(name) = ?', [strtolower($request->name)]);
-                }),
-            ],
+            'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'starting_location' => 'required|string|max:255', // Validate starting location
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'nullable|string|max:5000',
+            'description' => 'nullable|string|max:50000',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
