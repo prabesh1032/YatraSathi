@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/review/store', [ReviewController::class, 'store'])->name('reviews.store');
     Route::post('/messages/store', [MessageController::class, 'store'])->name('messages.store');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/ordersesewa/esewa/{packageId}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
+    Route::get('/ordersesewa/esewa/{bookmarkid}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
     Route::get('/history', [OrderController::class, 'userHistory'])->name('historyindex');
     Route::post('/orders/{orderId}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 

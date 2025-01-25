@@ -104,18 +104,18 @@ class OrderController extends Controller
     }
 
     // Handle eSewa payment and booking confirmation
-    public function storeEsewa(Request $request, $bookmarkId)
+    public function storeEsewa(Request $request, $bookmarkid)
     {
         $data = $request->data;
         $data = base64_decode($data);
         $data = json_decode($data);
         $status = $data->status;
-
         if ($status === "COMPLETE") {
-            $bookmark = Bookmark::find($bookmarkId);
-            // if (!$bookmark) {
-            //     return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
-            // }
+            $bookmark = Bookmark::find($bookmarkid);
+            if (!$bookmark) {
+                return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
+                // return redirect('/')->with('error', 'No corresponding bookmark found for the eSewa payment.');
+            }
             $order = new Order();
             $order->package_id = $bookmark->package_id;
             $order->total_price = $bookmark->total_price;

@@ -4,7 +4,7 @@
 <!-- Header Section -->
 <header class="relative h-screen w-88 bg-cover mt-0 bg-center" style="background-image: url('{{ asset('home.jpeg') }}'); background-attachment:fixed;">
     <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
-    <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-indigo-700">
+    <div class="relative container mx-auto h-full flex flex-col justify-start items-center text-center text-indigo-700 pt-32"> <!-- Adjusted from justify-center to justify-start and added pt-20 for more space from top -->
         <h1 class="text-5xl md:text-6xl text-black font-extrabold mb-4 animate-bounce">Explore. Dream. Discover.</h1>
         <p class="text-xl md:text-2xl font-extrabold mb-6">Let us take you places you’ve never been.</p>
         <a href="{{ route('location.index') }}" class="px-8 py-4 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">
@@ -12,6 +12,7 @@
         </a>
     </div>
 </header>
+
 <!-- Welcome Section -->
 <section class="py-8 bg-gray-100">
     <div class="container mx-auto text-center">
@@ -89,7 +90,7 @@
                 <div class="absolute top-4 right-4 bg-yellow-500 px-3 py-1 rounded-lg text-black text-sm font-bold shadow-md">New</div>
                 <div class="p-6">
                     <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $package->name }}</h3>
-                    <p class="text-lg text-gray-600 mb-4">${{ $package->price }}</p>
+                    <p class="text-lg text-green-500 font-bold mb-4">${{ $package->price }}</p>
                     <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="block w-full py-2 text-center bg-indigo-500 text-white font-bold rounded-lg shadow-md hover:bg-indigo-600 transition transform hover:scale-105">
                         View Details
                     </a>

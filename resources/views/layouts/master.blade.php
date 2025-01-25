@@ -15,76 +15,113 @@
 
 <body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
     @include('Layouts.alert')
+    <div class="flex justify-between items-center px-4 py-3 bg-yellow-500 text-white shadow-lg"> <!-- Adjusted padding for better mobile spacing -->
+        <!-- Logo and Main Link -->
+        <div>
+            <a href="{{ route('home') }}" class="text-2xl text-gray-900 font-extrabold hover:text-indigo-900 flex items-center space-x-2">
+                <i class="ri-map-pin-line"></i>
+                <span>Travel, Explore, Thrive </span>
+            </a>
+        </div>
+
+        <!-- Navigation and Authentication -->
+        <div class="flex items-center space-x-6">
+            @auth
+                <!-- User Name and My Adventures -->
+                <a href="{{ route('userprofile.edit') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2">
+                    <i class="ri-user-fill"></i>
+                    <span>Hi, {{ auth()->user()->name }}</span>
+                </a>
+
+                <!-- My Adventures Link with Badge -->
+                <div class="relative flex items-center space-x-2">
+                    <a href="{{ route('bookmarks.index') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-indigo-500 font-extrabold' : '' }}">
+                        <i class="ri-map-pin-fill"></i>
+                        <span>My Adventures</span>
+                    </a>
+                    <span class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                        @php
+                            $no_of_items = \App\Models\Bookmark::where('user_id', auth()->id())->count();
+                        @endphp
+                        {{ $no_of_items }}
+                    </span>
+                </div>
+
+                <!-- My Bookings Link with Badge -->
+                <div class="relative flex items-center space-x-2">
+                    <a href="{{ route('historyindex') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 {{ Route::currentRouteName() == 'historyindex' ? 'text-indigo-500 font-extrabold' : '' }}">
+                        <i class="ri-calendar-check-fill"></i>
+                        <span>My Bookings</span>
+                    </a>
+                    <span class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                        @php
+                            $bookingCount = \App\Models\Order::where('user_id', auth()->id())->count();
+                        @endphp
+                        {{ $bookingCount }}
+                    </span>
+                </div>
+
+                <!-- Logout Button -->
+                <form action="{{ route('logout') }}" method="POST" class="relative group inline-block">
+                    @csrf
+                    <button type="submit" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2">
+                        <i class="ri-logout-box-r-line"></i>
+                        <span>Logout</span>
+                    </button>
+                </form>
+            @else
+                <!-- Login Link -->
+                <a href="/login" class="text-xl font-extrabold text-black hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'login' ? 'text-indigo-500 font-extrabold' : '' }}">
+                    <i class="ri-login-box-line"></i>
+                    <span>Login</span>
+                </a>
+
+                <!-- Register Link -->
+                <a href="/register" class="text-xl font-extrabold text-black hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'register' ? 'text-indigo-500 font-extrabold' : '' }}">
+                    <i class="ri-user-add-line"></i>
+                    <span>Sign up</span>
+                </a>
+            @endauth
+        </div>
+    </div>
+
     <!-- Navbar -->
-    <nav class="bg-black top-0 sticky z-20 text-white py-5">
+    <nav class="bg-black top-0 sticky z-20 text-white py-5 px-4 md:px-10">
         <div class="container mx-auto flex justify-between items-center px-0">
             <!-- Logo Section -->
             <div class="flex items-center">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-16 h-16 rounded-full mr-2">
+                    <img src="{{ asset('SS2.png') }}" alt="YatraSathi Logo" class="w-12 h-12 rounded-full mr-2 md:w-16 md:h-16">
                 </a>
-                <a href="{{ route('home') }}" class="text-4xl text-gray-50 font-extrabold flex items-center">
+                <a href="{{ route('home') }}" class="text-3xl md:text-4xl text-white font-extrabold flex items-center">
                     YatraSathi
                     <i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-yellow-500"></i>
                 </a>
             </div>
+
             <!-- Hamburger Menu Button (for small screens) -->
-            <button
-                id="menu-toggle"
-                class="text-yellow-500 hover:text-yellow-600 lg:hidden text-2xl focus:outline-none">
+            <button id="menu-toggle" class="text-yellow-500 hover:text-yellow-600 lg:hidden text-2xl focus:outline-none">
                 <i class="ri-menu-line"></i>
             </button>
 
-
             <!-- Navbar Links -->
             <div id="menu" class="hidden lg:flex lg:space-x-6 text-xl">
-                <a href="{{ route('home') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    Home
-                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
-                </a> 
-                <a href="{{ route('packages') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    Packages
+                <a href="{{ route('packages') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    <i class="ri-briefcase-5-fill"></i> Packages
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="{{ route('route.show') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'route.show' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    Maps
+                <a href="{{ route('route.show') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'route.show' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    <i class="ri-map-pin-2-line"></i> Maps
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="{{ route('about') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    About
+                <a href="{{ route('about') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    <i class="ri-information-line"></i> About
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="{{ route('contact') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    Contact
+                <a href="{{ route('contact') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    <i class="ri-phone-line"></i> Contact
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
-
-                @auth
-                <a href="{{ route('bookmarks.index') }}" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    My-Adventure
-                    <span class="absolute top-[-6px] right-[-6px] bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                        @auth
-                        @php
-                        $no_of_items = \App\Models\Bookmark::where('user_id',auth()->id())->Count();
-                        @endphp
-                        {{$no_of_items}}
-                        @else
-                        0
-                        @endauth
-                    </span>
-                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <form action="{{ route('logout') }}" method="POST" class="group relative inline-block">
-                    @csrf
-                    <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer bg-transparent border-0 p-0 text-xl focus:outline-none">
-                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
-                </form>
-                @else
-                <a href="/login" class="group relative hover:text-yellow-500 {{ Route::currentRouteName() == 'login' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    Login
-                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                @endauth
             </div>
 
             <!-- Search Bar -->
@@ -92,39 +129,36 @@
                 <input type="search" placeholder="Search..." class="text-black px-2 py-1 rounded" name="qry" value="{{ request()->qry }}" minlength="2" required>
                 <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded ml-2">Go</button>
             </form>
+
             @auth
             <a href="{{ route('userprofile.edit') }}" class="block w-10 h-10">
                 <img src="{{ asset('useravatar.avif') }}" alt="User Avatar" class="w-10 h-10 rounded-full shadow-lg">
             </a>
             @endauth
-            <!-- Dropdown Menu for Mobile -->
-            <div id="mobile-menu" class="hidden flex-col space-y-4 text-center bg-black text-white py-4 lg:hidden">
-                <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
-                <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
-                <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
-                <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
+        </div>
 
-                @auth
-                <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My-Adventure</a>
-                <form action="{{ route('logout') }}" method="POST" class="inline-block">
-                    @csrf
-                    <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
-                </form>
-                @else
-                <a href="/login" class="hover:text-yellow-500">Login</a>
-                @endauth
+        <!-- Dropdown Menu for Mobile -->
+        <div id="mobile-menu" class="hidden flex-col space-y-4 text-center bg-black text-white py-4 lg:hidden">
+            <a href="{{ route('home') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'home' ? 'text-yellow-500 font-bold' : '' }}">Home</a>
+            <a href="{{ route('packages') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">Packages</a>
+            <a href="{{ route('about') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'about' ? 'text-yellow-500 font-bold' : '' }}">About</a>
+            <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
 
-                <form action="{{ route('search') }}" method="GET" class="mt-4">
-                    <input type="search"
-                        placeholder="Search..."
-                        class="text-black px-2 py-1 rounded w-full"
-                        name="qry"
-                        value="{{ request()->qry }}"
-                        minlength="2"
-                        required>
-                    <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded mt-2 w-full">Go</button>
-                </form>
-            </div>
+            @auth
+            <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My-Adventure</a>
+            <form action="{{ route('logout') }}" method="POST" class="inline-block">
+                @csrf
+                <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">
+            </form>
+            @else
+            <a href="/login" class="hover:text-yellow-500">Login</a>
+            @endauth
+
+            <form action="{{ route('search') }}" method="GET" class="mt-4">
+                <input type="search" placeholder="Search..." class="text-black px-2 py-1 rounded" name="qry" value="{{ request()->qry }}" minlength="2" required>
+                <button type="submit" class="bg-yellow-500 text-black px-2 py-1 rounded mt-2">Search</button>
+            </form>
+        </div>
     </nav>
 
     <!-- Main content -->
@@ -207,9 +241,6 @@
             <p>&copy; 2024 YatraSathi | All Rights Reserved</p>
         </div>
     </footer>
-
-
-
     <script>
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');

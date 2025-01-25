@@ -1,13 +1,14 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="flex items-center justify-between mt-10 mb-12">
+<div class="flex items-center justify-between mt-10 mb-4">
     <h1 class="text-gray-900 text-5xl text-center font-extrabold mx-auto"><i class="ri-map-pin-line text-5xl text-yellow-500 "></i>
         My Travelling <span class="text-yellow-500">Plans</span>
     </h1>
+
     <div class="flex space-x-4">
         <!-- View My History Button with Icon -->
-        <a href="{{ route('historyindex') }}"
+        {{-- <a href="{{ route('historyindex') }}"
             class="inline-block bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-md shadow-md hover:bg-yellow-300 transition duration-300 text-sm items-center space-x-2">
             <i class="ri-history-line text-lg"></i>
             <span>View My Booking History</span>
@@ -18,48 +19,58 @@
             class="inline-block bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-md shadow-md hover:bg-yellow-300 transition duration-300 text-sm items-center space-x-2">
             <i class="ri-suitcase-line text-lg"></i>
             <span>View More Packages</span>
-        </a>
+        </a> --}}
     </div>
 </div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 md:px-20 mb-16">
+<p class="text-gray-700 font-bold text-xl text-center mb-8  mt-4 mx-auto max-w-2xl">
+    Keep track of your bookings and plan your next adventure with ease.
+</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 px-5 md:px-20 mb-10">
     @forelse($bookmarks as $bookmark)
-    <div class="p-5 border shadow-lg rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
-        <img src="{{ asset('images/' . $bookmark->package->photopath) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg mb-4 shadow-sm">
-        <div class="flex flex-col gap-3">
-            <h1 class="text-2xl font-bold text-blue-700">{{ $bookmark->package->name }}</h1>
-            <p class="text-gray-600 flex items-center gap-2">
-                <i class="ri-money-dollar-circle-line text-green-500"></i>
-                <span class="font-semibold">${{ number_format($bookmark->total_price, 2) }}</span>
-            </p>
-            <p class="text-gray-600 flex items-center gap-2">
-                <i class="ri-calendar-line text-blue-500"></i>
-                <span>Duration: <span class="font-semibold">{{ $bookmark->duration }} days</span></span>
-            </p>
-            <p class="text-gray-600 flex items-center gap-2">
-                <i class="ri-map-pin-line text-red-500"></i>
-                <span>Location: <span class="font-semibold">{{ $bookmark->package->location }}</span></span>
-            </p>
-            <p class="text-gray-600 flex items-center gap-2">
-                <i class="ri-user-line text-yellow-500"></i>
-                <span>People: <span class="font-semibold">{{ $bookmark->num_people }}</span></span>
-            </p>
-            <p class="text-gray-600 flex items-center gap-2">
-                <i class="ri-user-smile-line text-green-500"></i>
-                <span>Guide:
-                    <span class="font-semibold">
-                        {{ $bookmark->guide ? $bookmark->guide->name : 'Not Selected' }}
+    <div class="p-5 border shadow-lg text-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
+        <h1 class="text-3xl font-extrabold mb-6 text-gray-900">{{ $bookmark->package->name }}</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Image Section -->
+            <div class="flex justify-center">
+                <img src="{{ asset('images/' . $bookmark->package->photopath) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg shadow-sm">
+            </div>
+
+            <!-- Package Information Section -->
+            <div class="flex flex-col gap-3">
+                <p class="text-green-500 flex text-xl items-center gap-2">
+                    <i class="ri-money-dollar-circle-line text-green-500"></i>
+                    <span class="font-bold">${{ number_format($bookmark->total_price, 2) }}</span>
+                </p>
+                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
+                    <i class="ri-calendar-line text-blue-500"></i>
+                    <span>Duration: <span class="font-bold">{{ $bookmark->duration }} days</span></span>
+                </p>
+                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
+                    <i class="ri-map-pin-line text-red-500"></i>
+                    <span>Location: <span class="font-bold">{{ $bookmark->package->location }}</span></span>
+                </p>
+                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
+                    <i class="ri-user-line text-yellow-500"></i>
+                    <span>People: <span class="font-bold">{{ $bookmark->num_people }}</span></span>
+                </p>
+                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
+                    <i class="ri-user-smile-line text-green-500"></i>
+                    <span>Guide:
+                        <span class="font-bold text-blue-500">
+                            {{ $bookmark->guide ? $bookmark->guide->name : 'Not Selected' }}
+                        </span>
                     </span>
-                </span>
-            </p>
-        </div>
-        <div class="flex justify-between mt-5">
-            <button onclick="showModal('{{ $bookmark->id }}')" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 shadow-md transition">
-                <i class="ri-delete-bin-line mr-2"></i>Remove
-            </button>
-            <a href="{{ route('bookmarks.checkout', $bookmark->id) }}" class="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 shadow-md transition">
-                <i class="ri-shopping-cart-line mr-2"></i>Book Now
-            </a>
+                </p>
+        <!-- Action Buttons -->
+                <div class="flex justify-between mt-5">
+                    <button onclick="showModal('{{ $bookmark->id }}')" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 shadow-md transition">
+                        <i class="ri-delete-bin-line mr-2"></i>Remove
+                    </button>
+                    <a href="{{ route('bookmarks.checkout', $bookmark->id) }}" class="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 shadow-md transition">
+                        <i class="ri-shopping-cart-line mr-2"></i>Book Now
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     @empty

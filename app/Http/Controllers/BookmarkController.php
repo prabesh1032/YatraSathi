@@ -95,8 +95,6 @@ class BookmarkController extends Controller
         if ($bookmark->user_id != auth()->user()->id) {
             return back()->with('error', 'Unauthorized access.');
         }
-
-        // Proceed with the checkout process
         return view('checkout', ['bookmark' => $bookmark]);
     }
 }

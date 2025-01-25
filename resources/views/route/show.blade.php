@@ -18,59 +18,71 @@
 <body class="bg-gray-50 text-gray-900">
 
     <div class="container mx-auto p-8">
-        <!-- View Available Packages heading -->
-        <div class="text-center text-5xl font-extrabold text-gray-900 mt-8">
+        <!-- View Available Packages Heading -->
+        <div class="text-center text-5xl font-extrabold text-black mt-8">
             <span class="block">
-                <i class="ri-map-pin-line text-red-600 text-6xl"></i> View Our Available
-                <span class="text-yellow-500">Packages on Map</span>
+             View Our Available
+                <span class="text-yellow-500 underline decoration-wavy">Packages on Map</span>
             </span>
         </div>
-        <p class="text-center text-xl text-indigo-700 font-extrabold mt-4">
-            Explore exciting packages by clicking on the markers! Your adventure starts here.
+        <p class="text-center text-lg text-gray-900 font-extrabold mt-4">
+            Discover exciting packages by clicking on the markers! <br /> Your next adventure is just a click away.
         </p>
 
         <!-- Map Container -->
-        <div id="map" class="mt-6 rounded-xl z-0 shadow-lg border-4 border-blue-600" style="height: 500px; width: 100%;"></div>
+        <div
+            id="map"
+            class="mt-6 rounded-xl shadow-2xl  z-0 border-4 border-indigo-600 "
+            style="height: 500px; width: 100%;"></div>
 
-        <!-- Button to explore packages -->
+        <!-- Button to Explore Packages -->
         <div class="text-center mt-6">
-            <a href="{{route('packages')}}" class="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+            <a href="{{ route('packages') }}"
+                class="inline-block px-8 py-3 bg-yellow-500 text-black font-semibold rounded-lg shadow-lg hover:shadow-xl hover:bg-yellow-300 ">
                 <i class="ri-compass-2-line mr-2"></i> Explore Packages
             </a>
         </div>
 
         <!-- How It Works Section -->
-        <div class="mt-16 bg-gray-50 p-10 rounded-lg shadow-lg">
-        <h2 class="text-4xl font-bold text-indigo-800 text-center">How It Works?</h2>
-            <p class="text-lg text-gray-900 font-bold text-center mt-4">
-                Our map offers a seamless way to explore the best travel packages. Click on any of the markers to learn more about exciting destinations and unique adventures.
+        <div class="mt-16 bg-gray-200 p-10 rounded-lg shadow-2xl">
+            <h2 class="text-4xl font-extrabold text-yellow-500 text-center">
+                How It Works?
+            </h2>
+            <p class="text-lg text-indigo-500 font-bold text-center mt-4">
+                Use our interactive map to explore destinations and travel packages.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
-        <!-- Step 1 -->
-        <div class="text-center flex flex-col items-center bg-indigo-50 p-6 rounded-lg shadow-sm">
-            <div class="bg-blue-100 p-4 rounded-full mb-4">
-                <i class="ri-map-pin-line text-4xl text-indigo-600"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
+                <!-- Step 1 -->
+                <div class="text-center flex flex-col items-center bg-gradient-to-b from-black to-indigo-900 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
+                    <div class="bg-yellow-500 p-4 rounded-full mb-4 animate-pulse">
+                        <i class="ri-map-pin-line text-4xl text-black"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-yellow-500">Explore Locations</h3>
+                    <p class="mt-2 text-indigo-500">
+                        Click on any marker to uncover detailed information about travel packages.
+                    </p>
+                </div>
+                <!-- Step 2 -->
+                <div class="text-center flex flex-col items-center bg-gradient-to-b from-black to-indigo-900 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
+                    <div class="bg-yellow-500 p-4 rounded-full mb-4 animate-pulse">
+                        <i class="ri-information-line text-4xl text-black"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-yellow-500">Learn More</h3>
+                    <p class="mt-2 text-indigo-500">
+                        Explore features, itineraries, and highlights for each package.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="text-center flex flex-col items-center bg-gradient-to-b from-black to-indigo-900 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
+                    <div class="bg-yellow-500 p-4 rounded-full mb-4 animate-pulse">
+                        <i class="ri-rocket-line text-4xl text-black"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-yellow-500">Book Your Adventure</h3>
+                    <p class="mt-2 text-indigo-500">
+                        Ready to travel? Book your dream package directly from the details page.
+                    </p>
+                </div>
             </div>
-            <h3 class="text-xl font-semibold text-indigo-800 mt-2">Explore Locations</h3>
-            <p class="mt-2 text-gray-600">Click on a location on the map to view detailed information about travel packages.</p>
-        </div>
-        <!-- Step 2 -->
-        <div class="text-center flex flex-col items-center bg-indigo-50 p-6 rounded-lg shadow-sm ">
-            <div class="bg-blue-100 p-4 rounded-full mb-4">
-                <i class="ri-information-line text-4xl text-indigo-600"></i>
-            </div>
-            <h3 class="text-xl font-semibold text-indigo-800 mt-2">Learn More</h3>
-            <p class="mt-2 text-gray-600">Discover the features, benefits, and itineraries for each package.</p>
-        </div>
-        <!-- Step 3 -->
-        <div class="text-center flex flex-col items-center bg-indigo-50 p-6 rounded-lg shadow-sm ">
-            <div class="bg-blue-100 p-4 rounded-full mb-4">
-                <i class="ri-rocket-line text-4xl text-indigo-600"></i>
-            </div>
-            <h3 class="text-xl font-semibold text-indigo-800 mt-2">Book Your Adventure</h3>
-            <p class="mt-2 text-gray-600">Ready to travel? Book your dream package directly from the details page.</p>
-        </div>
-    </div>
         </div>
     </div>
 
@@ -131,7 +143,6 @@
     // Initialize the map when the page loads
     window.onload = initMap;
 </script>
-
 </body>
 
 </html>
