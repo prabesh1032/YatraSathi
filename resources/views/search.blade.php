@@ -18,14 +18,12 @@
             <a href="{{ route('packages.read', $package->id) }}" class="text-3xl font-extrabold text-gray-900 hover:text-indigo-600 transition-colors duration-300">
                 {{ $package->name }}
             </a>
-
             <!-- Image and Info Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
                 <!-- Package Image -->
                 <div class="flex justify-center">
                     <img src="{{ asset('images/' . $package->photopath) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg shadow-sm">
                 </div>
-
                 <!-- Package Details -->
                 <div class="flex flex-col gap-3">
                     <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
@@ -66,6 +64,5 @@
         </div>
         @endforelse
     </div>
-
 </div>
 @endsection

@@ -5,22 +5,6 @@
     <h1 class="text-gray-900 text-5xl text-center font-extrabold mx-auto"><i class="ri-map-pin-line text-5xl text-yellow-500 "></i>
         My Travelling <span class="text-yellow-500">Plans</span>
     </h1>
-
-    <div class="flex space-x-4">
-        <!-- View My History Button with Icon -->
-        {{-- <a href="{{ route('historyindex') }}"
-            class="inline-block bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-md shadow-md hover:bg-yellow-300 transition duration-300 text-sm items-center space-x-2">
-            <i class="ri-history-line text-lg"></i>
-            <span>View My Booking History</span>
-        </a>
-
-        <!-- View Packages Button with Icon -->
-        <a href="{{ route('packages') }}"
-            class="inline-block bg-yellow-500 text-gray-900 font-bold px-4 py-2 rounded-md shadow-md hover:bg-yellow-300 transition duration-300 text-sm items-center space-x-2">
-            <i class="ri-suitcase-line text-lg"></i>
-            <span>View More Packages</span>
-        </a> --}}
-    </div>
 </div>
 <p class="text-gray-700 font-bold text-xl text-center mb-8  mt-4 mx-auto max-w-2xl">
     Keep track of your bookings and plan your next adventure with ease.
