@@ -53,7 +53,7 @@
             </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
                 <!-- Step 1 -->
-                <div class="text-center flex flex-col items-center bg-gradient-to-b from-black to-indigo-900 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
+                <div class="text-center flex flex-col items-center bg-gradient-to-b from-indigo-100 to-blue-200 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
                     <div class="bg-yellow-500 p-4 rounded-full mb-4 animate-pulse">
                         <i class="ri-map-pin-line text-4xl text-black"></i>
                     </div>
@@ -63,7 +63,7 @@
                     </p>
                 </div>
                 <!-- Step 2 -->
-                <div class="text-center flex flex-col items-center bg-gradient-to-b from-black to-indigo-900 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
+                <div class="text-center flex flex-col items-center bg-gradient-to-b from-indigo-100 to-blue-200 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
                     <div class="bg-yellow-500 p-4 rounded-full mb-4 animate-pulse">
                         <i class="ri-information-line text-4xl text-black"></i>
                     </div>
@@ -73,7 +73,7 @@
                     </p>
                 </div>
                 <!-- Step 3 -->
-                <div class="text-center flex flex-col items-center bg-gradient-to-b from-black to-indigo-900 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
+                <div class="text-center flex flex-col items-center bg-gradient-to-b from-indigo-100 to-blue-200 p-8 rounded-lg shadow-lg transition-all hover:shadow-2xl">
                     <div class="bg-yellow-500 p-4 rounded-full mb-4 animate-pulse">
                         <i class="ri-rocket-line text-4xl text-black"></i>
                     </div>

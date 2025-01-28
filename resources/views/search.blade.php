@@ -13,7 +13,7 @@
     <!-- Package Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-3 md:px-20 mb-10">
         @forelse($packages as $package)
-        <div class="p-5 border shadow-lg text-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
+        <div class="p-5 border shadow-lg text-center rounded-lg bg-gradient-to-br from-yellow-100 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
             <!-- Package Name -->
             <a href="{{ route('packages.read', $package->id) }}" class="text-3xl font-extrabold text-gray-900 hover:text-indigo-600 transition-colors duration-300">
                 {{ $package->name }}

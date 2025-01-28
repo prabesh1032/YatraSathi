@@ -15,7 +15,7 @@
     <!-- Bookings Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-4 md:px-16 mb-10">
         @forelse ($orders as $order)
-        <div class="p-6 border shadow-lg rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
+        <div class="p-6 border shadow-lg rounded-lg bg-gradient-to-br from-yellow-100 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
             <h2 class="text-3xl font-extrabold text-gray-900 mb-2">
                 <i class="ri-global-line text-blue-500 mr-2"></i>{{ $order->package->name }}
             </h2>

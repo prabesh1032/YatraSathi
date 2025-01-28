@@ -156,7 +156,7 @@
         @if ($reviews->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($reviews as $review)
-            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+            <div class="bg-blue-100 p-6 rounded-lg shadow-md">
                 <div class="flex items-center mb-4">
                     <!-- Display Initial as Profile Image -->
                     <div class="mr-4 flex items-center justify-center bg-gray-400 w-12 h-12 rounded-full text-white font-semibold">
@@ -247,19 +247,20 @@
     @endauth
     <!-- Related Packages Section -->
     <h2 class="text-3xl font-bold text-gray-800 mt-12 mb-6">Related Packages</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        @foreach($relatedpackages as $relatedpackage)
-        <div class="border border-gray-200 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:shadow-xl">
-            <a href="{{ route('packages.show', $relatedpackage->id) }}">
-                <img src="{{ asset('images/' . $relatedpackage->photopath) }}" alt="{{ $relatedpackage->name }}" class="h-56 w-full object-cover transition-transform duration-300 hover:scale-105">
-                <div class="p-4">
-                    <h3 class="text-lg font-bold text-gray-900">{{ $relatedpackage->name }}</h3>
-                    <p class="text-gray-600 mt-2">USD {{ number_format($relatedpackage->price, 2) }} Per Person</p>
-                </div>
-            </a>
-        </div>
-        @endforeach
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    @foreach($relatedpackages as $relatedpackage)
+    <div class="border border-gray-200 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:shadow-xl">
+        <a href="{{ route('packages.show', $relatedpackage->id) }}">
+            <img src="{{ asset('images/' . $relatedpackage->photopath) }}" alt="{{ $relatedpackage->name }}" class="h-56 w-full object-cover transition-transform duration-300 hover:scale-105">
+            <div class="p-4">
+                <h3 class="text-lg font-bold text-gray-900">{{ $relatedpackage->name }}</h3>
+                <p class="text-green-600 font-bold mt-2">USD {{ number_format($relatedpackage->price, 2) }} Per Person</p>
+            </div>
+        </a>
     </div>
+    @endforeach
+</div>
+
 </div>
 <script>
     // Select all star elements
