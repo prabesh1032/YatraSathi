@@ -2,88 +2,93 @@
 
 @section('content')
 <header class="h-screen w-full bg-cover bg-center relative" style="background-image: url('{{ asset('travelling3.png') }}');">
-    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-70"></div>
 
-    <main class="container mx-auto py-12">
-        <div class="relative flex items-center justify-center w-full h-full">
-            <div class="bg-white bg-opacity-30 backdrop-blur-lg rounded-lg shadow-md p-6 w-full max-w-4xl text-gray-900">
+    <main class="container mx-auto py-10 relative z-10">
+        <div class="flex items-center justify-center w-full h-full">
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-lg shadow-lg p-6 w-full max-w-3xl text-gray-900 border border-gray-300">
                 <!-- Title -->
-                <h2 class="text-3xl font-extrabold text-center text-indigo-600 mb-8">
-                    <i class="ri-user-line text-yellow-500"></i> Edit Your<span class="text-yellow-500 "> Profile
+                <h2 class="text-3xl font-bold text-center text-indigo-500 mb-4">
+                    <i class="ri-user-line text-yellow-500"></i> Edit Your
+                    <span class="text-yellow-500">Profile</span>
                 </h2>
 
-                <!-- Description Text -->
-                <div class="text-lg text-center font-extrabold mb-8">
-                    <p>Update your profile information below to keep your account details current. You can change your name, email, phone number, and address anytime.</p>
+                <!-- Description -->
+                <div class="text-sm text-center font-medium text-gray-200 mb-4">
+                    <p>Update your details to keep your profile up to date.</p>
                 </div>
 
                 <!-- User Info Form -->
-                <form action="{{ route('userprofile.update') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form action="{{ route('userprofile.update') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @csrf
 
-                    <!-- Left Column (Name, Email, Phone) -->
-                    <div class="space-y-6">
+                    <!-- Left Column -->
+                    <div class="space-y-4">
                         <!-- Name -->
                         <div>
-                            <div class="flex items-center space-x-2">
-                                <x-input-label for="name" :value="__('Name')" class="block text-xl font-bold text-gray-900" />
-                                <i class="ri-user-fill text-yellow-500"></i>
-                            </div>
-                            <x-text-input id="name" class="block w-full font-extrabold mt-1 p-3 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="text" name="name" :value="old('name', $user->name)" required placeholder="Enter your name" autofocus autocomplete="name" />
-                            <x-input-error :messages="$errors->get('name')" class="mt-1 text-red-400 text-sm" />
+                            <label for="name" class="block text-sm font-bold text-yellow-400 mb-1 flex items-center">
+                                <i class="ri-user-fill mr-1"></i>Name
+                            </label>
+                            <input id="name" type="text" name="name" value="{{ old('name', $user->name) }}" required
+                                class="block w-full px-3 py-2 rounded-md text-gray-900 font-semibold bg-white bg-opacity-70 placeholder-gray-500 focus:ring-2 focus:ring-yellow-400">
+                            @error('name')
+                            <span class="text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Email -->
                         <div>
-                            <div class="flex items-center space-x-2">
-                                <x-input-label for="email" :value="__('Email')" class="block text-xl font-bold text-gray-900" />
-                                <i class="ri-mail-fill text-yellow-500"></i>
-                            </div>
-                            <x-text-input id="email" class="block w-full mt-1 p-3 rounded-lg font-extrabold border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="email" name="email" :value="old('email', $user->email)" required placeholder="Enter your email" autocomplete="username" />
-                            <x-input-error :messages="$errors->get('email')" class="mt-1 text-red-400 text-sm" />
+                            <label for="email" class="block text-sm font-bold text-yellow-400 mb-1 flex items-center">
+                                <i class="ri-mail-fill mr-1"></i>Email
+                            </label>
+                            <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}" required
+                                class="block w-full px-3 py-2 rounded-md text-gray-900 font-semibold bg-white bg-opacity-70 placeholder-gray-500 focus:ring-2 focus:ring-yellow-400">
+                            @error('email')
+                            <span class="text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
 
-                        <!-- Phone -->
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <x-input-label for="phone" :value="__('Phone Number')" class="block text-xl font-bold text-gray-900" />
-                                <i class="ri-phone-fill text-yellow-500"></i>
-                            </div>
-                            <x-text-input id="phone" class="block w-full mt-1 p-3 rounded-lg border-none font-extrabold bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="tel" name="phone" :value="old('phone', $user->phone)" required placeholder="Enter your phone number" autocomplete="tel" />
-                            <x-input-error :messages="$errors->get('phone')" class="mt-1 text-red-400 text-sm" />
-                        </div>
                     </div>
 
-                    <!-- Right Column (Address) -->
-                    <div class="space-y-6">
-                        <!-- Address -->
+                    <!-- Right Column -->
+                    <div class="space-y-4">
+                        <!-- Phone -->
                         <div>
-                            <div class="flex items-center space-x-2">
-                                <x-input-label for="address" :value="__('Address')" class="block text-xl font-bold text-gray-900" />
-                                <i class="ri-home-5-line text-yellow-500"></i>
-                            </div>
-                            <x-text-input id="address" name="address" class="block w-full mt-1 p-3 font-extrabold rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" :value="old('address', $user->address)" placeholder="Enter your address" />
-                            <x-input-error :messages="$errors->get('address')" class="mt-1 text-red-400 text-sm" />
+                            <label for="phone" class="block text-sm font-bold text-yellow-400 mb-1 flex items-center">
+                                <i class="ri-phone-fill mr-1"></i>Phone
+                            </label>
+                            <input id="phone" type="tel" name="phone" value="{{ old('phone', $user->phone) }}" required
+                                class="block w-full px-3 py-2 rounded-md text-gray-900 font-semibold bg-white bg-opacity-70 placeholder-gray-500 focus:ring-2 focus:ring-yellow-400">
+                            @error('phone')
+                            <span class="text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
 
-                        <!-- Submit Button -->
-                        <div class="flex justify-center mt-6">
-                            <button type="submit" class="bg-yellow-600 text-gray-900 text-lg font-bold py-3 px-6 rounded-lg shadow-md hover:bg-yellow-300 transition flex items-center">
-                                <i class="ri-save-line text-indigo-500 mr-2"></i> Save Changes
-                            </button>
+                        <!-- Address -->
+                        <div>
+                            <label for="address" class="block text-sm font-bold text-yellow-400 mb-1 flex items-center">
+                                <i class="ri-home-5-line mr-1"></i>Address
+                            </label>
+                            <input id="address" type="text" name="address" value="{{ old('address', $user->address) }}"
+                                class="block w-full px-3 py-2 rounded-md text-gray-900 font-semibold bg-white bg-opacity-70 placeholder-gray-500 focus:ring-2 focus:ring-yellow-400">
+                            @error('address')
+                            <span class="text-red-400 text-xs">{{ $message }}</span>
+                            @enderror
                         </div>
-                        <div class="text-center mt-4">
-                            <a href="{{ route('password.request') }}" class="text-gray-900 text-sm font-extrabold hover:underline">
-                                <i class="ri-lock-line text-lime-500"></i> Forgot your password<i class="ri-question-line"></i>
-                            </a>
-                        </div>
-                        <div class="flex justify-center mt-6">
-                            <a href="{{ route('historyindex') }}"
-                                class="inline-block bg-yellow-600 text-gray-900 font-bold px-4 py-2 rounded-md shadow-md hover:bg-yellow-300 transition duration-300 text-sm items-center space-x-2">
-                                <i class="ri-history-line text-lg"></i>
-                                <span>View My Booking History</span>
-                            </a>
-                        </div>
+
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{{ route('historyindex') }}"
+                            class="bg-indigo-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-400 hover:scale-105 transition-all duration-300 font-bold inline-flex items-center">
+                            <i class="ri-history-line mr-2"></i>View Booking History
+                        </a>
+                    </div>
+                <!-- Save Button -->
+                    <div class="text-center">
+                        <button type="submit"
+                            class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg shadow-md hover:bg-yellow-400 hover:scale-105 transition-all duration-300 font-bold">
+                            <i class="ri-save-line mr-2"></i>Save Changes
+                        </button>
                     </div>
                 </form>
             </div>

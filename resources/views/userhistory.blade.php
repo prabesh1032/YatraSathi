@@ -7,7 +7,7 @@
         <h1 class="text-5xl font-extrabold text-gray-900">
             <i class="ri-road-map-line mr-3 text-yellow-500"></i>Your Booking <span class="text-yellow-500">History
         </h1>
-        <p class="text-lg text-gray-600 mt-4">
+        <p class="text-lg text-gray-700 mt-4">
             Take a journey through your past adventures and memories. Relive the moments and manage your bookings effortlessly.
         </p>
     </div>

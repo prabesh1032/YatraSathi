@@ -69,8 +69,8 @@
     <i class="ri-pie-chart-line text-3xl text-yellow-300 mb-2"></i>Travellers per Package (Pie Chart)
 </h3>
 <div class="flex justify-center">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
-        <canvas id="myChart" class="rounded-lg" style="max-width: 100%; height: 350px; background-color: #f0f9ff;"></canvas>
+    <div class="bg-cyan-200 p-6 rounded-lg shadow-lg w-full max-w-2xl">
+        <canvas id="myChart" class="rounded-lg" style="max-width: 100%; height: 350px ;"></canvas>
     </div>
 </div>
 

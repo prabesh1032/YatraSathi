@@ -1,18 +1,41 @@
 @extends('layouts.master')
 
 @section('content')
-<!-- Header Section -->
-<header class="relative h-screen w-88 bg-cover mt-0 bg-center" style="background-image: url('{{ asset('home.jpeg') }}'); background-attachment:fixed;">
+<header class="relative h-screen w-88 bg-cover mt-0 bg-center" id="dynamic-header" style="background-image: url('{{ asset('home.jpeg') }}'); background-attachment:fixed;">
     <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
-    <div class="relative container mx-auto h-full flex flex-col justify-start items-center text-center text-indigo-700 pt-32">
-         <!-- Adjusted from justify-center to justify-start and added pt-20 for more space from top -->
-        <h1 class="text-5xl md:text-6xl text-black font-extrabold mb-4 animate-bounce">Explore. Dream. Discover.</h1>
-        <p class="text-xl md:text-2xl font-extrabold mb-6">Let us take you places you’ve never been.</p>
+    <div class="relative container mx-auto h-full flex flex-col justify-start items-center text-center pt-32">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-4 animate-bounce" id="header-title" style="color: black;">Explore. Dream. Discover.</h1>
+        <p class="text-xl md:text-2xl font-extrabold mb-6" id="header-description" style="color: #4851fe;">Let us take you places you’ve never been.</p>
         <a href="{{ route('location.index') }}" class="px-8 py-4 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">
             Start Your Journey
         </a>
     </div>
 </header>
+
+<script>
+    const header = document.getElementById('dynamic-header');
+    const headerTitle = document.getElementById('header-title');
+    const headerDescription = document.getElementById('header-description');
+
+    const images = [
+        { url: '{{ asset("home.jpeg") }}', titleColor: 'black', descriptionColor: '#4c51bf' }, // Indigo-700
+        { url: '{{ asset("home-bg4.jpg") }}', titleColor: 'white', descriptionColor: '#a3e635' } // Lime-200
+    ];
+
+    let currentImageIndex = 0;
+
+    setInterval(() => {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        const currentImage = images[currentImageIndex];
+
+        // Change the background image
+        header.style.backgroundImage = `url('${currentImage.url}')`;
+
+        // Update text colors
+        headerTitle.style.color = currentImage.titleColor;
+        headerDescription.style.color = currentImage.descriptionColor;
+    }, 5000);
+</script>
 
 <!-- Welcome Section -->
 <section class="py-8 bg-gray-100">

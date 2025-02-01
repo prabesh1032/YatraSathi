@@ -173,12 +173,12 @@ class OrderController extends Controller
             return redirect()->route('historyindex')->with('error', 'You are not authorized to cancel this booking.');
         }
 
-        // Check if the cancellation is within 6 days of booking
+        // Check if the cancellation is within 2 days of booking
         $orderDate = Carbon::parse($order->created_at);
         $currentDate = Carbon::now();
         $diffInDays = $orderDate->diffInDays($currentDate);
 
-        if ($diffInDays <= 6) {
+        if ($diffInDays <= 2) {
             // Send cancellation email before deleting the order
             $emaildata = [
                 'name' => $order->user->name,

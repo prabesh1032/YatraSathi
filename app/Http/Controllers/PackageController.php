@@ -54,7 +54,7 @@ class PackageController extends Controller
             'starting_location' => 'required|string|max:255', // Validate starting location
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
-            'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif,avif',
             'description' => 'nullable|string|max:50000',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
@@ -100,7 +100,7 @@ class PackageController extends Controller
             'starting_location' => 'required|string|max:255', // Validate starting location
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
-            'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif,avif',
             'description' => 'nullable|string|max:50000',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',

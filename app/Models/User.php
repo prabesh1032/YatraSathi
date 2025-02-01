@@ -26,6 +26,13 @@ class User extends Authenticatable
         'profile_picture',
     ];
 
+    public function getProfilePictureUrlAttribute()
+    {
+        return $this->profile_picture
+            ? asset('storage/profile_pictures/' . $this->profile_picture)
+            : asset('default-profile.png');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
