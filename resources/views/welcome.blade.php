@@ -40,7 +40,6 @@
 <!-- Welcome Section -->
 <section class="py-8 bg-gray-100">
     <div class="container mx-auto text-center">
-        <!-- Heading Section -->
         <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-400 mb-4">
             Welcome to <span class="text-yellow-500 ">YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-indigo-500 "></i></span>
         </h2>
