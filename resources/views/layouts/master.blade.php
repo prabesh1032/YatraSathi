@@ -15,7 +15,7 @@
 
 <body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
     @include('Layouts.alert')
-    <div class="flex justify-between items-center px-4 py-3 bg-yellow-500 text-white shadow-lg"> <!-- Adjusted padding for better mobile spacing -->
+    <div class="flex justify-between items-center px-4 py-3 bg-yellow-500 text-white shadow-lg">
         <!-- Logo and Main Link -->
         <div>
             <a href="{{ route('home') }}" class="text-2xl text-gray-900 font-extrabold hover:text-indigo-900 flex items-center space-x-2">
@@ -61,6 +61,14 @@
                     </span>
                 </div>
 
+                <!-- Guides Link -->
+                <div class="relative flex items-center space-x-2">
+                    <a href="{{ route('guides.show') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'guides.show' ? 'text-indigo-500 font-extrabold' : '' }}">
+                        <i class="ri-contacts-fill"></i>
+                        <span>Guides</span>
+                    </a>
+                </div>
+
                 <!-- Logout Button -->
                 <form action="{{ route('logout') }}" method="POST" class="relative group inline-block">
                     @csrf
@@ -70,6 +78,12 @@
                     </button>
                 </form>
             @else
+                <div class="relative flex items-center space-x-2">
+                    <a href="{{ route('guides.show') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'guides.show' ? 'text-indigo-500 font-extrabold' : '' }}">
+                        <i class="ri-contacts-fill"></i>
+                        <span>Guides</span>
+                    </a>
+                </div>
                 <!-- Login Link -->
                 <a href="/login" class="text-xl font-extrabold text-black hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'login' ? 'text-indigo-500 font-extrabold' : '' }}">
                     <i class="ri-login-box-line"></i>
@@ -84,6 +98,7 @@
             @endauth
         </div>
     </div>
+
 
     <!-- Navbar -->
     <nav class="bg-black top-0 sticky z-20 text-white py-5 px-4 md:px-10">

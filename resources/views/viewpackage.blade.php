@@ -73,7 +73,6 @@
         <div class="bg-white py-2 px-2 shadow-lg">
             <h2 class="text-4xl font-bold text-gray-900 mb-2 text-center">Select Guide</h2>
             <p class="text-center text-lg text-gray-600 font-bold mb-4">Select a guide to accompany you on your journey. Guides are optional and can be added later.</p>
-
             @if ($guides->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($guides as $guide)

@@ -5,9 +5,7 @@
     <div class="text-center mb-12">
         <h1 class="text-6xl font-extrabold z-10 text-gray-900 mb-4">Explore Our Curated Travel <span class="text-yellow-500">Packages</span></h1>
         <p class="text-xl text-gray-600">Explore Nepal's most iconic destinations, where beauty meets adventure.</p>
-    </div>
-
-    <!-- Airplane Animation -->
+    </div>    <!-- Airplane Animation -->
     <div id="airplane" class="absolute top-20 left-0 z-10">
         <img src="{{ asset('plane.png') }}" alt="Flying Airplane" class="w-16 h-16" />
         <style>

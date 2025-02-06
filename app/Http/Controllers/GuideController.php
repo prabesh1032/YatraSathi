@@ -47,10 +47,10 @@ class GuideController extends Controller
         return redirect()->route('guides.index')->with('success', 'Guide created successfully.');
     }
 
-    public function show($id)
+    public function show()
     {
-        $guide = Guide::findOrFail($id);
-        return view('guides.show', compact('guide'));
+        $guides = Guide::all(); // Fetch all guides
+        return view('guides.show', compact('guides')); // Pass them to the view
     }
 
     public function edit($id)
@@ -119,5 +119,4 @@ class GuideController extends Controller
         // Flash success message and redirect to the index
         return redirect()->route('guides.index')->with('success', 'Guide deleted successfully.');
     }
-
 }
