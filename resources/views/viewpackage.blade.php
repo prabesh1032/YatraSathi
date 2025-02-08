@@ -265,12 +265,9 @@
     // Select all star elements
     const stars = document.querySelectorAll('#starRating .star');
 
-    // Add click event listener to each star
     stars.forEach((star, index) => {
         star.addEventListener('click', () => {
-            // Remove yellow color from all stars
             stars.forEach(s => s.classList.remove('text-yellow-400'));
-            // Add yellow color to all stars up to and including the clicked star
             for (let i = 0; i <= index; i++) {
                 stars[i].classList.add('text-yellow-400');
             }

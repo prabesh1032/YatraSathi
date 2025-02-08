@@ -26,6 +26,8 @@ Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/journey/location', [PackageController::class, 'showLocationPage'])->name('location.index');
 Route::get('/allguides', [GuideController::class, 'show'])->name('guides.show');
+Route::get('/guides/{id}', [GuideController::class, 'profile'])->name('guides.profile');
+
 
 Route::get('/packages/{package}/show', [PackageController::class, 'show'])->name('packages.show');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');

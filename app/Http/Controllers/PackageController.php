@@ -15,27 +15,90 @@ class PackageController extends Controller
         return view('packages.index', compact('packages'));
     }
 
-    public function package()
+    public function package(Request $request)
     {
+        $sort_by = $request->input('sort_by');
+
+        // Fetch all packages
         $packages = Package::all();
+
+        // Bubble sort implementation
+        if ($sort_by == 'price_asc') {
+            // Sort packages by price low to high
+            for ($i = 0; $i < count($packages); $i++) {
+                for ($j = 0; $j < count($packages) - $i - 1; $j++) {
+                    if ($packages[$j]->price > $packages[$j + 1]->price) {
+                        // Swap packages[j] and packages[j + 1]
+                        $temp = $packages[$j];
+                        $packages[$j] = $packages[$j + 1];
+                        $packages[$j + 1] = $temp;
+                    }
+                }
+            }
+        } elseif ($sort_by == 'price_desc') {
+            // Sort packages by price high to low
+            for ($i = 0; $i < count($packages); $i++) {
+                for ($j = 0; $j < count($packages) - $i - 1; $j++) {
+                    if ($packages[$j]->price < $packages[$j + 1]->price) {
+                        // Swap packages[j] and packages[j + 1]
+                        $temp = $packages[$j];
+                        $packages[$j] = $packages[$j + 1];
+                        $packages[$j + 1] = $temp;
+                    }
+                }
+            }
+        } elseif ($sort_by == 'latest') {
+            // Sort packages by the latest created (use created_at)
+            for ($i = 0; $i < count($packages); $i++) {
+                for ($j = 0; $j < count($packages) - $i - 1; $j++) {
+                    if ($packages[$j]->created_at < $packages[$j + 1]->created_at) {
+                        // Swap packages[j] and packages[j + 1]
+                        $temp = $packages[$j];
+                        $packages[$j] = $packages[$j + 1];
+                        $packages[$j + 1] = $temp;
+                    }
+                }
+            }
+        } elseif ($sort_by == 'shortest') {
+            // Sort packages by shortest duration
+            for ($i = 0; $i < count($packages); $i++) {
+                for ($j = 0; $j < count($packages) - $i - 1; $j++) {
+                    if ($packages[$j]->duration > $packages[$j + 1]->duration) {
+                        // Swap packages[j] and packages[j + 1]
+                        $temp = $packages[$j];
+                        $packages[$j] = $packages[$j + 1];
+                        $packages[$j + 1] = $temp;
+                    }
+                }
+            }
+        } elseif ($sort_by == 'longest') {
+            // Sort packages by longest duration
+            for ($i = 0; $i < count($packages); $i++) {
+                for ($j = 0; $j < count($packages) - $i - 1; $j++) {
+                    if ($packages[$j]->duration < $packages[$j + 1]->duration) {
+                        // Swap packages[j] and packages[j + 1]
+                        $temp = $packages[$j];
+                        $packages[$j] = $packages[$j + 1];
+                        $packages[$j + 1] = $temp;
+                    }
+                }
+            }
+        }
+
         return view('package', compact('packages'));
     }
     public function show(Package $package)
     {
-        // Get related packages excluding the current package
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
-
-        // Get the latest reviews for the package
         $reviews = $package->reviews()->latest()->take(3)->get();
-
-        // Filter guides based on the specific package
         $guides = $package->guides()->whereDoesntHave('orders', function ($query) use ($package) {
             $query->where('status', '!=', 'Completed')
-                ->where('package_id', $package->id); // Filter only for the current package
+                ->where('package_id', $package->id); 
         })->get();
 
         return view('viewpackage', compact('package', 'relatedpackages', 'reviews', 'guides'));
     }
+
     public function read(Package $package)
     {
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();

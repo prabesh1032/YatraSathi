@@ -62,12 +62,7 @@
                 </div>
 
                 <!-- Guides Link -->
-                <div class="relative flex items-center space-x-2">
-                    <a href="{{ route('guides.show') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'guides.show' ? 'text-indigo-500 font-extrabold' : '' }}">
-                        <i class="ri-contacts-fill"></i>
-                        <span>Guides</span>
-                    </a>
-                </div>
+
 
                 <!-- Logout Button -->
                 <form action="{{ route('logout') }}" method="POST" class="relative group inline-block">
@@ -78,12 +73,7 @@
                     </button>
                 </form>
             @else
-                <div class="relative flex items-center space-x-2">
-                    <a href="{{ route('guides.show') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'guides.show' ? 'text-indigo-500 font-extrabold' : '' }}">
-                        <i class="ri-contacts-fill"></i>
-                        <span>Guides</span>
-                    </a>
-                </div>
+
                 <!-- Login Link -->
                 <a href="/login" class="text-xl font-extrabold text-black hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'login' ? 'text-indigo-500 font-extrabold' : '' }}">
                     <i class="ri-login-box-line"></i>
@@ -137,6 +127,11 @@
                     <i class="ri-phone-line"></i> Contact
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
+                <a href="{{ route('guides.show') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'guides.show' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    <i class="ri-contacts-fill"></i> Guides
+                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
             </div>
 
             <!-- Search Bar -->

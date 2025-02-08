@@ -47,10 +47,47 @@ class GuideController extends Controller
         return redirect()->route('guides.index')->with('success', 'Guide created successfully.');
     }
 
-    public function show()
+    public function show(Request $request)
     {
-        $guides = Guide::all(); // Fetch all guides
-        return view('guides.show', compact('guides')); // Pass them to the view
+        $packages = Package::all();
+        $selectedPackage = $request->get('specialization');
+        $guides = Guide::when($selectedPackage, function ($query) use ($selectedPackage) {
+            return $query->where('package_id', $selectedPackage);
+        })->get()->map(function ($guide) {
+            // Check if the guide is currently booked
+            $isBooked = \App\Models\Order::where('guide_id', $guide->id)
+                ->where('status', '!=', 'Completed') // Check for non-completed orders
+                ->exists();
+
+            // Count the number of completed orders for the guide
+            $toursCompleted = \App\Models\Order::where('guide_id', $guide->id)
+                ->where('status', 'Completed') // Count only completed orders
+                ->count();
+
+            $guide->is_booked = $isBooked;
+            $guide->tours_count = $toursCompleted;
+
+            return $guide;
+        });
+
+        return view('guides.show', compact('guides', 'packages', 'selectedPackage'));
+    }
+    public function profile($id)
+    {
+        $guide = Guide::with('package')->findOrFail($id);
+
+        // Check if the guide is currently booked
+        $isBooked = \App\Models\Order::where('guide_id', $guide->id)
+            ->where('status', '!=', 'Completed') // Check for non-completed orders
+            ->exists();
+
+        // Count the number of completed orders for the guide
+        $toursCompleted = \App\Models\Order::where('guide_id', $guide->id)
+            ->where('status', 'Completed') // Count only completed orders
+            ->count();
+        $guide->is_booked = $isBooked;
+        $guide->tours_count = $toursCompleted;
+        return view('guides.profile', compact('guide'));
     }
 
     public function edit($id)
