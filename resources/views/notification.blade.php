@@ -39,7 +39,7 @@
                 @empty
                     <tr>
                         <td colspan="5" class="px-4 py-2 text-center text-gray-500">
-                            No notifications available.
+                            No notifications availables.
                         </td>
                     </tr>
                 @endforelse
