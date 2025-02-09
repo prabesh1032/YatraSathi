@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Bookmark;
 use App\Models\Package;
 use App\Models\Guide;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,6 @@ class OrderController extends Controller
     // Store a new booking order
     public function store(Request $request)
     {
-        // dd($request->all());
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'guide_id' => 'nullable|exists:guides,id', // Add validation for guide_id
@@ -34,21 +34,36 @@ class OrderController extends Controller
         $data['duration'] = $request->input('duration', 1);
 
         // Additional data to be stored in the order
-        $data['payment_method'] = "COD";
+        $data['payment_method'] = "COD"; // Assuming COD payment, or modify as needed
         $data['user_id'] = auth()->user()->id;
         $data['status'] = 'Pending';
         $data['total_price'] = $request->price * $data['num_people'] * $data['duration'];
 
         // Create the order
-        Order::create($data);
+        $order = Order::create($data);
+
+        // Create a notification for the admin about the new booking
+        Notification::create([
+            'user_id' => auth()->id(),
+            'type' => 'Booking',
+            'content' => 'A new booking has been made by ' . auth()->user()->name . ' for the package ' . Package::find($data['package_id'])->name,
+        ]);
+
+        // Create a notification for the admin about the payment (assuming it's COD)
+        Notification::create([
+            'user_id' => auth()->id(),
+            'type' => 'Payment',
+            'content' => 'Payment of ' . $order->total_price . ' is due (COD) for the package ' . Package::find($data['package_id'])->name,
+        ]);
 
         // Remove from bookmarks if it exists
         Bookmark::where('user_id', $data['user_id'])
             ->where('package_id', $data['package_id'])
             ->delete();
 
-        $guide = Guide::find($data['guide_id']);
+        // If a guide is assigned, send them an email
         if ($data['guide_id']) {
+            $guide = Guide::find($data['guide_id']);
             $emailData = [
                 'userName' => $data['name'],
                 'userPhone' => $data['phone'],
@@ -60,8 +75,7 @@ class OrderController extends Controller
                 'guide' => $guide, // Pass the guide object to the email
             ];
 
-            $guide = Guide::find($data['guide_id']); // Find the guide by ID
-
+            // Send email to guide
             Mail::send('emails.orderguidemail', $emailData, function ($message) use ($guide) {
                 $message->to($guide->email, $guide->name)
                     ->subject('You have a new booking!');
@@ -70,6 +84,7 @@ class OrderController extends Controller
 
         return redirect('/')->with('success', 'Booking has been placed successfully.');
     }
+
     public function index()
     {
         // Fetch orders with pagination (10 items per page)
@@ -110,12 +125,16 @@ class OrderController extends Controller
         $data = base64_decode($data);
         $data = json_decode($data);
         $status = $data->status;
+
         if ($status === "COMPLETE") {
+            // Find the bookmark
             $bookmark = Bookmark::find($bookmarkid);
             if (!$bookmark) {
                 return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
                 // return redirect('/')->with('error', 'No corresponding bookmark found for the eSewa payment.');
             }
+
+            // Create the order from bookmark data
             $order = new Order();
             $order->package_id = $bookmark->package_id;
             $order->total_price = $bookmark->total_price;
@@ -123,14 +142,18 @@ class OrderController extends Controller
             $order->duration = $bookmark->duration;
             $order->payment_method = "eSewa";
             $order->name = $bookmark->user->name;
-            $order->phone =  $bookmark->user->phone;
+            $order->phone = $bookmark->user->phone;
             $order->address = $bookmark->user->address;
             $order->travel_date = $request->input('travel_date');
             $order->guide_id = $bookmark->guide_id; // Assign guide_id from the bookmark
             $order->user_id = auth()->user()->id;
-            $order->status = "Pending";
+            $order->status = "Pending"; // Or set this to "Confirmed" based on your flow
             $order->save();
+
+            // Delete the bookmark
             $bookmark->delete();
+
+            // Send email confirmation to the user
             $emaildata = [
                 'name' => $order->user->name,
                 'status' => 'Pending',
@@ -146,9 +169,22 @@ class OrderController extends Controller
                     ->subject('Booking Confirmation');
             });
 
+            // Create a notification for the admin about the new booking
+            Notification::create([
+                'user_id' => auth()->id(),
+                'type' => 'Booking',
+                'content' => 'A new booking has been made by ' . auth()->user()->name . ' for the package ' . Package::find($data->package_id)->name,
+            ]);
+
+            // Create a notification for the admin about the completed payment
+            Notification::create([
+                'user_id' => auth()->id(),
+                'type' => 'Payment',
+                'content' => 'Payment of ' . $order->total_price . ' has been completed by ' . auth()->user()->name . ' for the package ' . Package::find($data->package_id)->name . ' via eSewa.',
+            ]);
+
             return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
         }
-
         return redirect('/')->with('error', 'eSewa payment failed.');
     }
 

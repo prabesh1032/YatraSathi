@@ -9,6 +9,7 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ReviewController;
@@ -79,7 +80,10 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
-    // Handle eSewa payment for orders
+
+    Route::get('admin/notifications', [NotificationController::class, 'showNotifications'])->name('admin.notifications');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('markAsRead');
+
 });
 
 Route::middleware('auth')->group(function () {

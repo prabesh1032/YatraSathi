@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <!-- Leaflet JS -->
@@ -72,8 +71,12 @@
                 <h1 class="text-6xl font-bold">@yield('title')</h1>
                 <div class="flex items-center space-x-4">
                     <div class="relative">
-                        <i class="ri-notification-3-line text-3xl text-blue-500"></i>
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">3</span>
+                        <a href="{{ route('admin.notifications') }}">
+                            <i class="ri-notification-3-line text-3xl text-blue-500"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">
+                                2
+                            </span>
+                        </a>
                     </div>
                     <img src="{{ asset('useravatar.avif') }}" alt="User Avatar" class="w-10 h-10 rounded-full">
                 </div>
