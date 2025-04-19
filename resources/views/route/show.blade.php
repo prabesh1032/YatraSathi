@@ -17,18 +17,45 @@
 
 <body class="bg-gray-50 text-gray-900">
 
-    <div class="container mx-auto p-8">
+    <div class="container mx-auto px-4 py-10">
         <!-- View Available Packages Heading -->
-        <div class="text-center text-5xl font-extrabold text-black mt-8">
+        <div class="text-center text-5xl font-extrabold text-black MT-1">
             <span class="block">
              View Our Available
-                <span class="text-yellow-500 underline decoration-wavy">Packages on Map</span>
+                <span class="text-yellow-500">Packages on Map</span>
             </span>
         </div>
         <p class="text-center text-lg text-gray-900 font-extrabold mt-4">
             Discover exciting packages by clicking on the markers! <br /> Your next adventure is just a click away.
         </p>
+        <!-- Airplane Animation -->
+        <div id="airplane" class="absolute top-20 left-0 z-10">
+            <img src="{{ asset('plane.png') }}" alt="Flying Airplane" class="w-16 h-16" />
+            <style>
+                #airplane {
+                    position: absolute;
+                    top: 150px;
+                    left: 0;
+                    animation: fly 5s linear infinite;
+                }
 
+                @keyframes fly {
+                    0% {
+                        left: -10%;
+                    }
+                    100% {
+                        left: 110%;
+                    }
+                }
+            </style>
+
+            <script>
+                window.onload = function() {
+                    const airplane = document.getElementById('airplane');
+                    airplane.style.animationPlayState = 'running'; // Starts the flying animation when the page loads
+                };
+            </script>
+        </div>
         <!-- Map Container -->
         <div
             id="map"

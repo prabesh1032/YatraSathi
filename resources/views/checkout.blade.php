@@ -10,35 +10,35 @@
         <!-- Package Information -->
         <div class="col-span-1 bg-gradient-to-r from-white to-gray-100 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out relative">
             <!-- Package Image -->
-            <img src="{{ asset('images/'.$bookmark->package->photopath) }}" alt="Package Image" class="w-full h-48 object-cover rounded-lg mb-5 shadow-md hover:shadow-lg transition-shadow duration-300">
+            <img src="{{ asset('images/'.$package->photopath) }}" alt="Package Image" class="w-full h-48 object-cover rounded-lg mb-5 shadow-md hover:shadow-lg transition-shadow duration-300">
 
             <!-- Package Title -->
             <h2 class="text-2xl font-extrabold text-gray-900 mb-2 flex items-center">
-                {{ $bookmark->package->name }}
+                {{ $package->name }}
             </h2>
 
             <!-- Price -->
             <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
                 <i class="ri-money-dollar-circle-line text-green-500 text-2xl mr-2"></i>
-                Price: <span class="text-green-600 font-bold ml-1">${{ number_format($bookmark->total_price, 2) }}</span>
+                Price: <span class="text-green-600 font-bold ml-1">${{ number_format($total_price, 2) }}</span>
             </p>
 
             <!-- Duration -->
             <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
                 <i class="ri-time-line text-purple-500 text-2xl mr-2"></i>
-                Duration: <span class="text-purple-600 font-bold ml-1">{{ $bookmark->duration }} Days</span>
+                Duration: <span class="text-purple-600 font-bold ml-1">{{ $duration }} Days</span>
             </p>
 
             <!-- Number of People -->
             <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
                 <i class="ri-user-3-line text-yellow-500 text-2xl mr-2"></i>
-                Number of People: <span class="text-yellow-600 font-bold ml-1">{{ $bookmark->num_people ?? 1 }}</span>
+                Number of People: <span class="text-yellow-600 font-bold ml-1">{{ $num_people ?? 1 }}</span>
             </p>
 
             <!-- Guide -->
             <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
                 <i class="ri-user-star-line text-blue-500 text-2xl mr-2"></i>
-                Guide: <span class="text-blue-600 font-bold ml-1">{{ $bookmark->guide ? $bookmark->guide->name : 'Not Selected' }}</span>
+                Guide: <span class="text-blue-600 font-bold ml-1">{{ $guide ? $guide->name : 'Not Selected' }}</span>
             </p>
         </div>
 
@@ -50,12 +50,11 @@
             <form action="{{ route('orders.store') }}" method="post" id="COD">
                 @csrf
                 <!-- Hidden Fields -->
-                <input type="hidden" name="package_id" value="{{ $bookmark->package_id }}">
-                <input type="hidden" name="price" value="{{ $bookmark->total_price }}">
-                <input type="hidden" name="bookmark_id" value="{{ $bookmark->id }}">
-                <input type="hidden" name="num_people" value="{{ $bookmark->num_people ?? 1 }}">
-                <input type="hidden" name="duration" value="{{ $bookmark->duration ?? 1 }}">
-                <input type="hidden" name="guide_id" value="{{ $bookmark->guide->id ?? '' }}">
+                <input type="hidden" name="package_id" value="{{ $package->id }}">
+                <input type="hidden" name="price" value="{{ $package->price }}">
+                <input type="hidden" name="num_people" value="{{ $num_people ?? 1 }}">
+                <input type="hidden" name="duration" value="{{ $package->duration }}">
+                <input type="hidden" name="guide_id" value="{{ $guide->id ?? '' }}">
 
                 <!-- Full Name -->
                 <div class="mb-4 flex items-center">
@@ -106,10 +105,6 @@
                 </h3>
 
                 <!-- Total Price -->
-                @php
-                $num_people = $bookmark->num_people ?? 1; // Fallback to 1 if num_people is not set
-                $total_price = $bookmark->total_price;
-                @endphp
                 <h2 class="text-2xl font-semibold text-gray-800 mb-5 flex items-center">
                     <i class="ri-money-dollar-circle-line text-green-500 text-2xl mr-2"></i>
                     Total: <span class="text-blue-500 ml-2">${{ number_format($total_price, 2) }}</span>
@@ -139,7 +134,7 @@
             <!-- Order Now Button -->
             <div>
                 <button id="paymentButton" type="button" class="w-full py-2 rounded-lg text-white text-lg font-semibold shadow-lg transition duration-300 ease-in-out">
-                    Book Now
+                    Confirm Book
                 </button>
             </div>
         </div>
@@ -155,14 +150,14 @@
     <input type="hidden" id="product_code" name="product_code" value="EPAYTEST" required>
     <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" required>
     <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
-    <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', $bookmark->id) }}" required>
-    <input type="hidden" id="failure_url" name="failure_url" value="{{ route('bookmarks.index') }}" required>
+    <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', $package->id) }}" required>
+    <input type="hidden" id="failure_url" name="failure_url" value="" required>
     <input type="hidden" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
     <input type="hidden" id="signature" name="signature" value="" required>
 </form>
 
 @php
-$total_amount = $bookmark->package->price;
+$total_amount = $package->price;
 $transaction_uuid = time();
 $msg = "total_amount=$total_amount,transaction_uuid=$transaction_uuid,product_code=EPAYTEST";
 $secret = "8gBm/:&EnhH.1/q";

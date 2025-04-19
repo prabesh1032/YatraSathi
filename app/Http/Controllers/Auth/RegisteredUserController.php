@@ -58,6 +58,6 @@ class RegisteredUserController extends Controller
 
 
 
-        return redirect(route('home', absolute: false));
+        return redirect(route('home', absolute: false))->with('success', 'Account Successfully Created.');
     }
 }

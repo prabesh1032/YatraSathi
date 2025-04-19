@@ -6,7 +6,7 @@
     <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-4">{{ $package->name }}</h1>
     <p class="text-center font-bold text-lg text-gray-600">Discover the wonders of {{ $package->location }} with this exclusive package!</p>
 
-    <form method="POST" action="{{ route('bookmarks.store') }}">
+    <form method="POST" action="{{ route('direct.checkout') }}">
         @csrf
         <!-- Hidden Input for Package ID -->
         <input type="hidden" name="guide_id" id="hidden_guide_id" value="">
@@ -18,7 +18,7 @@
             <div class="p-4 bg-white ">
                 <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="rounded-lg shadow-lg w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
                 <a href="{{ route('packages.read', $package->id) }}" class="block bg-gradient-to-r from-indigo-500 to-blue-600 text-white text-center mt-6 px-6 py-3 rounded-md shadow-lg hover:from-indigo-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
-                    Learn More About This Package
+                    Learn More
                 </a>
             </div>
 
@@ -105,7 +105,7 @@
             <!-- Add to Plan Button -->
             <div class="mt-8 flex justify-center">
                 <button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white mb-2 px-8 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center">
-                    <i class="ri-bookmark-line mr-2"></i> Add to My Plan
+                    <i class="ri-bookmark-line mr-2"></i> Book Now
                 </button>
             </div>
         </div>

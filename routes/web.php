@@ -35,25 +35,21 @@ Route::get('/allpackages', [PackageController::class, 'package'])->name('package
 Route::get('/readpackages/{package}', [PackageController::class, 'read'])->name('packages.read');
 Route::get('/packages/location', [PackageController::class, 'showPackagesByLocation'])->name('packages.byLocation');
 
-Route::get('route-planning', [MapController::class, 'showRoutePlanning'])->name('route.show');
+Route::get('maps', [MapController::class, 'showRoutePlanning'])->name('route.show');
 
 
 Route::middleware('auth')->group(function(){
     Route::post('/review/store', [ReviewController::class, 'store'])->name('reviews.store');
     Route::post('/messages/store', [MessageController::class, 'store'])->name('messages.store');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/ordersesewa/esewa/{bookmarkid}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
+    Route::get('/ordersesewa/esewa/{packageid}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
     Route::get('/history', [OrderController::class, 'userHistory'])->name('historyindex');
     Route::post('/orders/{orderId}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     Route::get('/userprofile/edit', [UserProfileController::class, 'edit'])->name('userprofile.edit');
     Route::post('/userprofile/update', [UserProfileController::class, 'update'])->name('userprofile.update');
 
-    Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
-    Route::get('/bookmarks', [BookmarkController::class, 'myBookmarks'])->name('bookmarks.index');
-    Route::delete('/bookmarks/{bookmark}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
-    Route::get('/bookmarks/{bookmark}/checkout', [BookmarkController::class, 'checkout'])->name('bookmarks.checkout');
-
+    Route::post('/bookmarks/checkout/direct', [BookmarkController::class, 'directCheckout'])->name('direct.checkout');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'isadmin'])->name('dashboard');
@@ -80,9 +76,6 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
-
-    Route::get('admin/notifications', [NotificationController::class, 'showNotifications'])->name('admin.notifications');
-    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('markAsRead');
 
 });
 

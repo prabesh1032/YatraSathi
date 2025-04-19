@@ -42,20 +42,6 @@ class OrderController extends Controller
         // Create the order
         $order = Order::create($data);
 
-        // Create a notification for the admin about the new booking
-        Notification::create([
-            'user_id' => auth()->id(),
-            'type' => 'Booking',
-            'content' => 'A new booking has been made by ' . auth()->user()->name . ' for the package ' . Package::find($data['package_id'])->name,
-        ]);
-
-        // Create a notification for the admin about the payment (assuming it's COD)
-        Notification::create([
-            'user_id' => auth()->id(),
-            'type' => 'Payment',
-            'content' => 'Payment of ' . $order->total_price . ' is due (COD) for the package ' . Package::find($data['package_id'])->name,
-        ]);
-
         // Remove from bookmarks if it exists
         Bookmark::where('user_id', $data['user_id'])
             ->where('package_id', $data['package_id'])
@@ -168,20 +154,6 @@ class OrderController extends Controller
                 $message->to($order->user->email, $order->user->name)
                     ->subject('Booking Confirmation');
             });
-
-            // Create a notification for the admin about the new booking
-            Notification::create([
-                'user_id' => auth()->id(),
-                'type' => 'Booking',
-                'content' => 'A new booking has been made by ' . auth()->user()->name . ' for the package ' . Package::find($data->package_id)->name,
-            ]);
-
-            // Create a notification for the admin about the completed payment
-            Notification::create([
-                'user_id' => auth()->id(),
-                'type' => 'Payment',
-                'content' => 'Payment of ' . $order->total_price . ' has been completed by ' . auth()->user()->name . ' for the package ' . Package::find($data->package_id)->name . ' via eSewa.',
-            ]);
 
             return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
         }

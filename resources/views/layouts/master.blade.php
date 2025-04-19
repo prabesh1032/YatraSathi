@@ -33,20 +33,6 @@
                     <span>Hi, {{ auth()->user()->name }}</span>
                 </a>
 
-                <!-- My Adventures Link with Badge -->
-                <div class="relative flex items-center space-x-2">
-                    <a href="{{ route('bookmarks.index') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 group {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-indigo-500 font-extrabold' : '' }}">
-                        <i class="ri-map-pin-fill"></i>
-                        <span>My Adventures</span>
-                    </a>
-                    <span class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-                        @php
-                            $no_of_items = \App\Models\Bookmark::where('user_id', auth()->id())->count();
-                        @endphp
-                        {{ $no_of_items }}
-                    </span>
-                </div>
-
                 <!-- My Bookings Link with Badge -->
                 <div class="relative flex items-center space-x-2">
                     <a href="{{ route('historyindex') }}" class="text-xl text-black font-extrabold hover:text-indigo-500 flex items-center space-x-2 {{ Route::currentRouteName() == 'historyindex' ? 'text-indigo-500 font-extrabold' : '' }}">
@@ -155,7 +141,6 @@
             <a href="{{ route('contact') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'contact' ? 'text-yellow-500 font-bold' : '' }}">Contact</a>
 
             @auth
-            <a href="{{ route('bookmarks.index') }}" class="hover:text-yellow-500 {{ Route::currentRouteName() == 'bookmarks.index' ? 'text-yellow-500 font-bold' : '' }}">My-Adventure</a>
             <form action="{{ route('logout') }}" method="POST" class="inline-block">
                 @csrf
                 <input type="submit" value="Logout" class="hover:text-yellow-500 cursor-pointer">

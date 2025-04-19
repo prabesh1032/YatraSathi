@@ -3,7 +3,7 @@
 @section('title', 'Guides')
 
 @section('content')
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="container mx-auto px-4 sm:px-6 lg:px-4 py-10">
     <!-- Hero Header Section -->
     <div class="text-center mb-4 relative">
         <div class="absolute inset-0 rounded-full blur-3xl -z-10"></div>
@@ -14,6 +14,34 @@
             Explore our certified guides who craft unforgettable adventures with their expertise.
         </p>
     </div>
+<!-- Airplane Animation -->
+<div id="airplane" class="absolute top-20 left-0 z-10">
+    <img src="{{ asset('plane.png') }}" alt="Flying Airplane" class="w-16 h-16" />
+    <style>
+        #airplane {
+            position: absolute;
+            top: 150px;
+            left: 0;
+            animation: fly 5s linear infinite;
+        }
+
+        @keyframes fly {
+            0% {
+                left: -10%;
+            }
+            100% {
+                left: 110%;
+            }
+        }
+    </style>
+
+    <script>
+        window.onload = function() {
+            const airplane = document.getElementById('airplane');
+            airplane.style.animationPlayState = 'running'; // Starts the flying animation when the page loads
+        };
+    </script>
+</div>
 
     <!-- Specialization Filter Form -->
     <form id="filterForm" method="GET" action="{{ route('guides.show') }}" class="mb-8">
