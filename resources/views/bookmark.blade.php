@@ -1,105 +1,95 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="flex items-center justify-between mt-10 mb-4">
-    <h1 class="text-gray-900 text-5xl text-center font-extrabold mx-auto"><i class="ri-map-pin-line text-5xl text-yellow-500 "></i>
-        My Travelling <span class="text-yellow-500">Plans</span>
-    </h1>
-</div>
-<p class="text-gray-700 font-bold text-xl text-center mb-8  mt-4 mx-auto max-w-2xl">
-    Keep track of your bookings and plan your next adventure with ease.
-</p>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 px-5 md:px-20 mb-10">
-    @forelse($bookmarks as $bookmark)
-    <div class="p-5 border shadow-lg text-center rounded-lg bg-gradient-to-br from-yellow-100 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
-        <h1 class="text-3xl font-extrabold mb-6 text-gray-900">{{ $bookmark->package->name }}</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Image Section -->
-            <div class="flex justify-center">
-                <img src="{{ asset('images/' . $bookmark->package->photopath) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg shadow-sm">
-            </div>
-
-            <!-- Package Information Section -->
-            <div class="flex flex-col gap-3">
-                <p class="text-green-500 flex text-xl items-center gap-2">
-                    <i class="ri-money-dollar-circle-line text-green-500"></i>
-                    <span class="font-bold">${{ number_format($bookmark->total_price, 2) }}</span>
-                </p>
-                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
-                    <i class="ri-calendar-line text-blue-500"></i>
-                    <span>Duration: <span class="font-bold">{{ $bookmark->duration }} days</span></span>
-                </p>
-                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
-                    <i class="ri-map-pin-line text-red-500"></i>
-                    <span>Location: <span class="font-bold">{{ $bookmark->package->location }}</span></span>
-                </p>
-                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
-                    <i class="ri-user-line text-yellow-500"></i>
-                    <span>People: <span class="font-bold">{{ $bookmark->num_people }}</span></span>
-                </p>
-                <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
-                    <i class="ri-user-smile-line text-green-500"></i>
-                    <span>Guide:
-                        <span class="font-bold text-blue-500">
-                            {{ $bookmark->guide ? $bookmark->guide->name : 'Not Selected' }}
-                        </span>
-                    </span>
-                </p>
-        <!-- Action Buttons -->
-                <div class="flex justify-between mt-5">
-                    <button onclick="showModal('{{ $bookmark->id }}')" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 shadow-md transition">
-                        <i class="ri-delete-bin-line mr-2"></i>Remove
-                    </button>
-                    <a href="{{ route('bookmarks.checkout', $bookmark->id) }}" class="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 shadow-md transition">
-                        <i class="ri-shopping-cart-line mr-2"></i>Book Now
-                    </a>
-                </div>
-            </div>
-        </div>
+<div class="container mx-auto px-4 py-10">
+    <div class="text-center mb-6">
+        <h1 class="text-6xl font-extrabold z-10 text-gray-900 mb-4">Your <span class="text-yellow-500">Bookmarked</span> Packages</h1>
+        <p class="text-xl text-gray-600">Easily access your favorite travel packages and explore further details.</p>
     </div>
-    @empty
-    <div class="col-span-full text-center py-12">
-        <img src="{{ asset('notfound.jpg') }}" alt="No Results Found" class="mx-auto w-1/3 h-auto mb-6">
-        <h2 class="text-2xl font-extrabold text-gray-600">No bookmarks found</h2>
-        <p class="text-gray-500 mb-5">Start exploring packages and bookmark your favorites!</p>
-        <a href="{{ route('packages') }}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400">
-            Browse Packages
-        </a>
-    </div>
-    @endforelse
-</div>
 
-<!-- Delete Modal -->
-<div class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm hidden items-center justify-center z-50" id="deleteModal">
-    <form id="deleteForm" method="POST" class="bg-white p-6 rounded-lg shadow-2xl max-w-md">
-        @csrf
-        @method('DELETE')
-        <h1 class="text-2xl font-bold text-center text-blue-700 mb-4">
-            <i class="ri-error-warning-line text-yellow-500 mr-2"></i> Confirm Deletion
-        </h1>
-        <p class="text-gray-600 text-center mb-6">Are you sure you want to remove this bookmark? This action cannot be undone.</p>
-        <div class="flex justify-center gap-5">
-            <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-400">
-                <i class="ri-check-line mr-2"></i>Yes, Delete
-            </button>
-            <button type="button" onclick="hideModal()" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 focus:ring-2 focus:ring-gray-400">
-                <i class="ri-close-line mr-2"></i>Cancel
-            </button>
+    @if ($bookmarkedPackages->isEmpty())
+        <div class="text-center text-gray-600 text-lg">
+            <p>You have no bookmarked packages yet. Start exploring and bookmark your favorite ones!</p>
         </div>
-    </form>
+    @else
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+            @foreach ($bookmarkedPackages as $bookmark)
+                @if ($bookmark->package)
+                    <div class="relative bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-500">
+                        <!-- Bookmark Icon -->
+                        <div class="absolute top-4 right-4">
+                            <button class="bookmark-button" data-package-id="{{ $bookmark->package->id }}">
+                                <i class="ri-bookmark-fill text-yellow-500 text-3xl"></i>
+                            </button>
+                        </div>
+                        <!-- Image Section -->
+                        @if($bookmark->package->photopath)
+                            <a href="{{ route('packages.read', $bookmark->package->id) }}">
+                                <img src="{{ asset('images/' . $bookmark->package->photopath) }}" alt="{{ $bookmark->package->name }}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                            </a>
+                        @endif
+                        <div class="p-6">
+                            <a href="{{ route('packages.read', $bookmark->package->id) }}" class="block text-3xl font-semibold text-gray-800 hover:text-indigo-600 transition-colors duration-300">
+                                {{ $bookmark->package->name }}
+                            </a>
+                            <p class="text-lg text-gray-600 mt-2 flex items-center">
+                                <i class="ri-map-pin-line text-indigo-500 mr-2"></i> {{ $bookmark->package->location }}
+                            </p>
+                            <p class="text-lg text-gray-600 mt-2 flex items-center">
+                                <i class="ri-calendar-line text-indigo-500 mr-2"></i> {{ $bookmark->package->duration }} days
+                            </p>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-xl font-bold text-indigo-600">${{ $bookmark->package->price }} <span class="text-sm text-gray-500">Per Person</span></span>
+                            </div>
+                            <div class="flex space-x-4 mt-4">
+                                <a href="{{ route('packages.read', $bookmark->package->id) }}" class="bg-indigo-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">Learn More</a>
+                                <a href="{{ route('packages.show', $bookmark->package->id) }}" class="bg-green-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-700 transition-all duration-300 transform hover:scale-105">Explore</a>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="text-center text-gray-600 text-lg">
+                        <p>This package is no longer available.</p>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+    @endif
 </div>
 
 <script>
-    function hideModal() {
-        document.getElementById('deleteModal').classList.add('hidden');
-        document.getElementById('deleteModal').classList.remove('flex');
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.bookmark-button').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const packageId = button.dataset.packageId;
+            const icon = button.querySelector('i');
 
-    function showModal(id) {
-        var deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = "/bookmarks/" + id;
-        document.getElementById('deleteModal').classList.remove('hidden');
-        document.getElementById('deleteModal').classList.add('flex');
-    }
+            try {
+                const response = await fetch(`/bookmark/add/${packageId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    }
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.message === 'Bookmark removed') {
+                        button.closest('.relative').remove();
+                    }
+                } else {
+                    alert(data.message || 'Something went wrong');
+                }
+            } catch (error) {
+                alert('Error communicating with server.');
+                console.error(error);
+            }
+        });
+    });
+});
 </script>
+
 @endsection

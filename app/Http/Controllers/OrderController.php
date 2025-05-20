@@ -14,6 +14,36 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
+    public function directCheckout(Request $request)
+    {
+        $data = $request->validate([
+            'package_id' => 'required|exists:packages,id',
+            'num_people' => 'required|integer|min:1',
+            'duration_range' => 'required|integer|min:1',
+            'guide_id' => 'nullable|exists:guides,id',
+        ]);
+
+        $package = Package::findOrFail($data['package_id']);
+
+        $data['duration'] = $data['duration_range'];
+        $data['total_price'] = $package->price * $data['num_people'] * $data['duration'];
+
+        $guide = null;
+        if (!empty($data['guide_id'])) {
+            $guide = Guide::find($data['guide_id']);
+            if (!$guide) {
+                return back()->with('error', 'Selected guide is invalid.');
+            }
+        }
+
+        return view('checkout', [
+            'package' => $package,
+            'num_people' => $data['num_people'],
+            'duration' => $data['duration'],
+            'total_price' => $data['total_price'],
+            'guide' => $guide
+        ]);
+    }
     // Store a new booking order
     public function store(Request $request)
     {
@@ -42,10 +72,6 @@ class OrderController extends Controller
         // Create the order
         $order = Order::create($data);
 
-        // Remove from bookmarks if it exists
-        Bookmark::where('user_id', $data['user_id'])
-            ->where('package_id', $data['package_id'])
-            ->delete();
 
         // If a guide is assigned, send them an email
         if ($data['guide_id']) {
@@ -73,9 +99,14 @@ class OrderController extends Controller
 
     public function index()
     {
-        // Fetch orders with pagination (10 items per page)
-        $orders = Order::latest()->paginate(12);
-        // dd($orders);
+        $query = Order::query();
+
+        if (request()->filled('status')) {
+            $query->where('status', request('status'));
+        }
+
+        $orders = $query->latest()->paginate(12);
+
         return view('orders.index', compact('orders'));
     }
 
@@ -104,60 +135,59 @@ class OrderController extends Controller
         return back()->with('success', 'Booking status updated to ' . $status);
     }
 
-    // Handle eSewa payment and booking confirmation
-    public function storeEsewa(Request $request, $bookmarkid)
+    public function storeEsewa(Request $request, $package_id)
     {
-        $data = $request->data;
-        $data = base64_decode($data);
-        $data = json_decode($data);
-        $status = $data->status;
+        $encodedData = $request->input('data');
+        $decodedData = base64_decode($encodedData);
+        $data = json_decode($decodedData);
 
-        if ($status === "COMPLETE") {
-            // Find the bookmark
-            $bookmark = Bookmark::find($bookmarkid);
-            if (!$bookmark) {
-                return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
-                // return redirect('/')->with('error', 'No corresponding bookmark found for the eSewa payment.');
-            }
-
-            // Create the order from bookmark data
-            $order = new Order();
-            $order->package_id = $bookmark->package_id;
-            $order->total_price = $bookmark->total_price;
-            $order->num_people = $bookmark->num_people;
-            $order->duration = $bookmark->duration;
-            $order->payment_method = "eSewa";
-            $order->name = $bookmark->user->name;
-            $order->phone = $bookmark->user->phone;
-            $order->address = $bookmark->user->address;
-            $order->travel_date = $request->input('travel_date');
-            $order->guide_id = $bookmark->guide_id; // Assign guide_id from the bookmark
-            $order->user_id = auth()->user()->id;
-            $order->status = "Pending"; // Or set this to "Confirmed" based on your flow
-            $order->save();
-
-            // Delete the bookmark
-            $bookmark->delete();
-
-            // Send email confirmation to the user
-            $emaildata = [
-                'name' => $order->user->name,
-                'status' => 'Pending',
-                'order' => $order,
-                'package' => $order->package,
-                'guide' => $order->guide, // Include guide in the email
-                'paymentMethod' => $order->payment_method,
-            ];
-
-            // Send confirmation email
-            Mail::send('emails.orderemail', $emaildata, function ($message) use ($order) {
-                $message->to($order->user->email, $order->user->name)
-                    ->subject('Booking Confirmation');
-            });
-
-            return redirect('/')->with('success', 'Booking completed via eSewa successfully.');
+        // ❌ Check if eSewa status is not COMPLETE
+        if (!isset($data->status) || $data->status !== "COMPLETE") {
+            return redirect('/')->with('error', '❌ eSewa payment failed.');
         }
-        return redirect('/')->with('error', 'eSewa payment failed.');
+
+        // ✅ Extract values safely
+        $total_price = $data->total_price ?? 0;
+        $num_people = $data->num_people ?? 1;
+        $duration = $data->duration ?? 1;
+        $guide_id = $data->guide_id ?? null;
+        $travel_date = $data->travel_date ?? now()->addDays(1)->toDateString();
+
+        $user = auth()->user();
+
+        // ✅ Create order
+        $order = new Order();
+        $order->package_id = $package_id;
+        $order->total_price = $total_price;
+        $order->num_people = $num_people;
+        $order->duration = $duration;
+        $order->payment_method = "eSewa";
+        $order->name = $user->name;
+        $order->phone = $user->phone;
+        $order->address = $user->address;
+        $order->travel_date = $travel_date;
+        $order->guide_id = $guide_id;
+        $order->user_id = $user->id;
+        $order->status = "Pending";
+        $order->save();
+
+        // ✉️ Send email
+        $emaildata = [
+            'name' => $user->name,
+            'status' => 'Pending',
+            'order' => $order,
+            'package' => $order->package,
+            'guide' => $order->guide,
+            'paymentMethod' => $order->payment_method,
+        ];
+
+        Mail::send('emails.orderemail', $emaildata, function ($message) use ($order, $user) {
+            $message->to($user->email, $user->name)
+                ->subject('Booking Confirmation');
+        });
+
+        // ✅ Redirect with success
+        return redirect('/')->with('success', '✅ Booking completed via eSewa successfully.');
     }
 
     public function userHistory()

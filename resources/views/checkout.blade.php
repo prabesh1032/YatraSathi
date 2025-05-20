@@ -40,6 +40,11 @@
                 <i class="ri-user-star-line text-blue-500 text-2xl mr-2"></i>
                 Guide: <span class="text-blue-600 font-bold ml-1">{{ $guide ? $guide->name : 'Not Selected' }}</span>
             </p>
+            <div class="mt-3">
+                <a href="{{ route('packages.show', $package->id) }}" class="inline-block w-full text-center py-2 bg-blue-500 text-white font-bold text-lg rounded-lg hover:bg-blue-600 transition-all">
+                Edit Information
+                </a>
+            </div>
         </div>
 
         <!-- User Information -->
@@ -151,7 +156,7 @@
     <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" required>
     <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
     <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', $package->id) }}" required>
-    <input type="hidden" id="failure_url" name="failure_url" value="" required>
+    <input type="hidden" id="failure_url" name="failure_url" value="{{route('esewa.failure')}}" required>
     <input type="hidden" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
     <input type="hidden" id="signature" name="signature" value="" required>
 </form>

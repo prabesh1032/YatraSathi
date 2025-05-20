@@ -70,4 +70,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Package::class, 'user_package', 'user_id', 'package_id');
     }
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Package::class, 'bookmarks');
+    }
 }

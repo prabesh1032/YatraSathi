@@ -25,13 +25,6 @@ class ReviewController extends Controller
             'rating' => $request->rating,
         ]);
 
-        // Create a notification for the admin about the new review
-        Notification::create([
-            'user_id' => auth()->id(),
-            'type' => 'Review',
-            'content' => 'A new review has been submitted by ' . auth()->user()->name . ' for the package ' . Package::find($request->package_id)->name,
-        ]);
-
         // Redirect back with success message
         return back()->with('success', 'Thank you for your review!');
     }

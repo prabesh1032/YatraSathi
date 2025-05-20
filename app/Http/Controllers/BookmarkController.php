@@ -6,6 +6,7 @@ use App\Models\Bookmark;
 use App\Models\Package;
 use App\Models\Guide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookmarkController extends Controller
 {
