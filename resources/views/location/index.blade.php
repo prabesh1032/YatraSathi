@@ -6,7 +6,7 @@
     <main class="container mx-auto py-12">
         <!-- Overlay for darker background -->
         <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
-        
+
         <!-- Centered Content -->
         <div class="relative flex items-center justify-center w-full h-full">
             <div class="bg-white bg-opacity-30 backdrop-blur-lg rounded-xl shadow-2xl p-8 w-full max-w-5xl text-gray-900 ">
@@ -59,5 +59,7 @@
         </div>
     </main>
 </header>
+{{-- smooth scrolling --}}
+
 
 @endsection

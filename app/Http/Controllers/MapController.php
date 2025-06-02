@@ -20,6 +20,6 @@ class MapController extends Controller
             ];
         });
         // Pass package data to the view
-        return view('route.show', compact('packagesArray'));
+        return view('maps.show', compact('packagesArray'));
     }
 }

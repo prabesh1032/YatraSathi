@@ -39,7 +39,7 @@
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-phone-line text-green-500 mr-2"></i> <strong>Phone:</strong> {{ $order->phone }}</p>
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-group-line text-purple-500 mr-2"></i> <strong>Travelers:</strong> {{ $order->num_people }}</p>
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-wallet-line text-yellow-500 mr-2"></i> <strong>Total Price:</strong>
-                    <span class="text-green-600 font-bold">${{ number_format($order->total_price, 2) }}</span>
+                    <span class="text-green-600 font-bold">${{ ($order->total_price) }}</span>
                 </p>
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-time-line text-blue-500 mr-2"></i> <strong>Duration:</strong> {{ $order->duration }} days</p>
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-calendar-event-line text-pink-500 mr-2"></i> <strong>Travelling on:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}</p>

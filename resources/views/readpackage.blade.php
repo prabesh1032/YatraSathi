@@ -96,7 +96,7 @@
 
                     <!-- Row 2 -->
                     <div class="flex justify-center items-stretch mb-4">
-                        <a href="{{ route('route.show') }}"
+                        <a href="{{ route('maps.show') }}"
                             class="flex items-center justify-center bg-indigo-500 text-white text-center py-3 px-4 rounded-lg shadow-md hover:bg-indigo-600 transition transform hover:scale-105 flex-grow">
                             <i class="ri-map-pin-line mr-2"></i> View Package on Map
                         </a>

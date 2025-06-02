@@ -16,11 +16,13 @@ class OrderController extends Controller
 {
     public function directCheckout(Request $request)
     {
+        // Validate POST input
         $data = $request->validate([
             'package_id' => 'required|exists:packages,id',
             'num_people' => 'required|integer|min:1',
             'duration_range' => 'required|integer|min:1',
             'guide_id' => 'nullable|exists:guides,id',
+            'travel_date' => 'required|date|after:today',
         ]);
 
         $package = Package::findOrFail($data['package_id']);
@@ -28,74 +30,108 @@ class OrderController extends Controller
         $data['duration'] = $data['duration_range'];
         $data['total_price'] = $package->price * $data['num_people'] * $data['duration'];
 
+        // Store all required data in session for the GET checkout page
+        session([
+            'checkout_data' => [
+                'package' => $package,
+                'num_people' => $data['num_people'],
+                'duration' => $data['duration'],
+                'total_price' => $data['total_price'],
+                'travel_date' => $data['travel_date'],
+                'guide_id' => $data['guide_id'] ?? null,
+            ]
+        ]);
+
+        // Redirect to GET route to show checkout page
+        return redirect()->route('checkout.final');
+    }
+    public function finalCheckout()
+    {
+        $checkoutData = session('checkout_data');
+
+        if (!$checkoutData) {
+            return redirect('/')->with('error', 'No checkout data found. Please start booking again.');
+        }
+
         $guide = null;
-        if (!empty($data['guide_id'])) {
-            $guide = Guide::find($data['guide_id']);
-            if (!$guide) {
-                return back()->with('error', 'Selected guide is invalid.');
-            }
+        if (!empty($checkoutData['guide_id'])) {
+            $guide = Guide::find($checkoutData['guide_id']);
         }
 
         return view('checkout', [
-            'package' => $package,
-            'num_people' => $data['num_people'],
-            'duration' => $data['duration'],
-            'total_price' => $data['total_price'],
-            'guide' => $guide
+            'package' => $checkoutData['package'],
+            'num_people' => $checkoutData['num_people'],
+            'duration' => $checkoutData['duration'],
+            'total_price' => $checkoutData['total_price'],
+            'travel_date' => $checkoutData['travel_date'],
+            'guide' => $guide,
         ]);
     }
-    // Store a new booking order
+
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'package_id' => 'required|exists:packages,id',
-            'guide_id' => 'nullable|exists:guides,id', // Add validation for guide_id
+        // Validate only user input fields here
+        $userData = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'duration' => 'nullable|integer|min:1',
-            'num_people' => 'nullable|integer|min:1',
-            'travel_date' => 'required|date|after:today', // Ensure num_people is valid
         ]);
-
-        // Default the num_people to 1 if not provided
-        $data['num_people'] = $request->input('num_people', 1);
-        $data['duration'] = $request->input('duration', 1);
-
-        // Additional data to be stored in the order
-        $data['payment_method'] = "COD"; // Assuming COD payment, or modify as needed
-        $data['user_id'] = auth()->user()->id;
-        $data['status'] = 'Pending';
-        $data['total_price'] = $request->price * $data['num_people'] * $data['duration'];
+        // Retrieve checkout data from session
+        $checkoutData = session('checkout_data');
+        if (!$checkoutData) {
+            return redirect('/')->with('error', 'No booking data found. Please start again.');
+        }
+        // Prepare data to store in order
+        $data = [
+            'package_id' => $checkoutData['package']->id,
+            'guide_id' => $checkoutData['guide_id'] ?? null,
+            'name' => $userData['name'],
+            'phone' => $userData['phone'],
+            'address' => $userData['address'],
+            'price' => $checkoutData['total_price'], // total price already calculated
+            'duration' => $checkoutData['duration'],
+            'num_people' => $checkoutData['num_people'],
+            'travel_date' => $checkoutData['travel_date'],
+            'payment_method' => 'COD',
+            'user_id' => auth()->user()->id,
+            'status' => 'Pending',
+            'total_price' => $checkoutData['total_price'], // total price
+        ];
 
         // Create the order
         $order = Order::create($data);
 
-
-        // If a guide is assigned, send them an email
+        // Send email to guide if assigned
         if ($data['guide_id']) {
             $guide = Guide::find($data['guide_id']);
-            $emailData = [
-                'userName' => $data['name'],
-                'userPhone' => $data['phone'],
-                'userAddress' => $data['address'],
-                'packageName' => Package::find($data['package_id'])->name, // Fetch package name
-                'travelDate' => $data['travel_date'],
-                'numPeople' => $data['num_people'],
-                'totalPrice' => $data['total_price'],
-                'guide' => $guide, // Pass the guide object to the email
-            ];
+            if ($guide) {
+                $emailData = [
+                    'userName' => $data['name'],
+                    'userPhone' => $data['phone'],
+                    'userAddress' => $data['address'],
+                    'packageName' => $checkoutData['package']->name,
+                    'travelDate' => $data['travel_date'],
+                    'numPeople' => $data['num_people'],
+                    'totalPrice' => $data['total_price'],
+                    'guide' => $guide,
+                ];
 
-            // Send email to guide
-            Mail::send('emails.orderguidemail', $emailData, function ($message) use ($guide) {
-                $message->to($guide->email, $guide->name)
-                    ->subject('You have a new booking!');
-            });
+                Mail::send('emails.orderguidemail', $emailData, function ($message) use ($guide) {
+                    $message->to($guide->email, $guide->name)
+                        ->subject('You have a new booking!');
+                });
+                Mail::send('emails.orderemail', $emailData, function ($message) use ($order) {
+                    $message->to($order->user->email, $order->user->name)
+                        ->subject('Booking Status Update');
+                });
+            }
         }
+        // Clear checkout session data after order placed
+        session()->forget('checkout_data');
 
         return redirect('/')->with('success', 'Booking has been placed successfully.');
     }
+
 
     public function index()
     {
@@ -135,11 +171,12 @@ class OrderController extends Controller
         return back()->with('success', 'Booking status updated to ' . $status);
     }
 
-    public function storeEsewa(Request $request, $package_id)
+    public function storeEsewa(Request $request, $package_id, $no_of_people, $duration, $travel_date)
     {
         $encodedData = $request->input('data');
         $decodedData = base64_decode($encodedData);
         $data = json_decode($decodedData);
+        $package = Package::findOrFail($package_id);
 
         // ❌ Check if eSewa status is not COMPLETE
         if (!isset($data->status) || $data->status !== "COMPLETE") {
@@ -147,11 +184,11 @@ class OrderController extends Controller
         }
 
         // ✅ Extract values safely
-        $total_price = $data->total_price ?? 0;
-        $num_people = $data->num_people ?? 1;
-        $duration = $data->duration ?? 1;
-        $guide_id = $data->guide_id ?? null;
-        $travel_date = $data->travel_date ?? now()->addDays(1)->toDateString();
+        $total_price = $data->total_amount ?? 0;
+        $num_people = $no_of_people ?? 1;
+        $duration = $duration ?? 1;
+        $guide_id = $guide_id ?? null;
+        $travel_date = $travel_date ?? now()->addDays(1)->toDateString();
 
         $user = auth()->user();
 

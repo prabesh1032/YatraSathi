@@ -9,11 +9,6 @@ use Illuminate\Validation\Rule;
 
 class PackageController extends Controller
 {
-    public function index()
-    {
-        $packages = Package::all();
-        return view('packages.index', compact('packages'));
-    }
 
     public function package(Request $request)
     {
@@ -93,7 +88,7 @@ class PackageController extends Controller
         $reviews = $package->reviews()->latest()->take(3)->get();
         $guides = $package->guides()->whereDoesntHave('orders', function ($query) use ($package) {
             $query->where('status', '!=', 'Completed')
-                ->where('package_id', $package->id); 
+                ->where('package_id', $package->id);
         })->get();
 
         return view('viewpackage', compact('package', 'relatedpackages', 'reviews', 'guides'));
@@ -103,6 +98,11 @@ class PackageController extends Controller
     {
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
         return view('readpackage', compact('package', 'relatedpackages'));
+    }
+     public function index()
+    {
+        $packages = Package::all();
+        return view('packages.index', compact('packages'));
     }
 
     public function create()

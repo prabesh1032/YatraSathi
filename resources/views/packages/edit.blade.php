@@ -29,7 +29,7 @@
 
             <div class="mb-4">
                 <label for="starting_location" class="block text-sm font-medium text-gray-700">Stating Location</label>
-                <input type="text" name="starting_location" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <input type="text" name="starting_location" value="{{ $package->location }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 @error('starting_location')
                 <div class="text-red-600 mt-2 text-sm">
                     *{{$message}}
@@ -59,7 +59,7 @@
 
             <div class="mb-4">
                 <label for="photopath" class="block text-sm font-medium text-gray-700">Image</label>
-                <input type="file" name="photopath" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <input type="file" name="photopath" value="{{$package->photopath}}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 @error('photopath')
                 <div class="text-red-600 mt-2 text-sm">
                     *{{ $message }}

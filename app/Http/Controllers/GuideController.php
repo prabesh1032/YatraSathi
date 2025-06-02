@@ -18,7 +18,7 @@ class GuideController extends Controller
     public function create()
     {
         $packages = Package::all();
-        return view('guides.create', compact('packages'));
+        return view('guides.create',compact('packages'));
     }
 
     public function store(Request $request)

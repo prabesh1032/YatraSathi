@@ -12,7 +12,7 @@
     </div>
 </header>
 <!-- Airplane Animation -->
-<div id="airplane" class="absolute top-20 left-0 z-10">
+ {{-- <div id="airplane" class="absolute top-20 left-0 z-10">
     <img src="{{ asset('plane.png') }}" alt="Flying Airplane" class="w-16 h-16" />
     <style>
         #airplane {
@@ -38,8 +38,7 @@
             airplane.style.animationPlayState = 'running'; // Starts the flying animation when the page loads
         };
     </script>
-</div>
-
+</div> --}}
 
 <script>
     const header = document.getElementById('dynamic-header');
@@ -48,7 +47,7 @@
 
     const images = [
         { url: '{{ asset("home.jpeg") }}', titleColor: 'black', descriptionColor: '#4c51bf' }, // Indigo-700
-        { url: '{{ asset("home-bg4.jpg") }}', titleColor: 'white', descriptionColor: '#a3e635' } // Lime-200
+        { url: '{{ asset("imageii.png") }}', titleColor: 'white', descriptionColor: '#a3e635' } // Lime-200
     ];
 
     let currentImageIndex = 0;

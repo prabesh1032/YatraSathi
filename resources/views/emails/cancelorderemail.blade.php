@@ -14,7 +14,7 @@
         <h3 style="color: #333; font-size: 18px; margin-bottom: 10px;">Booking Details:</h3>
         <p style="font-size: 16px; color: #555; line-height: 1.6;">
             <strong>Package Name:</strong> {{ $package->name }} <br>
-            <strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }} <br>
+            <strong>Total Price:</strong> ${{ number_format((float) $order->total_price, 2) }} <br>
             <strong>Number of Travelers:</strong> {{ $order->num_people }} <br>
             <strong>Duration:</strong> {{ $package->duration }} Days <br>
             <strong>Traveling On:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }} <br>

@@ -34,7 +34,7 @@
             </h2>
             <ul class="space-y-3 text-gray-700">
                 <li><strong>Package Name:</strong> {{ $package->name }}</li>
-                <li><strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }}</li>
+                {{-- <li><strong>Total Price:</strong> ${{ number_format($order->total_price, 2) }}</li> --}}
                 <li><strong>Number of Travelers:</strong> {{ $order->num_people }}</li>
                 <li><strong>Duration:</strong> {{ $package->duration }} Days</li>
                 <li><strong>Traveling On:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}</li>

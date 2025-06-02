@@ -32,7 +32,7 @@
                     <li><span class="font-semibold">Package Name:</span> {{ $packageName }}</li>
                     <li><span class="font-semibold">Travel Date:</span> {{ $travelDate }}</li>
                     <li><span class="font-semibold">Number of People:</span> {{ $numPeople }}</li>
-                    <li><span class="font-semibold">Total Price:</span> ${{ $totalPrice }}</li>
+                    <li><span class="font-semibold">Total Price:</span> ${{ number_format((float) $order->total_price, 2) }}</li>
                 </ul>
             </div>
 

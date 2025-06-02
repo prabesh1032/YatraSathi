@@ -22,34 +22,36 @@
                 </a>
             </div>
 
-            <!-- Package Details Section -->
-            <div class="p-6 bg-white ">
+          <!-- Package Details Section -->
+            <div class="flex-1 bg-white rounded-lg p-4">
                 <div class="space-y-4">
-                    <p class="text-lg text-gray-900 flex items-center">
-                        <i class="ri-map-pin-2-fill text-blue-500 text-xl mr-3"></i>
-                        <span><strong>Location:</strong> {{ $package->location }}</span>
-                    </p>
-                    <p class="text-lg text-gray-900 flex items-center">
-                        <i class="ri-money-dollar-circle-line text-green-500 text-xl mr-3"></i>
-                        <span><strong>Price:</strong> ${{ number_format($package->price, 2) }} <span class="text-sm font-bold text-gray-600">Daily Charge Per Person</span></span>
-                    </p>
-
-                    <label for="duration_range" class="text-lg font-bold flex items-center">
-                        <i class="ri-time-line text-yellow-500 text-xl mr-3"></i> Select Duration:
-                    </label>
-                    <select id="duration_range" name="duration_range" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                    <div class="flex items-center text-lg">
+                        <i class="ri-map-pin-2-fill text-blue-500 text-2xl mr-3"></i>
+                        <span><strong>Location:</strong> Everest</span>
+                    </div>
+                    <div class="flex items-center text-lg">
+                        <i class="ri-money-dollar-circle-line text-green-500 text-2xl mr-3"></i>
+                        <span><strong>Price:</strong> $999.00 <span class="text-sm">Daily Charge Per Person</span></span>
+                    </div>
+                    <div>
+                        <label for="duration_range" class="block text-lg font-bold mb-2">Select Duration:</label>
+                        <select id="duration_range" name="duration_range" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
                         @for ($i = $package->duration; $i <= $package->duration + 5; $i++)
                             <option value="{{ $i }}">{{ $i }} days</option>
-                            @endfor
+                        @endfor
                     </select>
-
-                    <label for="num_people" class="block text-lg font-bold mt-4">
-                        <i class="ri-user-line text-red-500 text-xl mr-3"></i> Number of People:
-                    </label>
-                    <input type="number" id="num_people" name="num_people" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all" min="1" value="1" required>
+                    </div>
+                    <div>
+                        <label for="num_people" class="block text-lg font-bold mb-2">Number of People:</label>
+                        <input type="number" id="num_people" name="num_people" class="w-full p-2 border rounded-lg" min="1" value="1" required>
+                    </div>
+                    <div>
+                        <label for="travel_date" class="block text-lg font-bold mb-2">Travel Date:</label>
+                        <input type="date" id="travel_date" name="travel_date" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                        min="{{ now()->toDateString() }}" required>
+                    </div>
                 </div>
             </div>
-
             <!-- Sidebar Section -->
             <div class="p-4 bg-white">
                 <div class="space-y-4">
@@ -68,7 +70,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Guide Selection Section -->
         <div class="bg-white py-2 px-2 shadow-lg">
             <h2 class="text-4xl font-bold text-gray-900 mb-2 text-center">Select Guide</h2>

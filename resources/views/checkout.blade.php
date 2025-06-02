@@ -16,13 +16,6 @@
             <h2 class="text-2xl font-extrabold text-gray-900 mb-2 flex items-center">
                 {{ $package->name }}
             </h2>
-
-            <!-- Price -->
-            <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
-                <i class="ri-money-dollar-circle-line text-green-500 text-2xl mr-2"></i>
-                Price: <span class="text-green-600 font-bold ml-1">${{ number_format($total_price, 2) }}</span>
-            </p>
-
             <!-- Duration -->
             <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
                 <i class="ri-time-line text-purple-500 text-2xl mr-2"></i>
@@ -34,6 +27,13 @@
                 <i class="ri-user-3-line text-yellow-500 text-2xl mr-2"></i>
                 Number of People: <span class="text-yellow-600 font-bold ml-1">{{ $num_people ?? 1 }}</span>
             </p>
+
+            <!-- Number of People -->
+            <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
+                <i class="ri-user-3-line text-yellow-500 text-2xl mr-2"></i>
+                Travelling Date: <span class="text-yellow-600 font-bold ml-1">{{$travel_date}}</span>
+            </p>
+
 
             <!-- Guide -->
             <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
@@ -92,12 +92,20 @@
                         class="w-full border-gray-300 rounded-lg p-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         value="{{ auth()->user()->email }}" required>
                 </div>
+                <!-- Terms & Conditions -->
+                <div class="mb-4 flex items-start">
+                    <i class="ri-edit-box-line text-blue-500 text-2xl mr-3 mt-2"></i>
+                    <textarea name="notes" placeholder="Additional Notes or Requests"
+                        class="w-full border-gray-300 rounded-lg p-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        rows="2"></textarea>
+                </div>
 
-                <!-- Travel Date -->
-                <div class="mb-4 flex items-center">
-                    <i class="ri-calendar-line text-blue-500 text-2xl mr-3"></i>
-                    <input type="date" name="travel_date" class="w-full border-gray-300 rounded-lg p-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        min="{{ now()->toDateString() }}" required>
+                <!-- Terms & Conditions -->
+                <div class="mb-4 flex items-start">
+                    <input type="checkbox" name="terms" id="terms" class="mr-3 mt-1">
+                    <label for="terms" class="text-gray-700">
+                        I agree to the <a href="#" class="text-blue-500 hover:underline">Terms and Conditions</a>.
+                    </label>
                 </div>
             </form>
         </div>
@@ -155,14 +163,14 @@
     <input type="hidden" id="product_code" name="product_code" value="EPAYTEST" required>
     <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" required>
     <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
-    <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', $package->id) }}" required>
+    <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', [$package->id,$num_people,$package->duration,$travel_date]) }}" required>
     <input type="hidden" id="failure_url" name="failure_url" value="{{route('esewa.failure')}}" required>
     <input type="hidden" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
     <input type="hidden" id="signature" name="signature" value="" required>
 </form>
 
 @php
-$total_amount = $package->price;
+$total_amount = $total_price;
 $transaction_uuid = time();
 $msg = "total_amount=$total_amount,transaction_uuid=$transaction_uuid,product_code=EPAYTEST";
 $secret = "8gBm/:&EnhH.1/q";

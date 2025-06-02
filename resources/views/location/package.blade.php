@@ -25,7 +25,6 @@
                 <div class="flex justify-center">
                     <img src="{{ asset('images/' . $package->photopath) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg shadow-sm">
                 </div>
-
                 <!-- Package Details -->
                 <div class="flex flex-col gap-3">
                     <!-- Location -->

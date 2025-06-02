@@ -63,7 +63,7 @@
                     </p>
                     <p class="text-base text-gray-900 flex items-center">
                         <i class="ri-wallet-line text-teal-500 mr-2"></i><strong>Total Price:</strong>
-                        <span class="text-green-600 font-bold">${{ number_format($order->total_price, 2) }}</span>
+                        <span class="text-green-600 font-bold">${{( $order->total_price) }}</span>
                     </p>
                     <p class="text-base text-gray-900 flex items-center">
                         <i class="ri-time-line text-orange-500 mr-2"></i><strong>Duration:</strong> {{ $order->duration }} days

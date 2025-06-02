@@ -35,33 +35,35 @@ Route::get('/allpackages', [PackageController::class, 'package'])->name('package
 Route::get('/readpackages/{package}', [PackageController::class, 'read'])->name('packages.read');
 Route::get('/packages/location', [PackageController::class, 'showPackagesByLocation'])->name('packages.byLocation');
 
-Route::get('maps', [MapController::class, 'showRoutePlanning'])->name('route.show');
+Route::get('maps', [MapController::class, 'showRoutePlanning'])->name('maps.show');
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function () {
     Route::post('/review/store', [ReviewController::class, 'store'])->name('reviews.store');
     Route::post('/messages/store', [MessageController::class, 'store'])->name('messages.store');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/ordersesewa/esewa/{packageid}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
+    Route::get('/ordersesewa/esewa/{packageid}/{noofpeople}/{duration}/{tarveldate}', [OrderController::class, 'storeEsewa'])->name('order.storeEsewa');
     Route::get('/esewa-failure', function () {
-        return redirect('/')->with('error', 'eSewa payment was cancelled or failed.'); })->name('esewa.failure');
+        return redirect('/')->with('error', 'eSewa payment was cancelled or failed.');
+    })->name('esewa.failure');
     Route::get('/history', [OrderController::class, 'userHistory'])->name('historyindex');
     Route::post('/orders/{orderId}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     Route::get('/userprofile/edit', [UserProfileController::class, 'edit'])->name('userprofile.edit');
     Route::post('/userprofile/update', [UserProfileController::class, 'update'])->name('userprofile.update');
-
     Route::post('/order/checkout/direct', [OrderController::class, 'directCheckout'])->name('direct.checkout');
+
+    Route::get('/order/checkout/final', [OrderController::class, 'finalCheckout'])->name('checkout.final');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'isadmin'])->name('dashboard');
 
-Route::middleware(['auth','isadmin'])->group(function(){
+Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index');
     Route::get('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-    Route::get('/travellers',[TravellerController::class,'index'])->name('travellers.index');
+    Route::get('/travellers', [TravellerController::class, 'index'])->name('travellers.index');
 
     Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');
-    Route::get('/guides/creates', [GuideController::class, 'create'])->name('guides.create');
+    Route::get('/guidess/create', [GuideController::class, 'create'])->name('guides.create');
     Route::post('/guides/store', [GuideController::class, 'store'])->name('guides.store');
     Route::get('/guides/{id}/edit', [GuideController::class, 'edit'])->name('guides.edit');
     Route::put('/guides/{id}/update', [GuideController::class, 'update'])->name('guides.update');
@@ -77,7 +79,6 @@ Route::middleware(['auth','isadmin'])->group(function(){
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}/{status}', [OrderController::class, 'status'])->name('orders.status');
-
 });
 
 Route::middleware('auth')->group(function () {
@@ -86,4 +87,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

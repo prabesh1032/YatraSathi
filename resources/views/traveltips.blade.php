@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Travel Tips Section -->
-<section class="bg-gradient-to-r from-white to-indigo-50 py-16 text-gray-900">
+<section class="bg-gradient-to-r from-white to-indigo-50 px-5 py-5 text-gray-900">
     <div class="container mx-auto text-center">
         <!-- Section Title -->
         <h1 class="text-5xl font-extrabold mb-6 text-gray-900 uppercase tracking-wide drop-shadow-md">
