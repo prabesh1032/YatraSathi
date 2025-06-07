@@ -15,7 +15,7 @@
                 <i class="ri-map-pin-line text-4xl"></i>
                 <h1 class="text-3xl font-bold">YatraSathi</h1>
             </div>
-            <p class="text-sm mt-2">Your Trusted Travel Companion</p>
+            <p class="text-sm mt-3">Your Trusted Travel Companion</p>
         </div>
 
         <!-- Main Content -->
