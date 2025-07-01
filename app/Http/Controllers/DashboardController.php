@@ -17,7 +17,6 @@ class DashboardController extends Controller
         $newReviews = Review::where('created_at', '>=', now()->subMonth())->count(); // Adjust the time frame as needed
         $totalTravellers = User::count();
         $totalPackages = Package::count();
-
         $allPackages = Package::all();
         $packageNames = $allPackages->pluck('name')->toArray(); // Extract names of all packages
         $userCounts = [];
