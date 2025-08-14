@@ -12,7 +12,7 @@
         </p>
     </div>
 
-    <!-- Messages Grid -->
+    <!-- Messages Grid-->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10">
         @forelse ($messages as $index => $message)
             <div class="bg-white rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 relative">
