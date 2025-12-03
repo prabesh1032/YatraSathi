@@ -120,9 +120,21 @@
             </form>
 
             @auth
-            <a href="{{ route('userprofile.edit') }}" class="block w-10 h-10">
-                <img src="{{ asset('useravatar.avif') }}" alt="User Avatar" class="w-10 h-10 rounded-full shadow-lg">
-            </a>
+            <div class="relative group">
+                <a href="{{ route('userprofile.edit') }}" class="block w-12 h-12 transition-transform duration-300 hover:scale-105">
+                    @if(auth()->user()->profile_picture)
+                        <img src="{{ asset('storage/profile_pictures/' . auth()->user()->profile_picture) }}" alt="User Avatar" class="w-12 h-12 rounded-full shadow-lg border-2 border-yellow-400 object-cover">
+                    @else
+                        <img src="{{ asset('useravatar.avif') }}" alt="Default Avatar" class="w-12 h-12 rounded-full shadow-lg border-2 border-yellow-400 object-cover">
+                    @endif
+                </a>
+
+                <!-- Profile Tooltip -->
+                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    {{ auth()->user()->name }}
+                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                </div>
+            </div>
             @endauth
         </div>
 

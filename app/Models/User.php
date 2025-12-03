@@ -30,7 +30,7 @@ class User extends Authenticatable
     {
         return $this->profile_picture
             ? asset('storage/profile_pictures/' . $this->profile_picture)
-            : asset('default-profile.png');
+            : asset('useravatar.avif');
     }
 
 
