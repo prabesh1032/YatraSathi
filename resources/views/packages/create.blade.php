@@ -7,7 +7,7 @@
         <form action="{{ route('packages.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <label for="name" class="block text-sm font-medium text-gray-700">Package Name</label>
                 <input type="text" name="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 @error('name')
                 <div class="text-red-600 mt-2 text-sm">
@@ -17,8 +17,23 @@
             </div>
 
             <div class="mb-4">
-                <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
-                <input type="text" name="location" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <label for="destination_id" class="block text-sm font-medium text-gray-700">Destination *</label>
+                <select name="destination_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                    <option value="">Select Destination</option>
+                    @foreach($destinations as $destination)
+                        <option value="{{ $destination->id }}">{{ $destination->name }}</option>
+                    @endforeach
+                </select>
+                @error('destination_id')
+                <div class="text-red-600 mt-2 text-sm">
+                    *{{$message}}
+                </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="location" class="block text-sm font-medium text-gray-700">Specific Location</label>
+                <input type="text" name="location" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., Everest Base Camp" required>
                 @error('location')
                 <div class="text-red-600 mt-2 text-sm">
                     *{{$message}}
@@ -68,6 +83,36 @@
                 <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                 <textarea name="description" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required></textarea>
                 @error('description')
+                <div class="text-red-600 mt-2 text-sm">
+                    *{{$message}}
+                </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="transportation" class="block text-sm font-medium text-gray-700">Transportation</label>
+                <input type="text" name="transportation" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., Private bus, Flight">
+                @error('transportation')
+                <div class="text-red-600 mt-2 text-sm">
+                    *{{$message}}
+                </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="accommodation" class="block text-sm font-medium text-gray-700">Accommodation</label>
+                <input type="text" name="accommodation" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., 3-star hotel, Lodge">
+                @error('accommodation')
+                <div class="text-red-600 mt-2 text-sm">
+                    *{{$message}}
+                </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="meals" class="block text-sm font-medium text-gray-700">Meals</label>
+                <input type="text" name="meals" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., Breakfast included, All meals">
+                @error('meals')
                 <div class="text-red-600 mt-2 text-sm">
                     *{{$message}}
                 </div>

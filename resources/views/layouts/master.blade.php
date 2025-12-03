@@ -90,8 +90,8 @@
 
             <!-- Navbar Links -->
             <div id="menu" class="hidden lg:flex lg:space-x-6 text-xl">
-                <a href="{{ route('packages') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-extrabold' : '' }}">
-                    <i class="ri-briefcase-5-fill"></i> Packages
+                <a href="{{ route('destinations.public') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'destinations.public' ? 'text-yellow-500 font-extrabold' : '' }}">
+                    <i class="ri-map-pin-line"></i> Destinations
                     <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <a href="{{ route('maps.show') }}" class="group relative font-extrabold hover:text-yellow-500 {{ Route::currentRouteName() == 'route.show' ? 'text-yellow-500 font-extrabold' : '' }}">
@@ -128,8 +128,8 @@
 
         <!-- Dropdown Menu for Mobile -->
         <div id="mobile-menu" class="hidden flex-col space-y-4 text-center bg-black text-white gap-2 lg:hidden">
-            <a href="{{ route('packages') }}" class="group relative font-bold hover:text-yellow-500 {{ Route::currentRouteName() == 'packages' ? 'text-yellow-500 font-bold' : '' }}">
-                <i class="ri-briefcase-5-fill"></i> Packages
+            <a href="{{ route('destinations.public') }}" class="group relative font-bold hover:text-yellow-500 {{ Route::currentRouteName() == 'destinations.public' ? 'text-yellow-500 font-bold' : '' }}">
+                <i class="ri-map-pin-line"></i> Destinations
                 <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a href="{{ route('maps.show') }}" class="group relative font-bold hover:text-yellow-500 {{ Route::currentRouteName() == 'maps.show' ? 'text-yellow-500 font-bold' : '' }}">

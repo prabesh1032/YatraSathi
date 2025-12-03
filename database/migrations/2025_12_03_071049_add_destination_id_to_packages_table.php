@@ -9,20 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('packages', function (Blueprint $table) {
-            $table->string('starting_location')->nullable(); // Add starting_location column
+            $table->foreignId('destination_id')->nullable()->constrained('destinations')->onDelete('set null');
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('packages', function (Blueprint $table) {
-            $table->dropColumn('starting_location'); // Drop the column if rolled back
+            $table->dropForeign(['destination_id']);
+            $table->dropColumn('destination_id');
         });
     }
 };

@@ -28,7 +28,7 @@ class OrderController extends Controller
         $package = Package::findOrFail($data['package_id']);
 
         $data['duration'] = $data['duration_range'];
-        $data['total_price'] = $package->price * $data['num_people'] * $data['duration'];
+        $data['total_price'] = $package->package_price * $data['num_people'] * $data['duration'];
 
         // Store all required data in session for the GET checkout page
         session([
@@ -109,7 +109,7 @@ class OrderController extends Controller
                     'userName' => $data['name'],
                     'userPhone' => $data['phone'],
                     'userAddress' => $data['address'],
-                    'packageName' => $checkoutData['package']->name,
+                    'packageName' => $checkoutData['package']->package_name,
                     'travelDate' => $data['travel_date'],
                     'numPeople' => $data['num_people'],
                     'totalPrice' => $data['total_price'],

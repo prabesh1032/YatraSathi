@@ -11,20 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('destinations', function (Blueprint $table) {
             $table->id();
-            $table->string('package_name');
-            $table->string('package_location');
-            $table->string('starting_location');
-            $table->integer('duration');
-            $table->decimal('package_price', 10, 2);
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->string('photopath')->nullable();
-            $table->text('package_description')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->string('transportation')->nullable();
-            $table->string('accommodation')->nullable();
-            $table->string('meals')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('packages');
+        Schema::dropIfExists('destinations');
     }
 };

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Package;
+use App\Models\Destination;
 use Illuminate\Http\Request;
 class PackageController extends Controller
 {
@@ -19,7 +20,7 @@ class PackageController extends Controller
             // Sort packages by price low to high
             for ($i = 0; $i < count($packages); $i++) {
                 for ($j = 0; $j < count($packages) - $i - 1; $j++) {
-                    if ($packages[$j]->price > $packages[$j + 1]->price) {
+                    if ($packages[$j]->package_price > $packages[$j + 1]->package_price) {
                         // Swap packages[j] and packages[j + 1]
                         $temp = $packages[$j];
                         $packages[$j] = $packages[$j + 1];
@@ -31,7 +32,7 @@ class PackageController extends Controller
             // Sort packages by price high to low
             for ($i = 0; $i < count($packages); $i++) {
                 for ($j = 0; $j < count($packages) - $i - 1; $j++) {
-                    if ($packages[$j]->price < $packages[$j + 1]->price) {
+                    if ($packages[$j]->package_price < $packages[$j + 1]->package_price) {
                         // Swap packages[j] and packages[j + 1]
                         $temp = $packages[$j];
                         $packages[$j] = $packages[$j + 1];
@@ -98,38 +99,47 @@ class PackageController extends Controller
     }
      public function index()
     {
-        $packages = Package::all();
+        $packages = Package::with('destination')->latest()->get();
         return view('packages.index', compact('packages'));
     }
 
     public function create()
     {
-        return view('packages.create');
+        $destinations = Destination::all();
+        return view('packages.create', compact('destinations'));
     }
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'destination_id' => 'required|exists:destinations,id',
             'location' => 'required|string|max:255',
-            'starting_location' => 'required|string|max:255', // Validate starting location
+            'starting_location' => 'required|string|max:255',
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif,avif',
             'description' => 'nullable|string|max:50000',
+            'transportation' => 'nullable|string|max:255',
+            'accommodation' => 'nullable|string|max:255',
+            'meals' => 'nullable|string|max:255',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        $data = $request->only([
-            'name',
-            'location',
-            'starting_location',
-            'duration',
-            'price',
-            'description',
-            'latitude',
-            'longitude',
-        ]);
+        $data = [
+            'package_name' => $request->name,
+            'destination_id' => $request->destination_id,
+            'package_location' => $request->location,
+            'starting_location' => $request->starting_location,
+            'duration' => $request->duration,
+            'package_price' => $request->price,
+            'package_description' => $request->description,
+            'transportation' => $request->transportation,
+            'accommodation' => $request->accommodation,
+            'meals' => $request->meals,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ];
 
         // Handle image upload
         if ($request->hasFile('photopath')) {
@@ -146,8 +156,9 @@ class PackageController extends Controller
 
     public function edit($id)
     {
-        $package = Package::findOrFail($id); // Use findOrFail to handle invalid IDs
-        return view('packages.edit', compact('package'));
+        $package = Package::findOrFail($id);
+        $destinations = Destination::all();
+        return view('packages.edit', compact('package', 'destinations'));
     }
 
     public function update(Request $request, $id)
@@ -156,22 +167,30 @@ class PackageController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'destination_id' => 'required|exists:destinations,id',
             'location' => 'required|string|max:255',
-            'starting_location' => 'required|string|max:255', // Validate starting location
+            'starting_location' => 'required|string|max:255',
             'duration' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
             'photopath' => 'nullable|image|mimes:jpeg,png,jpg,gif,avif',
             'description' => 'nullable|string|max:50000',
+            'transportation' => 'nullable|string|max:255',
+            'accommodation' => 'nullable|string|max:255',
+            'meals' => 'nullable|string|max:255',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        $package->name = $request->name;
-        $package->location = $request->location;
-        $package->starting_location = $request->starting_location; // Set starting location
+        $package->package_name = $request->name;
+        $package->destination_id = $request->destination_id;
+        $package->package_location = $request->location;
+        $package->starting_location = $request->starting_location;
         $package->duration = $request->duration;
-        $package->price = $request->price;
-        $package->description = $request->description;
+        $package->package_price = $request->price;
+        $package->package_description = $request->description;
+        $package->transportation = $request->transportation;
+        $package->accommodation = $request->accommodation;
+        $package->meals = $request->meals;
         $package->latitude = $request->latitude;
         $package->longitude = $request->longitude;
 
@@ -211,14 +230,14 @@ class PackageController extends Controller
     }
     public function showLocationPage(Package $package)
     {
-        $locations = Package::select('location')->distinct()->get();
+        $locations = Package::select('package_location')->distinct()->get();
         $packages = Package::where('id', '!=', $package->id)->get();
         return view('location.index', compact('locations', 'packages', 'package'));
     }
     public function showPackagesByLocation(Request $request)
     {
         $location = $request->input('location');
-        $packages = Package::where('location', $location)->get();
+        $packages = Package::where('package_location', $location)->get();
         return view('location.package', compact('location', 'packages'));
     }
 }

@@ -98,10 +98,10 @@
                 <div class="carousel flex transition-transform duration-700 ease-in-out">
                     @foreach($packages as $package)
                     <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="w-full flex-shrink-0 relative block">
-                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-96 object-cover rounded-lg">
+                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}" class="w-full h-96 object-cover rounded-lg">
                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent text-white p-8">
-                            <h3 class="text-4xl text-yellow-500 font-extrabold">{{ $package->name }}</h3>
-                            <p class="text-3xl text-green-600 font-extrabold">${{ $package->price }}</p>
+                            <h3 class="text-4xl text-yellow-500 font-extrabold">{{ $package->package_name }}</h3>
+                            <p class="text-3xl text-green-600 font-extrabold">${{ $package->package_price }}</p>
                         </div>
                     </a>
                     @endforeach
@@ -137,11 +137,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($packages->take(3) as $package)
             <div class="relative bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
+                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
                 <div class="absolute top-4 right-4 bg-yellow-500 px-3 py-1 rounded-lg text-black text-sm font-bold shadow-md">New</div>
                 <div class="p-6">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $package->name }}</h3>
-                    <p class="text-lg text-green-500 font-bold mb-4">${{ $package->price }}</p>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $package->package_name }}</h3>
+                    <p class="text-lg text-green-500 font-bold mb-4">${{ $package->package_price }}</p>
                     <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="block w-full py-2 text-center bg-indigo-500 text-white font-bold rounded-lg shadow-md hover:bg-indigo-600 transition transform hover:scale-105">
                         View Details
                     </a>

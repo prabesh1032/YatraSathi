@@ -16,7 +16,7 @@
         <div class="p-5 border shadow-lg text-center rounded-lg bg-gradient-to-br from-yellow-100 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
             <!-- Package Name -->
             <a href="{{ route('packages.read', $package->id) }}" class="text-3xl font-extrabold text-gray-900 hover:text-indigo-600 transition-colors duration-300">
-                {{ $package->name }}
+                {{ $package->package_name }}
             </a>
 
             <!-- Image and Info Section -->
@@ -30,7 +30,7 @@
                     <!-- Location -->
                     <p class="text-gray-900 flex text-xl font-extrabold items-center gap-2">
                         <i class="ri-map-pin-line text-red-500"></i>
-                        <span>Location: <span class="font-bold">{{ $package->location }}</span></span>
+                        <span>Location: <span class="font-bold">{{ $package->package_location }}</span></span>
                     </p>
 
                     <!-- Duration -->

@@ -10,15 +10,19 @@ class Package extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'location',
+        'package_name',
+        'package_location',
         'starting_location',
         'duration',
-        'price',
+        'package_price',
         'photopath',
-        'description',
+        'package_description',
         'latitude',
-        'longitude'
+        'longitude',
+        'transportation',
+        'accommodation',
+        'meals',
+        'destination_id'
     ];
     public function orders()
     {
@@ -36,5 +40,10 @@ class Package extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'user_package', 'package_id', 'user_id');
+    }
+
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class);
     }
 }

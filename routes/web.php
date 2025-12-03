@@ -29,6 +29,9 @@ Route::get('/journey/location', [PackageController::class, 'showLocationPage'])-
 Route::get('/allguides', [GuideController::class, 'show'])->name('guides.show');
 Route::get('/guides/{id}', [GuideController::class, 'profile'])->name('guides.profile');
 
+Route::get('/destinations', [App\Http\Controllers\DestinationController::class, 'showAll'])->name('destinations.public');
+Route::get('/destinations/{destination}', [App\Http\Controllers\DestinationController::class, 'show'])->name('destinations.show');
+
 
 Route::get('/packages/{package}/show', [PackageController::class, 'show'])->name('packages.show');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');
@@ -61,6 +64,13 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index');
     Route::get('/review/{id}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::get('/travellers', [TravellerController::class, 'index'])->name('travellers.index');
+
+    Route::get('/admin/destinations', [App\Http\Controllers\DestinationController::class, 'index'])->name('destinations.index');
+    Route::get('/admin/destinations/create', [App\Http\Controllers\DestinationController::class, 'create'])->name('destinations.create');
+    Route::post('/admin/destinations/store', [App\Http\Controllers\DestinationController::class, 'store'])->name('destinations.store');
+    Route::get('/admin/destinations/{destination}/edit', [App\Http\Controllers\DestinationController::class, 'edit'])->name('destinations.edit');
+    Route::put('/admin/destinations/{destination}/update', [App\Http\Controllers\DestinationController::class, 'update'])->name('destinations.update');
+    Route::get('/admin/destinations/{destination}/destroy', [App\Http\Controllers\DestinationController::class, 'destroy'])->name('destinations.destroy');
 
     Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');
     Route::get('/guidess/create', [GuideController::class, 'create'])->name('guides.create');

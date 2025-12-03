@@ -21,7 +21,12 @@ class CreateOrdersTable extends Migration
             $table->string('payment_method'); // Example: 'COD', 'eSewa', etc.
             $table->decimal('total_price', 10, 2);
             $table->integer('num_people')->default(1);
-            $table->string('status')->default('pending'); // Example: 'pending', 'completed'
+            $table->string('status')->default('pending');
+            $table->date('travel_date')->nullable()->after('status');
+            $table->integer('duration')->nullable()->after('travel_date'); // Add the travel_date column
+            $table->boolean('cancellation_status')->default(false)->after('duration'); // Add the cancellation_status column
+            $table->timestamp('cancelled_at')->nullable()->after('cancellation_status'); // Add the cancelled_at column
+            $table->foreignId('guide_id')->nullable()->constrained('guides')->onDelete('set null')->after('cancelled_at'); // Add guide_id as a foreign key // Example: 'pending', 'completed'
             $table->timestamps();
         });
     }

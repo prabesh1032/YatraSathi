@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $totalTravellers = User::count();
         $totalPackages = Package::count();
         $allPackages = Package::all();
-        $packageNames = $allPackages->pluck('name')->toArray(); // Extract names of all packages
+        $packageNames = $allPackages->pluck('package_name')->toArray(); // Extract names of all packages
         $userCounts = [];
 
         foreach ($allPackages as $package) {

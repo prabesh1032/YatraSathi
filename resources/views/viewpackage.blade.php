@@ -3,8 +3,8 @@
 @section('content')
 <div class="container mx-auto p-8">
     <!-- Package Title -->
-    <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-4">{{ $package->name }}</h1>
-    <p class="text-center font-bold text-lg text-gray-600">Discover the wonders of {{ $package->location }} with this exclusive package!</p>
+    <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-4">{{ $package->package_name }}</h1>
+    <p class="text-center font-bold text-lg text-gray-600">Discover the wonders of {{ $package->package_location }} with this exclusive package!</p>
 
     <form method="POST" action="{{ route('direct.checkout') }}">
         @csrf
@@ -16,7 +16,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mt-8">
             <!-- Package Image Section -->
             <div class="p-4 bg-white ">
-                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="rounded-lg shadow-lg w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
+                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}" class="rounded-lg shadow-lg w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
                 <a href="{{ route('packages.read', $package->id) }}" class="block bg-gradient-to-r from-indigo-500 to-blue-600 text-white text-center mt-6 px-6 py-3 rounded-md shadow-lg hover:from-indigo-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
                     Learn More
                 </a>
