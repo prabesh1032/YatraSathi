@@ -23,17 +23,32 @@
         @forelse ($orders as $order)
         <div class="bg-gradient-to-br from-white to-gray-100 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-105">
             <div class="relative">
-                <img src="{{ asset('images/' . $order->package->photopath) }}" alt="{{ $order->package->name }}" class="h-56 w-full object-cover">
+                @if($order->is_custom_package)
+                    @php
+                        $destination = App\Models\Destination::find($order->package_id ?? 1);
+                        $imagePath = $destination && $destination->photopath ? $destination->photopath : 'default.jpg';
+                    @endphp
+                    <img src="{{ asset('images/' . $imagePath) }}" alt="Custom Package" class="h-56 w-full object-cover">
+                @else
+                    <img src="{{ asset('images/' . ($order->package->photopath ?? 'default.jpg')) }}" alt="{{ $order->package->package_name ?? 'Package' }}" class="h-56 w-full object-cover">
+                @endif
                 <div class="absolute top-4 left-4 bg-indigo-500 text-white text-xs font-extrabold py-1.5 px-3 rounded-full shadow-lg">
                     {{ ucfirst($order->status) }}
                 </div>
                 <div class="absolute top-4 right-4 bg-yellow-500 text-gray-900 text-xs font-extrabold py-1.5 px-3 rounded-full shadow-lg">
                     {{ $order->payment_method }}
                 </div>
+                @if($order->is_custom_package)
+                    <div class="absolute bottom-4 left-4 bg-purple-500 text-white text-xs font-extrabold py-1.5 px-3 rounded-full shadow-lg">
+                        Custom Package
+                    </div>
+                @endif
             </div>
             <!-- Details Section -->
             <div class="p-4 space-y-2">
-                <h2 class="text-2xl font-bold text-gray-900 truncate">{{ $order->package->name }}</h2>
+                <h2 class="text-2xl font-bold text-gray-900 truncate">
+                    {{ $order->is_custom_package ? $order->custom_package_name : ($order->package->package_name ?? 'Package') }}
+                </h2>
                 <p class="text-base font-bold text-gray-800 flex items-center"><i class="ri-user-line text-blue-500 mr-2"></i> <strong>Customer:</strong> {{ $order->name }}</p>
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-map-pin-line text-red-500 mr-2"></i> <strong>Address:</strong> {{ $order->address }}</p>
                 <p class="text-base text-gray-600 flex items-center"><i class="ri-phone-line text-green-500 mr-2"></i> <strong>Phone:</strong> {{ $order->phone }}</p>

@@ -6,11 +6,34 @@
     <h1 class="text-5xl font-extrabold text-center text-gray-900 mb-4">{{ $package->package_name }}</h1>
     <p class="text-center font-bold text-lg text-gray-600">Discover the wonders of {{ $package->package_location }} with this exclusive package!</p>
 
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4">
+            <strong>Please fix the following errors:</strong>
+            <ul class="list-disc ml-4 mt-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @auth
     <form method="POST" action="{{ route('direct.checkout') }}">
         @csrf
         <!-- Hidden Input for Package ID -->
         <input type="hidden" name="guide_id" id="hidden_guide_id" value="">
         <input type="hidden" name="package_id" value="{{ $package->id }}">
+    @else
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+        <p class="font-bold">Please <a href="{{ route('login') }}" class="text-blue-600 underline hover:text-blue-800">login</a> to book this package.</p>
+    </div>
+    @endauth
 
         <!-- Package Image and Details Section -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mt-8">
@@ -27,11 +50,11 @@
                 <div class="space-y-4">
                     <div class="flex items-center text-lg">
                         <i class="ri-map-pin-2-fill text-blue-500 text-2xl mr-3"></i>
-                        <span><strong>Location:</strong> Everest</span>
+                        <span><strong>Location:</strong> {{ $package->package_location }}</span>
                     </div>
                     <div class="flex items-center text-lg">
                         <i class="ri-money-dollar-circle-line text-green-500 text-2xl mr-3"></i>
-                        <span><strong>Price:</strong> $999.00 <span class="text-sm">Daily Charge Per Person</span></span>
+                        <span><strong>Price:</strong> ${{ number_format($package->package_price, 2) }} <span class="text-sm">Daily Charge Per Person</span></span>
                     </div>
                     <div>
                         <label for="duration_range" class="block text-lg font-bold mb-2">Select Duration:</label>
@@ -48,7 +71,8 @@
                     <div>
                         <label for="travel_date" class="block text-lg font-bold mb-2">Travel Date:</label>
                         <input type="date" id="travel_date" name="travel_date" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-                        min="{{ now()->toDateString() }}" required>
+                        min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
+                        <small class="text-gray-500">Select a date at least 1 day from today</small>
                     </div>
                 </div>
             </div>
@@ -105,9 +129,19 @@
 
             <!-- Add to Plan Button -->
             <div class="mt-8 flex justify-center">
-                <button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white mb-2 px-8 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center">
-                    <i class="ri-bookmark-line mr-2"></i> Book Now
-                </button>
+                @auth
+                    <button type="submit" id="bookNowBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white mb-2 px-8 py-3 rounded-lg shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center">
+                        <i class="ri-bookmark-line mr-2"></i>
+                        <span id="btnText">Book Now</span>
+                        <div id="btnLoader" class="hidden ml-2">
+                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        </div>
+                    </button>
+                @else
+                    <a href="{{ route('login') }}" class="bg-gradient-to-r from-red-500 to-red-600 text-white mb-2 px-8 py-3 rounded-lg shadow-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 flex items-center">
+                        <i class="ri-login-box-line mr-2"></i> Login to Book
+                    </a>
+                @endauth
             </div>
         </div>
 
@@ -146,9 +180,51 @@
                     selectedGuideId = guideId;
                 }
             }
+
+            // Form submission handling
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.querySelector('form[action="{{ route('direct.checkout') }}"]');
+                const submitBtn = document.getElementById('bookNowBtn');
+                const btnText = document.getElementById('btnText');
+                const btnLoader = document.getElementById('btnLoader');
+
+                if (form && submitBtn) {
+                    form.addEventListener('submit', function(e) {
+                        // Validate required fields
+                        const numPeople = document.getElementById('num_people').value;
+                        const travelDate = document.getElementById('travel_date').value;
+                        const durationRange = document.getElementById('duration_range').value;
+
+                        if (!numPeople || numPeople < 1) {
+                            alert('Please enter a valid number of people');
+                            e.preventDefault();
+                            return;
+                        }
+
+                        if (!travelDate) {
+                            alert('Please select a travel date');
+                            e.preventDefault();
+                            return;
+                        }
+
+                        if (!durationRange) {
+                            alert('Please select duration');
+                            e.preventDefault();
+                            return;
+                        }
+
+                        // Show loading state
+                        btnText.textContent = 'Processing...';
+                        btnLoader.classList.remove('hidden');
+                        submitBtn.disabled = true;
+                    });
+                }
+            });
         </script>
 
+        @auth
     </form>
+    @endauth
 
     <!-- Reviews Section -->
     <div class="mt-12">
@@ -253,8 +329,8 @@
         <a href="{{ route('packages.show', $relatedpackage->id) }}">
             <img src="{{ asset('images/' . $relatedpackage->photopath) }}" alt="{{ $relatedpackage->name }}" class="h-56 w-full object-cover transition-transform duration-300 hover:scale-105">
             <div class="p-4">
-                <h3 class="text-lg font-bold text-gray-900">{{ $relatedpackage->name }}</h3>
-                <p class="text-green-600 font-bold mt-2">USD {{ number_format($relatedpackage->price, 2) }} Per Person</p>
+                <h3 class="text-lg font-bold text-gray-900">{{ $relatedpackage->package_name }}</h3>
+                <p class="text-green-600 font-bold mt-2">USD {{ number_format($relatedpackage->package_price, 2) }} Per Person</p>
             </div>
         </a>
     </div>

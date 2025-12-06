@@ -16,35 +16,96 @@ class OrderController extends Controller
 {
     public function directCheckout(Request $request)
     {
-        // Validate POST input
-        $data = $request->validate([
-            'package_id' => 'required|exists:packages,id',
-            'num_people' => 'required|integer|min:1',
-            'duration_range' => 'required|integer|min:1',
-            'guide_id' => 'nullable|exists:guides,id',
-            'travel_date' => 'required|date|after:today',
-        ]);
+        // Check if it's a custom package
+        $isCustom = $request->has('is_custom') && $request->get('is_custom') == '1';
 
-        $package = Package::findOrFail($data['package_id']);
+        if ($isCustom) {
+            // Handle custom package
+            $data = $request->validate([
+                'destination_id' => 'required|exists:destinations,id',
+                'num_people' => 'required|integer|min:1|max:20',
+                'duration_range' => 'required|integer|min:1',
+                'package_type' => 'required|in:budget,standard,luxury',
+                'travel_date' => 'required|date|after:today',
+                'guide_id' => 'nullable|exists:guides,id',
+            ]);
 
-        $data['duration'] = $data['duration_range'];
-        $data['total_price'] = $package->package_price * $data['num_people'] * $data['duration'];
+            $destination = \App\Models\Destination::findOrFail($data['destination_id']);
 
-        // Store all required data in session for the GET checkout page
-        session([
-            'checkout_data' => [
-                'package' => $package,
-                'num_people' => $data['num_people'],
-                'duration' => $data['duration'],
-                'total_price' => $data['total_price'],
-                'travel_date' => $data['travel_date'],
-                'guide_id' => $data['guide_id'] ?? null,
-            ]
-        ]);
+            // Calculate pricing based on destination's average package price
+            $basePrice = $destination->packages()->avg('package_price') ?? 100;
+
+            // Apply duration multipliers
+            $durationMultipliers = [3 => 1, 5 => 1.2, 7 => 1.4, 10 => 1.6, 14 => 1.8];
+            $durationMultiplier = $durationMultipliers[$data['duration_range']] ?? 1;
+
+            // Apply package type multipliers
+            $typeMultipliers = ['budget' => 0.8, 'standard' => 1, 'luxury' => 1.5];
+            $typeMultiplier = $typeMultipliers[$data['package_type']];
+
+            $pricePerPersonDay = $basePrice * $typeMultiplier;
+            $subtotal = $pricePerPersonDay * $data['num_people'] * $data['duration_range'];
+
+            // Apply group discount for 5+ people
+            $total = $subtotal;
+            if ($data['num_people'] >= 5) {
+                $total = $subtotal * 0.9; // 10% discount
+            }
+
+            // Create a virtual package object for checkout
+            $virtualPackage = new Package();
+            $virtualPackage->package_name = 'Custom ' . $destination->name . ' - ' . $data['duration_range'] . ' Days';
+            $virtualPackage->package_location = $destination->name;
+            $virtualPackage->package_price = $pricePerPersonDay; // Per person per day
+            $virtualPackage->duration = $data['duration_range'];
+            $virtualPackage->photopath = $destination->photopath ?? 'default.jpg';
+            $virtualPackage->destination_id = $data['destination_id'];
+
+            // Store all required data in session for the GET checkout page
+            session([
+                'checkout_data' => [
+                    'package' => $virtualPackage,
+                    'num_people' => $data['num_people'],
+                    'duration' => $data['duration_range'],
+                    'total_price' => round($total),
+                    'travel_date' => $data['travel_date'],
+                    'guide_id' => $data['guide_id'] ?? null,
+                    'is_custom' => true,
+                    'package_type' => $data['package_type'],
+                ]
+            ]);
+        } else {
+            // Handle regular package
+            $data = $request->validate([
+                'package_id' => 'required|exists:packages,id',
+                'num_people' => 'required|integer|min:1',
+                'duration_range' => 'required|integer|min:1',
+                'guide_id' => 'nullable|exists:guides,id',
+                'travel_date' => 'required|date|after:today',
+            ]);
+
+            $package = Package::findOrFail($data['package_id']);
+
+            $data['duration'] = $data['duration_range'];
+            $data['total_price'] = $package->package_price * $data['num_people'] * $data['duration'];
+
+            // Store all required data in session for the GET checkout page
+            session([
+                'checkout_data' => [
+                    'package' => $package,
+                    'num_people' => $data['num_people'],
+                    'duration' => $data['duration'],
+                    'total_price' => $data['total_price'],
+                    'travel_date' => $data['travel_date'],
+                    'guide_id' => $data['guide_id'] ?? null,
+                ]
+            ]);
+        }
 
         // Redirect to GET route to show checkout page
         return redirect()->route('checkout.final');
     }
+
     public function finalCheckout()
     {
         $checkoutData = session('checkout_data');
@@ -82,8 +143,10 @@ class OrderController extends Controller
             return redirect('/')->with('error', 'No booking data found. Please start again.');
         }
         // Prepare data to store in order
+        $isCustom = $checkoutData['is_custom'] ?? false;
+
         $data = [
-            'package_id' => $checkoutData['package']->id,
+            'package_id' => $isCustom ? null : $checkoutData['package']->id,
             'guide_id' => $checkoutData['guide_id'] ?? null,
             'name' => $userData['name'],
             'phone' => $userData['phone'],
@@ -96,7 +159,15 @@ class OrderController extends Controller
             'user_id' => auth()->user()->id,
             'status' => 'Pending',
             'total_price' => $checkoutData['total_price'], // total price
+            'is_custom_package' => $isCustom,
         ];
+
+        // Add custom package fields if it's a custom package
+        if ($isCustom) {
+            $data['custom_package_name'] = $checkoutData['package']->package_name;
+            $data['custom_package_location'] = $checkoutData['package']->package_location;
+            $data['custom_package_type'] = $checkoutData['package_type'];
+        }
 
         // Create the order
         $order = Order::create($data);

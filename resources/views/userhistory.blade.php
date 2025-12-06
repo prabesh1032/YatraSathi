@@ -17,12 +17,21 @@
         @forelse ($orders as $order)
         <div class="p-6 border shadow-lg rounded-lg bg-gradient-to-br from-yellow-100 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
             <h2 class="text-3xl font-extrabold text-gray-900 mb-2">
-                <i class="ri-global-line text-blue-500 mr-2"></i>{{ $order->package->name }}
+                <i class="ri-global-line text-blue-500 mr-2"></i>
+                {{ $order->is_custom_package ? $order->custom_package_name : ($order->package->package_name ?? 'Package') }}
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Image Section -->
                 <div class="relative mb-2">
-                    <img src="{{ asset('images/' . $order->package->photopath) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg shadow-sm">
+                    @if($order->is_custom_package)
+                        @php
+                            $destination = App\Models\Destination::find($order->package_id ?? 1);
+                            $imagePath = $destination && $destination->photopath ? $destination->photopath : 'default.jpg';
+                        @endphp
+                        <img src="{{ asset('images/' . $imagePath) }}" alt="Custom Package" class="w-full h-64 object-cover rounded-lg shadow-sm">
+                    @else
+                        <img src="{{ asset('images/' . ($order->package->photopath ?? 'default.jpg')) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg shadow-sm">
+                    @endif
                     <div class="absolute top-4 left-4 bg-indigo-500 text-white text-xs font-extrabold py-1.5 px-3 rounded-full shadow-lg">
                         {{ ucfirst($order->status) }}
                     </div>

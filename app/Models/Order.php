@@ -25,6 +25,10 @@ class Order extends Model
         'travel_date',
         'cancellation_status',
         'cancelled_at',
+        'custom_package_name',
+        'custom_package_location',
+        'custom_package_type',
+        'is_custom_package',
     ];
 
     // Relationships

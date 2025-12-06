@@ -14,7 +14,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('package_id')->constrained()->onDelete('cascade');
+            $table->foreignId('package_id')->nullable()->constrained('packages')->onDelete('set null');
             $table->string('name');
             $table->text('address');
             $table->string('phone');
@@ -22,11 +22,18 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_price', 10, 2);
             $table->integer('num_people')->default(1);
             $table->string('status')->default('pending');
-            $table->date('travel_date')->nullable()->after('status');
-            $table->integer('duration')->nullable()->after('travel_date'); // Add the travel_date column
-            $table->boolean('cancellation_status')->default(false)->after('duration'); // Add the cancellation_status column
-            $table->timestamp('cancelled_at')->nullable()->after('cancellation_status'); // Add the cancelled_at column
-            $table->foreignId('guide_id')->nullable()->constrained('guides')->onDelete('set null')->after('cancelled_at'); // Add guide_id as a foreign key // Example: 'pending', 'completed'
+            $table->date('travel_date')->nullable();
+            $table->integer('duration')->nullable();
+            $table->boolean('cancellation_status')->default(false);
+            $table->timestamp('cancelled_at')->nullable();
+            $table->foreignId('guide_id')->nullable()->constrained('guides')->onDelete('set null');
+            
+            // Custom package fields
+            $table->boolean('is_custom_package')->default(false);
+            $table->string('custom_package_name')->nullable();
+            $table->string('custom_package_location')->nullable();
+            $table->string('custom_package_type')->nullable(); // budget, standard, luxury
+            
             $table->timestamps();
         });
     }

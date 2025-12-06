@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('transportation')->nullable();
             $table->string('accommodation')->nullable();
             $table->string('meals')->nullable();
+            $table->foreignId('destination_id')->nullable()->constrained('destinations')->onDelete('set null');
             $table->timestamps();
         });
     }

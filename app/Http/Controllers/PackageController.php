@@ -97,7 +97,8 @@ class PackageController extends Controller
         $relatedpackages = Package::where('id', '!=', $package->id)->take(4)->get();
         return view('readpackage', compact('package', 'relatedpackages'));
     }
-     public function index()
+
+    public function index()
     {
         $packages = Package::with('destination')->latest()->get();
         return view('packages.index', compact('packages'));

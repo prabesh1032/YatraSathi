@@ -10,11 +10,15 @@
         <!-- Package Information -->
         <div class="col-span-1 bg-gradient-to-r from-white to-gray-100 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out relative">
             <!-- Package Image -->
-            <img src="{{ asset('images/'.$package->photopath) }}" alt="Package Image" class="w-full h-48 object-cover rounded-lg mb-5 shadow-md hover:shadow-lg transition-shadow duration-300">
+            @if($package->photopath && file_exists(public_path('images/'.$package->photopath)))
+                <img src="{{ asset('images/'.$package->photopath) }}" alt="Package Image" class="w-full h-48 object-cover rounded-lg mb-5 shadow-md hover:shadow-lg transition-shadow duration-300">
+            @else
+                <img src="{{ asset('images/default.jpg') }}" alt="Default Package Image" class="w-full h-48 object-cover rounded-lg mb-5 shadow-md hover:shadow-lg transition-shadow duration-300">
+            @endif
 
             <!-- Package Title -->
             <h2 class="text-2xl font-extrabold text-gray-900 mb-2 flex items-center">
-                {{ $package->name }}
+                {{ $package->package_name }}
             </h2>
             <!-- Duration -->
             <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
@@ -40,10 +44,25 @@
                 <i class="ri-user-star-line text-blue-500 text-2xl mr-2"></i>
                 Guide: <span class="text-blue-600 font-bold ml-1">{{ $guide ? $guide->name : 'Not Selected' }}</span>
             </p>
+
+            @if(session('checkout_data.is_custom'))
+                <!-- Custom Package Type -->
+                <p class="text-lg font-medium text-gray-700 mt-2 flex items-center">
+                    <i class="ri-star-line text-yellow-500 text-2xl mr-2"></i>
+                    Package Type: <span class="text-yellow-600 font-bold ml-1">{{ ucfirst(session('checkout_data.package_type')) }}</span>
+                </p>
+            @endif
+
             <div class="mt-3">
-                <a href="{{ route('packages.show', $package->id) }}" class="inline-block w-full text-center py-2 bg-blue-500 text-white font-bold text-lg rounded-lg hover:bg-blue-600 transition-all">
-                Edit Information
-                </a>
+                @if(session('checkout_data.is_custom'))
+                    <a href="{{ route('home') }}#custom-package" class="inline-block w-full text-center py-2 bg-blue-500 text-white font-bold text-lg rounded-lg hover:bg-blue-600 transition-all">
+                        Edit Custom Package
+                    </a>
+                @else
+                    <a href="{{ route('packages.show', $package->id ?? 1) }}" class="inline-block w-full text-center py-2 bg-blue-500 text-white font-bold text-lg rounded-lg hover:bg-blue-600 transition-all">
+                        Edit Information
+                    </a>
+                @endif
             </div>
         </div>
 
@@ -163,7 +182,7 @@
     <input type="hidden" id="product_code" name="product_code" value="EPAYTEST" required>
     <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" required>
     <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
-    <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', [$package->id,$num_people,$package->duration,$travel_date]) }}" required>
+    <input type="hidden" id="success_url" name="success_url" value="{{ route('order.storeEsewa', [$package->id ?? 0, $num_people, $duration, $travel_date]) }}" required>
     <input type="hidden" id="failure_url" name="failure_url" value="{{route('esewa.failure')}}" required>
     <input type="hidden" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
     <input type="hidden" id="signature" name="signature" value="" required>

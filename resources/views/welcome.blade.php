@@ -129,6 +129,193 @@
     </div>
 </section>
 
+<!-- Custom Package Builder Section -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-extrabold text-indigo-700 mb-4">
+                <i class="ri-settings-3-line mr-3"></i>Create Your Custom Package
+            </h2>
+            <p class="text-lg text-gray-600">
+                Build your perfect Nepal adventure by selecting your preferences
+            </p>
+        </div>
+
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 max-w-4xl mx-auto">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 max-w-4xl mx-auto">
+                <strong>Please fix the following errors:</strong>
+                <ul class="list-disc ml-4 mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- Custom Package Form -->
+        @auth
+        <form method="POST" action="{{ route('direct.checkout') }}" id="customPackageForm" class="max-w-6xl mx-auto">
+            @csrf
+            <input type="hidden" name="is_custom" value="1">
+            <input type="hidden" name="guide_id" value="">
+            <input type="hidden" name="package_id" id="virtualPackageId" value="0">
+
+            <div class="bg-gray-50 rounded-lg shadow-lg p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left Side - Form -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Package Details</h3>
+
+                        <!-- Destination Selection -->
+                        <div>
+                            <label for="destination_id" class="block text-lg font-bold text-gray-700 mb-2">
+                                <i class="ri-map-pin-2-line mr-2"></i>Choose Destination
+                            </label>
+                            <select id="destination_id" name="destination_id" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required onchange="updateCustomPricing()">
+                                <option value="">Select a destination...</option>
+                                @php
+                                    $destinations = \App\Models\Destination::with('packages')->get();
+                                @endphp
+                                @foreach($destinations as $destination)
+                                    <option value="{{ $destination->id }}"
+                                            data-base-price="{{ $destination->packages->avg('package_price') ?? 100 }}"
+                                            data-name="{{ $destination->name }}">
+                                        {{ $destination->name }}
+                                        @if($destination->packages->count() > 0)
+                                            ({{ $destination->packages->count() }} packages available)
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Duration -->
+                        <div>
+                            <label for="duration_range" class="block text-lg font-bold text-gray-700 mb-2">
+                                <i class="ri-calendar-line mr-2"></i>Duration
+                            </label>
+                            <select id="duration_range" name="duration_range" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required onchange="updateCustomPricing()">
+                                <option value="">Select duration...</option>
+                                <option value="3" data-multiplier="1">3 Days (Short Trip)</option>
+                                <option value="5" data-multiplier="1.2">5 Days (Standard)</option>
+                                <option value="7" data-multiplier="1.4">7 Days (Extended)</option>
+                                <option value="10" data-multiplier="1.6">10 Days (Long Adventure)</option>
+                                <option value="14" data-multiplier="1.8">14 Days (Full Experience)</option>
+                            </select>
+                        </div>
+
+                        <!-- Number of People -->
+                        <div>
+                            <label for="num_people" class="block text-lg font-bold text-gray-700 mb-2">
+                                <i class="ri-group-line mr-2"></i>Number of People
+                            </label>
+                            <input type="number" id="num_people" name="num_people" min="1" max="20" value="2"
+                                   class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                                   required onchange="updateCustomPricing()">
+                            <small class="text-gray-500">Group discounts apply for 5+ people</small>
+                        </div>
+
+                        <!-- Travel Date -->
+                        <div>
+                            <label for="travel_date" class="block text-lg font-bold text-gray-700 mb-2">
+                                <i class="ri-calendar-event-line mr-2"></i>Travel Date
+                            </label>
+                            <input type="date" id="travel_date" name="travel_date"
+                                   min="{{ date('Y-m-d', strtotime('+1 day')) }}"
+                                   class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required>
+                        </div>
+
+                        <!-- Package Type -->
+                        <div>
+                            <label for="package_type" class="block text-lg font-bold text-gray-700 mb-2">
+                                <i class="ri-star-line mr-2"></i>Package Type
+                            </label>
+                            <select id="package_type" name="package_type" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" required onchange="updateCustomPricing()">
+                                <option value="budget" data-multiplier="0.8">Budget (Basic accommodation)</option>
+                                <option value="standard" data-multiplier="1" selected>Standard (Good accommodation)</option>
+                                <option value="luxury" data-multiplier="1.5">Luxury (Premium experience)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Right Side - Price Summary -->
+                    <div class="bg-white p-6 rounded-lg shadow h-fit">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Price Summary</h3>
+
+                        <div class="space-y-4" id="customPriceSummary">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Destination:</span>
+                                <span id="customSelectedDestination" class="font-medium">Not selected</span>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Duration:</span>
+                                <span id="customSelectedDuration" class="font-medium">Not selected</span>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">People:</span>
+                                <span id="customSelectedPeople" class="font-medium">2</span>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Package Type:</span>
+                                <span id="customSelectedType" class="font-medium">Standard</span>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Base Price (per person/day):</span>
+                                <span id="customBasePrice" class="font-medium">$0</span>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Subtotal:</span>
+                                <span id="customSubtotal" class="font-medium">$0</span>
+                            </div>
+
+                            <div class="flex justify-between items-center text-green-600" id="customDiscountRow" style="display: none;">
+                                <span>Group Discount (10%):</span>
+                                <span id="customDiscount">-$0</span>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="flex justify-between items-center text-2xl font-bold text-blue-600">
+                                <span>Total Price:</span>
+                                <span id="customTotalPrice">$0</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full mt-6 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-bold disabled:bg-gray-400" disabled id="customCheckoutBtn">
+                            <i class="ri-shopping-cart-line mr-2"></i>Book Custom Package
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        @else
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-8 text-center">
+            <div class="mb-6">
+                <i class="ri-lock-line text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Login Required</h3>
+                <p class="text-gray-600">Please login to create your custom package</p>
+            </div>
+            <a href="{{ route('login') }}" class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-bold">
+                <i class="ri-login-box-line mr-2"></i>Login Now
+            </a>
+        </div>
+        @endauth
+    </div>
+</section>
+
 <!-- Popular Packages Section -->
 <section id="popular-packages" class="py-16 bg-gray-100">
     <div class="container mx-auto text-center">
@@ -201,5 +388,73 @@
 
     // Initialize the first indicator
     updateCarousel(currentIndex);
+</script>
+
+<script>
+// Custom Package Pricing Calculator
+function updateCustomPricing() {
+    const destinationSelect = document.getElementById('destination_id');
+    const durationSelect = document.getElementById('duration_range');
+    const numPeople = document.getElementById('num_people').value || 2;
+    const packageType = document.getElementById('package_type');
+
+    const selectedDestination = destinationSelect.options[destinationSelect.selectedIndex];
+    const selectedDurationOption = durationSelect.options[durationSelect.selectedIndex];
+    const selectedTypeOption = packageType.options[packageType.selectedIndex];
+
+    // Update display values
+    document.getElementById('customSelectedDestination').textContent = selectedDestination?.dataset.name || 'Not selected';
+    document.getElementById('customSelectedDuration').textContent = selectedDurationOption?.text || 'Not selected';
+    document.getElementById('customSelectedPeople').textContent = numPeople;
+    document.getElementById('customSelectedType').textContent = selectedTypeOption?.text || 'Standard';
+
+    // Calculate pricing
+    if (selectedDestination?.dataset.basePrice && selectedDurationOption?.dataset.multiplier) {
+        const basePrice = parseFloat(selectedDestination.dataset.basePrice);
+        const duration = parseInt(durationSelect.value);
+        const durationMultiplier = parseFloat(selectedDurationOption.dataset.multiplier);
+        const typeMultiplier = parseFloat(selectedTypeOption.dataset.multiplier);
+
+        const pricePerPersonDay = Math.round(basePrice * typeMultiplier);
+        const subtotal = pricePerPersonDay * parseInt(numPeople) * duration;
+
+        // Apply group discount for 5+ people
+        let total = subtotal;
+        let discountAmount = 0;
+        const discountRow = document.getElementById('customDiscountRow');
+
+        if (parseInt(numPeople) >= 5) {
+            discountAmount = subtotal * 0.1; // 10% discount
+            total = subtotal - discountAmount;
+            discountRow.style.display = 'flex';
+            document.getElementById('customDiscount').textContent = '-$' + Math.round(discountAmount);
+        } else {
+            discountRow.style.display = 'none';
+        }
+
+        // Update display
+        document.getElementById('customBasePrice').textContent = '$' + pricePerPersonDay;
+        document.getElementById('customSubtotal').textContent = '$' + subtotal;
+        document.getElementById('customTotalPrice').textContent = '$' + Math.round(total);
+
+        // Enable checkout button
+        document.getElementById('customCheckoutBtn').disabled = false;
+
+        // Set virtual package ID for the form
+        document.getElementById('virtualPackageId').value = 'custom_' + selectedDestination.value + '_' + Date.now();
+    } else {
+        // Reset pricing
+        document.getElementById('customBasePrice').textContent = '$0';
+        document.getElementById('customSubtotal').textContent = '$0';
+        document.getElementById('customTotalPrice').textContent = '$0';
+        document.getElementById('customDiscountRow').style.display = 'none';
+        document.getElementById('customCheckoutBtn').disabled = true;
+    }
+}
+
+// Initialize pricing on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateCustomPricing();
+});
 </script>
 @endsection
