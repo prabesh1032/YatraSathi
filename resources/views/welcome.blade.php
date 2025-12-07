@@ -316,6 +316,136 @@
     </div>
 </section>
 
+<!-- AI Recommendations Section -->
+@auth
+@if($recommendedPackages->isNotEmpty())
+<section class="py-16 bg-gradient-to-r from-indigo-50 to-purple-50">
+    <div class="container mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-extrabold text-gray-800 mb-4">
+                <i class="ri-magic-line text-indigo-600 mr-3"></i>Recommended For You
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Based on your preferences and travel history, here are our AI-powered recommendations just for you!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
+            @foreach($recommendedPackages as $package)
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="relative overflow-hidden">
+                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                <i class="ri-star-fill mr-1"></i>AI Pick
+                            </span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-yellow-400 text-black px-3 py-2 rounded-full text-sm font-bold">
+                                ${{ $package->package_price }}
+                            </span>
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="text-white text-sm">
+                                @foreach($package->recommendation_reasons as $reason)
+                                    <div class="flex items-center mb-1">
+                                        <i class="ri-check-line mr-2 text-green-400"></i>
+                                        {{ $reason }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition-colors">
+                            {{ $package->package_name }}
+                        </h3>
+                        <div class="flex items-center text-gray-600 mb-3">
+                            <i class="ri-map-pin-line mr-2 text-indigo-500"></i>
+                            <span class="text-sm">{{ $package->destination->name ?? 'Various Locations' }}</span>
+                            <span class="mx-2">•</span>
+                            <i class="ri-time-line mr-2 text-indigo-500"></i>
+                            <span class="text-sm">{{ $package->duration }} days</span>
+                        </div>
+
+                        <p class="text-gray-600 text-sm mb-4 leading-relaxed">
+                            {{ Str::limit($package->package_description, 100) }}
+                        </p>
+
+                        <!-- Recommendation Score Display -->
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <span class="text-xs text-gray-500 mr-2">Match Score:</span>
+                                @php
+                                    $scorePercentage = min(100, ($package->recommendation_score / 100) * 100);
+                                @endphp
+                                <div class="flex-1 bg-gray-200 rounded-full h-2 w-20">
+                                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" style="width: {{ $scorePercentage }}%"></div>
+                                </div>
+                                <span class="text-xs text-indigo-600 ml-2 font-semibold">{{ round($scorePercentage) }}%</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <a href="{{ route('packages.read', $package->id) }}" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center">
+                                <i class="ri-eye-line mr-2"></i>
+                                View Details
+                            </a>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-indigo-600">${{ $package->package_price }}</div>
+                                <div class="text-xs text-gray-500">per person</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="{{ route('preferences.edit') }}" class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-semibold">
+                <i class="ri-settings-3-line mr-2"></i>
+                Update Your Preferences
+            </a>
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- First-time User Preferences Modal -->
+@if(session('show_preferences_modal'))
+<div id="preferencesModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all">
+        <div class="p-8 text-center">
+            <div class="mb-6">
+                <i class="ri-magic-line text-6xl text-indigo-600 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Welcome to YatraSathi!</h3>
+                <p class="text-gray-600 leading-relaxed">
+                    Help us personalize your travel experience by telling us about your preferences.
+                    Our AI will recommend perfect packages just for you!
+                </p>
+            </div>
+            <div class="space-y-3">
+                <a href="{{ route('preferences.show') }}" class="block w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                    <i class="ri-heart-line mr-2"></i>Set My Preferences
+                </a>
+                <button onclick="closePreferencesModal()" class="block w-full bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                    Maybe Later
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function closePreferencesModal() {
+    document.getElementById('preferencesModal').style.display = 'none';
+}
+</script>
+@endif
+@endauth
+
 <!-- Popular Packages Section -->
 <section id="popular-packages" class="py-16 bg-gray-100">
     <div class="container mx-auto text-center">

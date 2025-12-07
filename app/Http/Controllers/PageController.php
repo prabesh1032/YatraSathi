@@ -3,15 +3,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Destination;
 use App\Models\Package;
+use App\Services\AIRecommendationService;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     public function home()
     {
-        // $packages = Package::take(20)->get();;
         $packages = Package::all();
-        return view('welcome', compact( 'packages'));
+
+        // Get AI recommendations for authenticated users
+        $recommendedPackages = collect();
+        if (auth()->check()) {
+            $user = auth()->user();
+
+            // Check if user needs to complete preferences
+            if (!$user->preferences || !$user->preferences->preferences_completed) {
+                session()->flash('show_preferences_modal', true);
+            } else {
+                // Get AI recommendations
+                $aiService = new AIRecommendationService();
+                $recommendedPackages = $aiService->getRecommendationsForUser($user);
+            }
+        }
+
+        return view('welcome', compact('packages', 'recommendedPackages'));
     }
     public function about()
     {

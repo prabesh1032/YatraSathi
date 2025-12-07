@@ -56,6 +56,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/order/checkout/direct', [OrderController::class, 'directCheckout'])->name('direct.checkout');
 
     Route::get('/order/checkout/final', [OrderController::class, 'finalCheckout'])->name('checkout.final');
+
+    // User Preferences Routes
+    Route::get('/preferences', [App\Http\Controllers\UserPreferenceController::class, 'show'])->name('preferences.show');
+    Route::post('/preferences', [App\Http\Controllers\UserPreferenceController::class, 'store'])->name('preferences.store');
+    Route::get('/preferences/edit', [App\Http\Controllers\UserPreferenceController::class, 'edit'])->name('preferences.edit');
+    Route::put('/preferences', [App\Http\Controllers\UserPreferenceController::class, 'update'])->name('preferences.update');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'isadmin'])->name('dashboard');

@@ -129,10 +129,35 @@
                     @endif
                 </a>
 
-                <!-- Profile Tooltip -->
-                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    {{ auth()->user()->name }}
-                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+                <!-- User Dropdown Menu -->
+                <div class="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    <div class="py-2">
+                        <div class="px-4 py-2 border-b border-gray-100">
+                            <p class="font-semibold text-gray-800">{{ auth()->user()->name }}</p>
+                            <p class="text-sm text-gray-600">{{ auth()->user()->email }}</p>
+                        </div>
+                        <a href="{{ route('userprofile.edit') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            <i class="ri-user-settings-line mr-3"></i>
+                            Edit Profile
+                        </a>
+                        <a href="{{ route('preferences.show') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            <i class="ri-magic-line mr-3 text-indigo-600"></i>
+                            AI Preferences
+                        </a>
+                        <a href="{{ route('historyindex') }}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            <i class="ri-history-line mr-3"></i>
+                            Booking History
+                        </a>
+                        <div class="border-t border-gray-100 mt-2 pt-2">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600">
+                                    <i class="ri-logout-circle-line mr-3"></i>
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             @endauth

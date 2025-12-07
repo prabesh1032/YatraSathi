@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Package::class, 'bookmarks');
     }
+
+    public function preferences()
+    {
+        return $this->hasOne(UserPreference::class);
+    }
 }
