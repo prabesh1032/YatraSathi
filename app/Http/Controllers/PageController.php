@@ -10,7 +10,8 @@ class PageController extends Controller
 {
     public function home()
     {
-        $packages = Package::all();
+        // Only load 12 packages for better performance
+        $packages = Package::latest()->take(12)->get();
 
         // Get AI recommendations for authenticated users
         $recommendedPackages = collect();
