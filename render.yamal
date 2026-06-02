@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: yatrasathi
+    runtime: docker
+    plan: free
+    branch: docker-deploy
+    healthCheckPath: /
+    envVars:
+      - key: APP_NAME
+        value: YatraSathi
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: yatrasathi-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: yatrasathi-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: yatrasathi-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: yatrasathi-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: yatrasathi-db
+          property: password
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: error
+
+databases:
+  - name: yatrasathi-db
+    plan: free
+    databaseName: yatrasathi
+    user: yatrasathi
