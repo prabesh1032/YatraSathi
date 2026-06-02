@@ -3,7 +3,7 @@ services:
     name: yatrasathi
     runtime: docker
     plan: free
-    branch: docker-deploy
+    branch: dockerdeploy
     healthCheckPath: /
     envVars:
       - key: APP_NAME
