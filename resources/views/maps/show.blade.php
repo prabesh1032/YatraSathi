@@ -1,55 +1,65 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="min-h-screen bg-gray-50">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Page Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                Explore Nepal
-            </h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Discover breathtaking destinations and adventure packages across Nepal
-            </p>
-            <div class="flex justify-center mt-4">
-                <div class="flex items-center space-x-4 bg-white rounded px-4 py-2 shadow">
-                    <div class="flex items-center">
-                        <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
-                        <span class="text-sm text-gray-700">{{ $destinationsArray->count() }} Destinations</span>
-                    </div>
-                    <div class="w-px h-4 bg-gray-300"></div>
-                    <div class="flex items-center">
-                        <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-                        <span class="text-sm text-gray-700">{{ $packagesArray->count() }} Packages</span>
-                    </div>
-                </div>
+    <div class="min-h-screen bg-gray-50">
+        <header class="relative w-full bg-cover bg-center overflow-hidden"
+            style="height: 280px; background-image: url('{{ asset('travelling1.png') }}'); background-attachment: fixed;">
+            <div class="absolute inset-0"
+                style="background: linear-gradient(135deg, rgba(10,20,60,0.85) 0%, rgba(10,20,60,0.5) 50%, rgba(10,20,60,0.2) 100%);">
             </div>
-        </div>
-
-        <!-- Legend -->
-        <div class="max-w-xl mx-auto mb-6">
-            <div class="bg-white rounded-lg shadow p-4">
-                <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">Map Legend</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-blue-500 rounded p-3">
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+            <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
+                <span class="inline-block text-orange-400 text-xs font-bold tracking-widest uppercase mb-3"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    ✦ YatraSathi
+                </span>
+                <h1 class="text-white font-semibold leading-tight mb-3"
+                    style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); text-shadow: 0 2px 20px rgba(0,0,0,0.4);">
+                    Adventure Map
+                </h1>
+                <p class="text-blue-100/80 text-sm max-w-md leading-relaxed"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    Navigate Nepal's destinations and packages with one interactive map.
+                </p>
+            </div>
+        </header>
+        <!-- Legend Section - YatraSathi Theme -->
+        <div class="max-w-2xl mx-auto mb-8 mt-8">
+            <div class=" overflow-hidden">
+                <div class="p-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Destinations -->
+                        <div class="flex items-center gap-4 p-3 rounded-xl transition-all hover:shadow-md"
+                            style="background: linear-gradient(135deg, #eef2ff 0%, #ffffff 100%); border-left: 3px solid #3b82f6;">
+                            <div class="relative">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-md">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                                    </svg>
+                                </div>
                             </div>
-                            <div class="ml-3">
-                                <h4 class="text-white font-bold">Destinations</h4>
-                                <p class="text-blue-100 text-sm">Click to explore packages</p>
+                            <div>
+                                <h4 class="font-bold text-gray-800"
+                                    style="font-family: 'DM Serif Display', Georgia, serif;">Destinations</h4>
+                                <p class="text-gray-500 text-sm" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                                    Click to explore packages</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="bg-green-500 rounded p-3">
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+
+                        <!-- Packages -->
+                        <div class="flex items-center gap-4 p-3 rounded-xl transition-all hover:shadow-md"
+                            style="background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%); border-left: 3px solid #10b981;">
+                            <div class="relative">
+                                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-md">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+                                    </svg>
+                                </div>
                             </div>
-                            <div class="ml-3">
-                                <h4 class="text-white font-bold">Packages</h4>
-                                <p class="text-green-100 text-sm">View detailed information</p>
+                            <div>
+                                <h4 class="font-bold text-gray-800"
+                                    style="font-family: 'DM Serif Display', Georgia, serif;">Packages</h4>
+                                <p class="text-gray-500 text-sm" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                                    View detailed information</p>
                             </div>
                         </div>
                     </div>
@@ -60,144 +70,87 @@
         <!-- Map Container -->
         <div class="flex justify-center mb-8">
             <div class="bg-white rounded-lg shadow border-2 border-gray-200 overflow-hidden mx-4 max-w-6xl w-full">
-                <div id="map" class="w-full" style="height: 500px; margin: 20px; border-radius: 8px; border: 1px solid #e5e7eb; z-index: 10; position: relative;">
+                <div id="map" class="w-full"
+                    style="height: 500px; margin: 20px; border-radius: 8px; border: 1px solid #e5e7eb; z-index: 10; position: relative;">
                     <!-- Map will be loaded here -->
                 </div>
             </div>
         </div>
-
-        <!-- Enhanced How It Works Section -->
-        <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 opacity-10">
-                <div class="absolute top-10 left-10 w-20 h-20 border border-white rounded-full"></div>
-                <div class="absolute top-32 right-20 w-16 h-16 border border-white rounded-full"></div>
-                <div class="absolute bottom-20 left-32 w-12 h-12 border border-white rounded-full"></div>
-            </div>
-
-            <div class="relative z-10">
-                <h2 class="text-4xl md:text-5xl font-bold text-center text-white mb-8">
-                    How to Navigate
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="group">
-                        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-20 transition-all duration-300 hover:scale-105 border border-white/10">
-                            <div class="flex justify-center mb-6">
-                                <div class="w-20 h-20 bg-gradient-to-br from-indigo-400 to-blue-500 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                                    <i class="ri-map-pin-line text-3xl text-white"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-4 text-center">Find Destinations</h3>
-                            <p class="text-indigo-100 text-center leading-relaxed">
-                                Discover blue markers scattered across Nepal's most beautiful regions. Each destination offers unique experiences and packages.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-20 transition-all duration-300 hover:scale-105 border border-white/10">
-                            <div class="flex justify-center mb-6">
-                                <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                                    <i class="ri-gift-line text-3xl text-white"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-4 text-center">Explore Packages</h3>
-                            <p class="text-indigo-100 text-center leading-relaxed">
-                                Green markers represent individual adventure packages. Click to view detailed itineraries, pricing, and booking options.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-20 transition-all duration-300 hover:scale-105 border border-white/10">
-                            <div class="flex justify-center mb-6">
-                                <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-                                    <i class="ri-rocket-line text-3xl text-white"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-4 text-center">Book Your Journey</h3>
-                            <p class="text-indigo-100 text-center leading-relaxed">
-                                Found your perfect adventure? Click through to detailed package information and secure your booking with trusted guides.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 
-<!-- Enhanced Leaflet CSS and JS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Enhanced Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<script>
-let map;
+    <script>
+        let map;
 
-function initMap() {
-    // Nepal boundaries - more restrictive
-    const nepalBounds = [
-        [26.347, 80.035], // Southwest corner
-        [30.422, 88.175]  // Northeast corner
-    ];
+        function initMap() {
+            // Nepal boundaries - more restrictive
+            const nepalBounds = [
+                [26.347, 80.035], // Southwest corner
+                [30.422, 88.175] // Northeast corner
+            ];
 
-    // Initialize map with better zoom settings
-    map = L.map('map', {
-        center: [28.3949, 84.1240],
-        zoom: 7,
-        minZoom: 7,
-        maxZoom: 12,
-        maxBounds: nepalBounds,
-        maxBoundsViscosity: 1.0,
-        zoomControl: false,
-        scrollWheelZoom: true,
-        doubleClickZoom: true,
-        boxZoom: false,
-        keyboard: true,
-        dragging: true,
-        touchZoom: true,
-        bounceAtZoomLimits: true
-    });
+            // Initialize map with better zoom settings
+            map = L.map('map', {
+                center: [28.3949, 84.1240],
+                zoom: 7,
+                minZoom: 7,
+                maxZoom: 12,
+                maxBounds: nepalBounds,
+                maxBoundsViscosity: 1.0,
+                zoomControl: false,
+                scrollWheelZoom: true,
+                doubleClickZoom: true,
+                boxZoom: false,
+                keyboard: true,
+                dragging: true,
+                touchZoom: true,
+                bounceAtZoomLimits: true
+            });
 
-    // Add custom zoom control with better positioning
-    L.control.zoom({
-        position: 'bottomright'
-    }).addTo(map);
+            // Add custom zoom control with better positioning
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(map);
 
-    // Enhanced map tiles with better styling
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        maxZoom: 15,
-        subdomains: 'abcd'
-    }).addTo(map);
+            // Enhanced map tiles with better styling
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                maxZoom: 15,
+                subdomains: 'abcd'
+            }).addTo(map);
 
-    // Custom icons
-    const destinationIcon = L.divIcon({
-        className: 'custom-div-icon destination-marker',
-        html: `<div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+            // Custom icons
+            const destinationIcon = L.divIcon({
+                className: 'custom-div-icon destination-marker',
+                html: `<div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
             <i class="ri-map-pin-fill text-white text-sm"></i>
         </div>`,
-        iconSize: [24, 24],
-        iconAnchor: [12, 24],
-        popupAnchor: [0, -24]
-    });
+                iconSize: [24, 24],
+                iconAnchor: [12, 24],
+                popupAnchor: [0, -24]
+            });
 
-    const packageIcon = L.divIcon({
-        className: 'custom-div-icon package-marker',
-        html: `<div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+            const packageIcon = L.divIcon({
+                className: 'custom-div-icon package-marker',
+                html: `<div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
             <i class="ri-gift-fill text-white text-sm"></i>
         </div>`,
-        iconSize: [24, 24],
-        iconAnchor: [12, 24],
-        popupAnchor: [0, -24]
-    });
+                iconSize: [24, 24],
+                iconAnchor: [12, 24],
+                popupAnchor: [0, -24]
+            });
 
-    // Add destination markers
-    const destinations = @json($destinationsArray);
-    destinations.forEach(function(destination) {
-        L.marker([destination.latitude, destination.longitude], {
-            icon: destinationIcon
-        })
-        .addTo(map)
-        .bindPopup(`
+            // Add destination markers
+            const destinations = @json($destinationsArray);
+            destinations.forEach(function(destination) {
+                L.marker([destination.latitude, destination.longitude], {
+                        icon: destinationIcon
+                    })
+                    .addTo(map)
+                    .bindPopup(`
             <div class="p-4">
                 <h3 class="font-bold text-lg mb-2">${destination.name}</h3>
                 ${destination.description ? `<p class="text-gray-600 mb-3">${destination.description.substring(0, 100)}${destination.description.length > 100 ? '...' : ''}</p>` : ''}
@@ -213,16 +166,16 @@ function initMap() {
                 </button>
             </div>
         `);
-    });
+            });
 
-    // Add package markers
-    const packages = @json($packagesArray);
-    packages.forEach(function(package) {
-        L.marker([package.latitude, package.longitude], {
-            icon: packageIcon
-        })
-        .addTo(map)
-        .bindPopup(`
+            // Add package markers
+            const packages = @json($packagesArray);
+            packages.forEach(function(package) {
+                L.marker([package.latitude, package.longitude], {
+                        icon: packageIcon
+                    })
+                    .addTo(map)
+                    .bindPopup(`
             <div class="p-4">
                 <h3 class="font-bold text-lg mb-2">${package.name}</h3>
                 <div class="space-y-2 mb-3">
@@ -246,12 +199,11 @@ function initMap() {
                 </button>
             </div>
         `);
-    });
+            });
 
-}
+        }
 
-// Initialize map when page loads
-document.addEventListener('DOMContentLoaded', initMap);
-</script>
-
+        // Initialize map when page loads
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
 @endsection

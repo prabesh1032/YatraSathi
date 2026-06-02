@@ -70,13 +70,6 @@
 
         </div>
 
-        {{-- Scroll indicator --}}
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40">
-            <span class="text-xs tracking-widest uppercase"
-                style="font-family: 'Plus Jakarta Sans', sans-serif;">Scroll</span>
-            <i class="ri-arrow-down-line animate-bounce"></i>
-        </div>
-
     </header>
 
     <script>
@@ -106,11 +99,12 @@
                             <i class="ri-plane-line mr-2"></i>
                             Welcome to YatraSathi
                         </div>
-                        <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
+                        <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-800 mb-6 leading-tight"
+                         style="font-family: 'DM Serif Display', Georgia, serif;">
                             Explore Nepal <br>
                             <span class="text-orange-500">With Confidence</span>
                         </h2>
-                        <p class="text-lg text-gray-600 mb-8">
+                        <p class="text-lg text-gray-600 mb-8" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                             Discover amazing destinations across Nepal, create unforgettable memories, and experience the
                             journey of a lifetime with our expertly curated travel packages and local expertise.
                         </p>
