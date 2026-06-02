@@ -42,8 +42,8 @@ WORKDIR /var/www/html
 
 # Copy composer files first (layer cache)
 COPY composer.json composer.lock ./
+COPY . .
 RUN composer install --no-dev --no-interaction --optimize-autoloader --ignore-platform-reqs
-
 # Copy package.json and install node deps
 COPY package.json package-lock.json* ./
 RUN npm ci
