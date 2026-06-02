@@ -15,6 +15,8 @@
     <!-- Load fonts with display=swap for better performance -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Slab:wght@700&display=swap"
         rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Load icons asynchronously -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'" />
@@ -40,7 +42,7 @@
                 <a href="mailto:prabesh11100@gmail.com"
                     class="flex items-center space-x-2 hover:text-orange-300 transition-colors duration-300">
                     <i class="ri-mail-line"></i>
-                    <span>prabesh11100@gmail.com</span>
+                    <span>yatrasathi@gmail.com</span>
                 </a>
                 <a href="tel:+9779812965110"
                     class="flex items-center space-x-2 hover:text-orange-300 transition-colors duration-300">

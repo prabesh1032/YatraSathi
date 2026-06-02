@@ -12,7 +12,11 @@ class PageController extends Controller
     {
         // Only load 12 packages for better performance
         $packages = Package::latest()->take(12)->get();
-
+        $featuredDestinations = Destination::withCount('packages')
+                        ->whereHas('packages')
+                        ->orderBy('packages_count', 'desc')
+                        ->take(6)
+                        ->get();
         // Get AI recommendations for authenticated users
         $recommendedPackages = collect();
         if (auth()->check()) {
@@ -28,7 +32,7 @@ class PageController extends Controller
             }
         }
 
-        return view('welcome', compact('packages', 'recommendedPackages'));
+        return view('welcome', compact('packages', 'recommendedPackages','featuredDestinations'));
     }
     public function about()
     {

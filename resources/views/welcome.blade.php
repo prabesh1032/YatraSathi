@@ -1,302 +1,106 @@
 @extends('layouts.master')
 
 @section('content')
-    <header class="relative h-screen w-88 bg-cover mt-0 bg-center" id="dynamic-header"
-        style="background-image: url('{{ asset('home.jpeg') }}'); background-attachment:fixed;">
-        <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
-        <div class="relative container mx-auto h-full flex flex-col justify-start items-center text-center pt-32">
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 animate-bounce" id="header-title" style="color: black;">
-                Explore. Dream. Discover.</h1>
-            <p class="text-xl md:text-2xl font-extrabold mb-6" id="header-description" style="color: #4851fe;">Let us take you
-                places you’ve never been.</p>
-            <a href="{{ route('location.index') }}"
-                class="px-8 py-4 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">
-                Start Your Journey
-            </a>
+    <header class="relative w-full overflow-hidden" id="dynamic-header" style="height: 100vh;">
+        {{-- Background images with crossfade --}}
+        <div class="absolute inset-0 transition-opacity duration-1000" id="bg-1"
+            style="background-image: url('{{ asset('home.jpeg') }}'); background-size: cover; background-position: center; opacity: 1;">
         </div>
-    </header>
-    <!-- Airplane Animation -->
-    {{-- <div id="airplane" class="absolute top-20 left-0 z-10">
-    <img src="{{ asset('plane.png') }}" alt="Flying Airplane" class="w-16 h-16" />
-    <style>
-        #airplane {
-            position: absolute;
-            top: 170px;
-            left: 0;
-            animation: fly 5s linear infinite;
-        }
+        <div class="absolute inset-0 transition-opacity duration-1000" id="bg-2"
+            style="background-image: url('{{ asset('imageii.png') }}'); background-size: cover; background-position: center; opacity: 0;">
+        </div>
 
-        @keyframes fly {
-            0% {
-                left: -10%;
-            }
-            100% {
-                left: 110%;
-            }
-        }
-    </style>
+        {{-- Strong overlay for text readability --}}
+        <div class="absolute inset-0"
+            style="background: linear-gradient(135deg, rgba(10,20,60,0.85) 0%, rgba(10,20,60,0.5) 50%, rgba(10,20,60,0.2) 100%);">
+        </div>
 
-    <script>
-        window.onload = function() {
-            const airplane = document.getElementById('airplane');
-            airplane.style.animationPlayState = 'running'; // Starts the flying animation when the page loads
-        };
-    </script>
-</div> --}}
+        {{-- Content — left aligned, vertically centered --}}
+        <div class="relative h-full flex flex-col justify-center px-6 lg:px-24 max-w-3xl">
+            {{-- Heading --}}
+            <h1 class="text-white font-extrabold leading-none mb-5"
+                style="font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 3vw, 5rem); text-shadow: 0 2px 20px rgba(0,0,0,0.4);">
+                Explore.<br>
+                Dream.<br>
+                <em class="not-italic text-orange-400">Discover.</em>
+            </h1>
 
-    <script>
-        const header = document.getElementById('dynamic-header');
-        const headerTitle = document.getElementById('header-title');
-        const headerDescription = document.getElementById('header-description');
-
-        const images = [{
-                url: '{{ asset('home.jpeg') }}',
-                titleColor: 'black',
-                descriptionColor: '#4c51bf'
-            }, // Indigo-700
-            {
-                url: '{{ asset('imageii.png') }}',
-                titleColor: 'white',
-                descriptionColor: '#a3e635'
-            } // Lime-200
-        ];
-
-        let currentImageIndex = 0;
-
-        setInterval(() => {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            const currentImage = images[currentImageIndex];
-
-            // Change the background image
-            header.style.backgroundImage = `url('${currentImage.url}')`;
-
-            // Update text colors
-            headerTitle.style.color = currentImage.titleColor;
-            headerDescription.style.color = currentImage.descriptionColor;
-        }, 5000);
-    </script>
-
-    <!-- Custom CSS for 3D Effects and Animations -->
-    <style>
-        .perspective-1000 {
-            perspective: 1000px;
-        }
-
-        .rotate-y-12:hover {
-            transform: rotateY(12deg) scale(1.05);
-        }
-
-        .filter {
-            transition: filter 0.7s ease;
-        }
-
-        .group:hover .filter {
-            filter: brightness(110%) contrast(110%) saturate(120%);
-        }
-
-        /* Advanced hover animations */
-        .group:hover .bg-gradient-to-br {
-            animation: gradientShift 2s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-
-            0%,
-            100% {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            }
-
-            50% {
-                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            }
-        }
-
-        /* Floating animation for cards */
-        .group:hover {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
-        }
-
-        /* Pulse effect for explore button */
-        .group\\/btn:hover {
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
-            }
-
-            70% {
-                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
-            }
-        }
-
-        /* Shimmer effect */
-        .group:hover::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shimmer 1.5s infinite;
-            z-index: 20;
-            pointer-events: none;
-            border-radius: 1rem;
-        }
-
-        @keyframes shimmer {
-            0% {
-                left: -100%;
-            }
-
-            100% {
-                left: 100%;
-            }
-        }
-
-        /* Glow effect */
-        .group:hover .bg-gradient-to-br {
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Smooth transitions */
-        * {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Fade-in animations */
-        .fade-in-up {
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .fade-in-right {
-            animation: fadeInRight 1s ease-out 0.3s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Floating animation for award badge */
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-    </style>
-
-    <!-- Welcome Section -->
-    <section class="py-8 bg-gray-100">
-        {{-- <div class="container mx-auto text-center">
-            <h2
-                class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-indigo-400 mb-4">
-                Welcome to <span class="text-yellow-500 ">YatraSathi<i
-                        class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-indigo-500 "></i></span>
-            </h2>
-            <p class="text-lg text-gray-900 mb-8 font-roboto-slab tracking-wide">
-                Your trusted travel partner for unforgettable journeys. Start exploring the world, one destination at a
-                time.
+            {{-- Subheading --}}
+            <p class="text-blue-100/80 text-sm md:text-base max-w-sm mb-10 leading-relaxed"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                Expertly curated Nepal travel experiences — from Himalayan treks to cultural escapes.
             </p>
 
-            <!-- Carousel / Slider -->
-            <div class="relative w-full lg:w-8/12 mx-auto overflow-hidden rounded-lg shadow-lg">
-                <div class="carousel-wrapper relative">
-                    <!-- Carousel Items -->
-                    <div class="carousel flex transition-transform duration-700 ease-in-out">
-                        @foreach ($packages as $package)
-                            <a href="{{ route('packages.read', ['package' => $package->id]) }}"
-                                class="w-full flex-shrink-0 relative block">
-                                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}"
-                                    class="w-full h-96 object-cover rounded-lg">
-                                <div
-                                    class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent text-white p-8">
-                                    <h3 class="text-4xl text-yellow-500 font-extrabold">{{ $package->package_name }}</h3>
-                                    <p class="text-3xl text-green-600 font-extrabold">${{ $package->package_price }}</p>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                    <!-- Navigation Buttons -->
-                    <button
-                        class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow hover:bg-gray-600 focus:outline-none">
-                        <i class="ri-arrow-left-s-line text-2xl"></i>
-                    </button>
-                    <button
-                        class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow hover:bg-gray-600 focus:outline-none">
-                        <i class="ri-arrow-right-s-line text-2xl"></i>
-                    </button>
+            {{-- CTAs --}}
+            <div class="flex flex-wrap gap-3">
+                <a href="{{ route('location.index') }}"
+                    class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white px-7 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 shadow-lg"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    Start Your Journey
+                    <i class="ri-arrow-right-line"></i>
+                </a>
+                <a href="{{ route('packages') }}"
+                    class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 hover:border-white/60 text-white px-7 py-3 rounded-full font-bold text-sm transition-all duration-300 backdrop-blur-sm"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <i class="ri-map-pin-line"></i>
+                    View Packages
+                </a>
+            </div>
 
-                    <!-- Indicators -->
-                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                        @foreach ($packages as $index => $package)
-                            <div class="indicator w-3 h-3 rounded-full bg-gray-400 transition transform hover:scale-110 cursor-pointer"
-                                data-index="{{ $index }}"></div>
-                        @endforeach
+            {{-- Stats strip --}}
+            <div class="flex items-center gap-8 mt-12 pt-8 border-t border-white/10">
+                <div>
+                    <div class="text-white font-extrabold text-xl" style="font-family: 'Syne', sans-serif;">1,000+</div>
+                    <div class="text-white/50 text-xs" style="font-family: 'Plus Jakarta Sans', sans-serif;">Happy Travelers
+                    </div>
+                </div>
+                <div class="w-px h-8 bg-white/20"></div>
+                <div>
+                    <div class="text-white font-extrabold text-xl" style="font-family: 'Syne', sans-serif;">50+</div>
+                    <div class="text-white/50 text-xs" style="font-family: 'Plus Jakarta Sans', sans-serif;">Destinations
+                    </div>
+                </div>
+                <div class="w-px h-8 bg-white/20"></div>
+                <div>
+                    <div class="text-white font-extrabold text-xl" style="font-family: 'Syne', sans-serif;">100%</div>
+                    <div class="text-white/50 text-xs" style="font-family: 'Plus Jakarta Sans', sans-serif;">Local Expertise
                     </div>
                 </div>
             </div>
-            <!-- Call to Action -->
-            <a href="{{ route('packages') }}"
-                class="mt-6 inline-block bg-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full shadow-md hover:bg-yellow-300 transition duration-300">
-                View All Packages
-            </a>
 
-        </div> --}}
+        </div>
 
-        <!-- Beautiful About Section -->
-        <section id="about" class="py-20 bg-gradient-to-br from-blue-50 to-orange-50">
+        {{-- Scroll indicator --}}
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40">
+            <span class="text-xs tracking-widest uppercase"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">Scroll</span>
+            <i class="ri-arrow-down-line animate-bounce"></i>
+        </div>
+
+    </header>
+
+    <script>
+        const backgrounds = [
+            document.getElementById('bg-1'),
+            document.getElementById('bg-2'),
+        ];
+        let current = 0;
+        setInterval(() => {
+            backgrounds[current].style.opacity = '0';
+            current = (current + 1) % backgrounds.length;
+            backgrounds[current].style.opacity = '1';
+        }, 5000);
+    </script>
+    <!-- Welcome Section -->
+    <section class="py-8 bg-gray-100">
+        <section id="about" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <!-- Left Content -->
+
+                    {{-- Left Content --}}
                     <div class="fade-in-up">
+
+                        {{-- Heading --}}
                         <div
                             class="inline-block bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
                             <i class="ri-plane-line mr-2"></i>
@@ -308,76 +112,87 @@
                         </h2>
                         <p class="text-lg text-gray-600 mb-8">
                             Discover amazing destinations across Nepal, create unforgettable memories, and experience the
-                            journey of a
-                            lifetime with our expertly curated travel packages and local expertise.
+                            journey of a lifetime with our expertly curated travel packages and local expertise.
                         </p>
 
-                        <!-- Stats -->
+                        {{-- Stats --}}
                         <div class="grid grid-cols-2 gap-4 mb-8">
-                            <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <div class="flex items-center gap-4">
-                                    <div class="bg-orange-100 rounded-full p-3">
-                                        <i class="ri-user-heart-line text-2xl text-orange-500"></i>
+                            <div
+                                class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-orange-50 rounded-xl p-2.5">
+                                        <i class="ri-user-heart-line text-xl text-orange-500"></i>
                                     </div>
                                     <div>
-                                        <div class="text-2xl font-bold text-gray-800">1,000+</div>
-                                        <div class="text-sm text-gray-600">Happy Travelers</div>
+                                        <div class="text-xl font-extrabold text-blue-900"
+                                            style="font-family: 'Syne', sans-serif;">1,000+</div>
+                                        <div class="text-xs text-gray-400">Happy Travelers</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <div class="flex items-center gap-4">
-                                    <div class="bg-blue-100 rounded-full p-3">
-                                        <i class="ri-map-pin-line text-2xl text-blue-500"></i>
+                            <div
+                                class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-blue-50 rounded-xl p-2.5">
+                                        <i class="ri-map-pin-line text-xl text-blue-700"></i>
                                     </div>
                                     <div>
-                                        <div class="text-2xl font-bold text-gray-800">50+</div>
-                                        <div class="text-sm text-gray-600">Destinations</div>
+                                        <div class="text-xl font-extrabold text-blue-900"
+                                            style="font-family: 'Syne', sans-serif;">50+</div>
+                                        <div class="text-xs text-gray-400">Destinations</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        {{-- CTAs --}}
+                        <div class="flex flex-col sm:flex-row gap-3">
                             <a href="{{ route('packages') }}"
-                                class="inline-flex items-center justify-center bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                                class="inline-flex items-center justify-center bg-blue-900 hover:bg-blue-800 text-white px-7 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 shadow-md"
+                                style="font-family: 'Plus Jakarta Sans', sans-serif;">
                                 Explore Destinations
                                 <i class="ri-arrow-right-line ml-2"></i>
                             </a>
                             <a href="{{ route('contact') }}"
-                                class="inline-flex items-center justify-center bg-white border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300">
+                                class="inline-flex items-center justify-center border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-7 py-3 rounded-full font-bold text-sm transition-all duration-300"
+                                style="font-family: 'Plus Jakarta Sans', sans-serif;">
                                 <i class="ri-customer-service-line mr-2"></i>
                                 Contact Us
                             </a>
                         </div>
                     </div>
 
-                    <!-- Right Content - Image -->
+                    {{-- Right Content --}}
                     <div class="fade-in-right">
                         <div class="relative">
-                            <div class="bg-white/10 backdrop-blur-md rounded-3xl p-4 shadow-2xl">
+
+                            {{-- Image --}}
+                            <div class="rounded-3xl overflow-hidden shadow-xl">
                                 <img src="{{ asset('home.jpeg') }}" alt="Nepal Travel Experience"
-                                    class="rounded-2xl w-full h-96 object-cover">
+                                    class="w-full h-96 object-cover">
                             </div>
-                            <!-- Floating Element -->
+
+                            {{-- Floating badge --}}
                             <div
-                                class="absolute -bottom-6 -right-6 bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl shadow-xl p-6 floating">
-                                <div class="flex items-center gap-4">
-                                    <div class="bg-white/20 rounded-full p-3">
-                                        <i class="ri-award-line text-2xl"></i>
+                                class="absolute -bottom-5 -right-5 bg-blue-900 text-white rounded-2xl shadow-xl p-4 floating">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-white/20 rounded-full p-2">
+                                        <i class="ri-award-line text-xl"></i>
                                     </div>
                                     <div>
-                                        <div class="text-xl font-bold">Trusted Partner</div>
-                                        <div class="text-sm">Nepal Tourism 2024</div>
+                                        <div class="text-sm font-bold" style="font-family: 'Syne', sans-serif;">Trusted
+                                            Partner</div>
+                                        <div class="text-xs text-blue-200">Nepal Tourism 2024</div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
-
         @auth
             @if ($recommendedPackages->isNotEmpty())
                 <section class="py-16 bg-gradient-to-r from-indigo-50 to-purple-50">
@@ -552,14 +367,12 @@
                     Customize Your Trip
                 </div>
 
-                <!-- Heading -->
-                <h2 class="text-2xl lg:text-3xl font-extrabold mb-3">
-                    <span class="text-orange-500">Create Your</span>
-                    <span class="text-blue-700">Custom Package</span>
+                <h2 class="text-blue-900 leading-tight mb-3"
+                    style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.7rem, 3vw, 2.4rem);">
+                    Create Your <em class="not-italic text-orange-500">Custom Package</em>
                 </h2>
-
-                <!-- Description -->
-                <p class="text-sm lg:text-base text-black max-w-xl mx-auto">
+                <p class="text-sm text-gray-500 max-w-xl mx-auto leading-relaxed"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
                     Build your perfect Nepal adventure by selecting your travel preferences.
                 </p>
             </div>
@@ -582,172 +395,199 @@
                 </div>
             @endif
 
-            <!-- Enhanced Custom Package Form - Available for All Users -->
             <form method="POST" action="{{ auth()->check() ? route('direct.checkout') : route('login') }}"
                 id="customPackageForm" class="max-w-6xl mx-auto">
                 @csrf
                 <input type="hidden" name="is_custom" value="1">
                 <input type="hidden" name="guide_id" value="">
                 <input type="hidden" name="package_id" id="virtualPackageId" value="0">
-
-                <!-- Store form data for login redirect -->
                 @guest
                     <input type="hidden" name="redirect_after_login" value="{{ url()->current() }}">
                 @endguest
 
-                <div class="bg-gray-50 rounded-lg shadow-lg p-8">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <!-- Left Side - Form -->
-                        <div class="space-y-6">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Package Details</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                            <!-- Destination Selection -->
-                            <div>
-                                <label for="destination_id" class="block text-lg font-bold text-gray-700 mb-2">
-                                    <i class="ri-map-pin-2-line mr-2"></i>Choose Destination
-                                </label>
-                                <select id="destination_id" name="destination_id"
-                                    class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                                    required onchange="updateCustomPricing()">
-                                    <option value="">Select a destination...</option>
-                                    @php
-                                        $destinations = \App\Models\Destination::with('packages')->get();
-                                    @endphp
-                                    @foreach ($destinations as $destination)
-                                        <option value="{{ $destination->id }}"
-                                            data-base-price="{{ $destination->packages->avg('package_price') ?? 100 }}"
-                                            data-name="{{ $destination->name }}">
-                                            {{ $destination->name }}
-                                            @if ($destination->packages->count() > 0)
-                                                ({{ $destination->packages->count() }} packages available)
-                                            @endif
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    {{-- Left Side - Form Fields --}}
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
+                        <h3 class="text-blue-900 font-semibold mb-1"
+                            style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.4rem;">
+                            Package Details
+                        </h3>
 
-                            <!-- Duration -->
-                            <div>
-                                <label for="duration_range" class="block text-lg font-bold text-gray-700 mb-2">
-                                    <i class="ri-calendar-line mr-2"></i>Duration
-                                </label>
-                                <select id="duration_range" name="duration_range"
-                                    class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                                    required onchange="updateCustomPricing()">
-                                    <option value="">Select duration...</option>
-                                    <option value="3" data-multiplier="1">3 Days (Short Trip)</option>
-                                    <option value="5" data-multiplier="1.2">5 Days (Standard)</option>
-                                    <option value="7" data-multiplier="1.4">7 Days (Extended)</option>
-                                    <option value="10" data-multiplier="1.6">10 Days (Long Adventure)</option>
-                                    <option value="14" data-multiplier="1.8">14 Days (Full Experience)</option>
-                                </select>
-                            </div>
-
-                            <!-- Number of People -->
-                            <div>
-                                <label for="num_people" class="block text-lg font-bold text-gray-700 mb-2">
-                                    <i class="ri-group-line mr-2"></i>Number of People
-                                </label>
-                                <input type="number" id="num_people" name="num_people" min="1" max="20"
-                                    value="2"
-                                    class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                                    required onchange="updateCustomPricing()" oninput="updateCustomPricing()">
-                                <small class="text-gray-500">Group discounts apply for 5+ people</small>
-                            </div>
-
-                            <!-- Travel Date -->
-                            <div>
-                                <label for="travel_date" class="block text-lg font-bold text-gray-700 mb-2">
-                                    <i class="ri-calendar-event-line mr-2"></i>Travel Date
-                                </label>
-                                <input type="date" id="travel_date" name="travel_date"
-                                    min="{{ date('Y-m-d', strtotime('+1 day')) }}"
-                                    class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                                    required>
-                            </div>
-
-                            <!-- Package Type -->
-                            <div>
-                                <label for="package_type" class="block text-lg font-bold text-gray-700 mb-2">
-                                    <i class="ri-star-line mr-2"></i>Package Type
-                                </label>
-                                <select id="package_type" name="package_type"
-                                    class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                                    required onchange="updateCustomPricing()">
-                                    <option value="budget" data-multiplier="0.8">Budget (Basic accommodation)</option>
-                                    <option value="standard" data-multiplier="1" selected>Standard (Good accommodation)
+                        {{-- Destination --}}
+                        <div>
+                            <label for="destination_id"
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                                <i class="ri-map-pin-2-line mr-1 text-orange-500"></i> Destination
+                            </label>
+                            <select id="destination_id" name="destination_id"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                                required onchange="updateCustomPricing()">
+                                <option value="">Select a destination...</option>
+                                @php $destinations = \App\Models\Destination::with('packages')->get(); @endphp
+                                @foreach ($destinations as $destination)
+                                    <option value="{{ $destination->id }}"
+                                        data-base-price="{{ $destination->packages->avg('package_price') ?? 100 }}"
+                                        data-name="{{ $destination->name }}">
+                                        {{ $destination->name }}
+                                        @if ($destination->packages->count() > 0)
+                                            ({{ $destination->packages->count() }} packages)
+                                        @endif
                                     </option>
-                                    <option value="luxury" data-multiplier="1.5">Luxury (Premium experience)</option>
-                                </select>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- Duration --}}
+                        <div>
+                            <label for="duration_range"
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                                <i class="ri-calendar-line mr-1 text-orange-500"></i> Duration
+                            </label>
+                            <select id="duration_range" name="duration_range"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                                required onchange="updateCustomPricing()">
+                                <option value="">Select duration...</option>
+                                <option value="3" data-multiplier="1">3 Days — Short Trip</option>
+                                <option value="5" data-multiplier="1.2">5 Days — Standard</option>
+                                <option value="7" data-multiplier="1.4">7 Days — Extended</option>
+                                <option value="10" data-multiplier="1.6">10 Days — Long Adventure</option>
+                                <option value="14" data-multiplier="1.8">14 Days — Full Experience</option>
+                            </select>
+                        </div>
+
+                        {{-- Number of People --}}
+                        <div>
+                            <label for="num_people"
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                                <i class="ri-group-line mr-1 text-orange-500"></i> Number of People
+                            </label>
+                            <input type="number" id="num_people" name="num_people" min="1" max="20"
+                                value="2"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                                required onchange="updateCustomPricing()" oninput="updateCustomPricing()">
+                            <p class="text-xs text-orange-500 mt-1">Group discounts apply for 5+ people</p>
+                        </div>
+
+                        {{-- Travel Date --}}
+                        <div>
+                            <label for="travel_date"
+                                class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                                <i class="ri-calendar-event-line mr-1 text-orange-500"></i> Travel Date
+                            </label>
+                            <input type="date" id="travel_date" name="travel_date"
+                                min="{{ date('Y-m-d', strtotime('+1 day')) }}"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                                required>
+                        </div>
+
+                        {{-- Package Type --}}
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                                <i class="ri-star-line mr-1 text-orange-500"></i> Package Type
+                            </label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="package_type" value="budget" data-multiplier="0.8"
+                                        class="peer hidden" onchange="updateCustomPricing()">
+                                    <div
+                                        class="peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600 border border-gray-200 rounded-xl p-3 text-center text-xs font-bold text-gray-500 transition-all duration-200 hover:border-orange-300">
+                                        <i class="ri-wallet-line block text-lg mb-1"></i> Budget
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="package_type" value="standard" data-multiplier="1"
+                                        class="peer hidden" checked onchange="updateCustomPricing()">
+                                    <div
+                                        class="peer-checked:border-blue-700 peer-checked:bg-blue-50 peer-checked:text-blue-700 border border-gray-200 rounded-xl p-3 text-center text-xs font-bold text-gray-500 transition-all duration-200 hover:border-blue-300">
+                                        <i class="ri-shield-check-line block text-lg mb-1"></i> Standard
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="package_type" value="luxury" data-multiplier="1.5"
+                                        class="peer hidden" onchange="updateCustomPricing()">
+                                    <div
+                                        class="peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-600 border border-gray-200 rounded-xl p-3 text-center text-xs font-bold text-gray-500 transition-all duration-200 hover:border-orange-300">
+                                        <i class="ri-vip-crown-line block text-lg mb-1"></i> Luxury
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Right Side - Price Summary --}}
+                    <div class="bg-blue-900 rounded-2xl shadow-sm p-6 flex flex-col justify-between"
+                        style="min-height: 100%;">
+                        <div>
+                            <h3 class="text-white font-semibold mb-5"
+                                style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.4rem;">
+                                Price Summary
+                            </h3>
+
+                            <div class="space-y-3" id="customPriceSummary">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-200 text-sm">Destination</span>
+                                    <span id="customSelectedDestination" class="text-white text-sm font-semibold">Not
+                                        selected</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-200 text-sm">Duration</span>
+                                    <span id="customSelectedDuration" class="text-white text-sm font-semibold">Not
+                                        selected</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-200 text-sm">People</span>
+                                    <span id="customSelectedPeople" class="text-white text-sm font-semibold">2</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-blue-200 text-sm">Package Type</span>
+                                    <span id="customSelectedType" class="text-white text-sm font-semibold">Standard</span>
+                                </div>
+
+                                <div class="border-t border-blue-700 my-2 pt-3 space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-blue-200 text-sm">Base Price / person / day</span>
+                                        <span id="customBasePrice" class="text-white text-sm font-semibold">$0</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-blue-200 text-sm">Subtotal</span>
+                                        <span id="customSubtotal" class="text-white text-sm font-semibold">$0</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-orange-400" id="customDiscountRow"
+                                        style="display: none;">
+                                        <span class="text-sm">Group Discount (10%)</span>
+                                        <span id="customDiscount" class="text-sm font-semibold">-$0</span>
+                                    </div>
+                                </div>
+
+                                <div class="border-t border-blue-700 pt-4">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-white font-bold text-base">Total Price</span>
+                                        <span id="customTotalPrice" class="text-orange-400 font-extrabold text-2xl"
+                                            style="font-family: 'DM Serif Display', Georgia, serif;">$0</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Right Side - Price Summary -->
-                        <div class="bg-white p-6 rounded-lg shadow h-fit">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Price Summary</h3>
-
-                            <div class="space-y-4" id="customPriceSummary">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Destination:</span>
-                                    <span id="customSelectedDestination" class="font-medium">Not selected</span>
-                                </div>
-
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Duration:</span>
-                                    <span id="customSelectedDuration" class="font-medium">Not selected</span>
-                                </div>
-
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">People:</span>
-                                    <span id="customSelectedPeople" class="font-medium">2</span>
-                                </div>
-
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Package Type:</span>
-                                    <span id="customSelectedType" class="font-medium">Standard</span>
-                                </div>
-
-                                <hr class="my-4">
-
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Base Price (per person/day):</span>
-                                    <span id="customBasePrice" class="font-medium">$0</span>
-                                </div>
-
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Subtotal:</span>
-                                    <span id="customSubtotal" class="font-medium">$0</span>
-                                </div>
-
-                                <div class="flex justify-between items-center text-green-600" id="customDiscountRow"
-                                    style="display: none;">
-                                    <span>Group Discount (10%):</span>
-                                    <span id="customDiscount">-$0</span>
-                                </div>
-
-                                <hr class="my-4">
-
-                                <div class="flex justify-between items-center text-2xl font-bold text-blue-600">
-                                    <span>Total Price:</span>
-                                    <span id="customTotalPrice">$0</span>
-                                </div>
-                            </div>
-
+                        {{-- CTA Button --}}
+                        <div class="mt-6">
                             @auth
                                 <button type="submit"
-                                    class="w-full mt-6 bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors font-bold disabled:bg-gray-400"
-                                    disabled id="customCheckoutBtn">
-                                    <i class="ri-shopping-cart-line mr-2"></i>Book Custom Package
+                                    class="w-full bg-orange-500 hover:bg-orange-400 text-white py-3 px-6 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-105 disabled:opacity-40 disabled:scale-100"
+                                    disabled id="customCheckoutBtn" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                                    <i class="ri-shopping-cart-line mr-2"></i> Book Custom Package
                                 </button>
                             @else
                                 <button type="button" onclick="redirectToLogin()"
-                                    class="w-full mt-6 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-6 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 font-bold text-lg shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
-                                    disabled id="loginToBookBtn">
-                                    <i class="ri-login-box-line mr-2"></i>Book Package
+                                    class="w-full bg-orange-500 hover:bg-orange-400 text-white py-3 px-6 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-105 disabled:opacity-40 disabled:scale-100"
+                                    disabled id="loginToBookBtn" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                                    <i class="ri-login-box-line mr-2"></i> Login to Book
                                 </button>
                             @endauth
                         </div>
                     </div>
+
                 </div>
             </form>
         </div>
@@ -767,7 +607,8 @@
                 </div>
 
                 <!-- Heading -->
-                <h2 class="text-2xl lg:text-3xl font-extrabold mb-3">
+                <h2 class="text-2xl lg:text-3xl font-extrabold mb-3"
+                    style="font-family: 'DM Serif Display', Georgia, serif;">
                     <span class="text-orange-500">Popular</span>
                     <span class="text-blue-700">Destinations</span>
                 </h2>
@@ -778,58 +619,63 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @php
-                    $featuredDestinations = \App\Models\Destination::withCount('packages')
-                        ->whereHas('packages')
-                        ->orderBy('packages_count', 'desc')
-                        ->take(6)
-                        ->get();
-                @endphp
-
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
                 @foreach ($featuredDestinations as $destination)
-                    <!-- Destination {{ $loop->iteration }} -->
                     <a href="{{ route('packages') }}?destination={{ $destination->id }}"
-                        class="package-card group relative block bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-                        <div class="relative h-64 overflow-hidden">
+                        class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+
+                        {{-- Image --}}
+                        <div class="relative h-60 overflow-hidden">
                             @if ($destination->photopath)
                                 <img src="{{ asset('images/' . $destination->photopath) }}"
                                     alt="{{ $destination->name }}"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div
-                                    class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
-                                    <i class="ri-landscape-line text-white text-6xl"></i>
+                                    class="w-full h-full bg-gradient-to-br from-blue-800 to-blue-500 flex items-center justify-center">
+                                    <i class="ri-landscape-line text-white text-6xl opacity-60"></i>
                                 </div>
                             @endif
-                            <!-- Light Blue Overlay on Hover with Description -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-blue-500/80 via-blue-400/60 to-blue-300/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center p-6">
-                                <p class="text-white text-sm text-center leading-relaxed line-clamp-3 font-medium">
-                                    @if ($destination->description)
-                                        {{ Str::limit($destination->description, 120) }}
-                                    @else
-                                        Discover the beauty and culture of {{ $destination->name }}. Experience
-                                        breathtaking landscapes, rich heritage, and unforgettable adventures in this amazing
-                                        destination.
-                                    @endif
-                                </p>
+
+                            {{-- Always-on dark gradient at bottom --}}
+                            <div class="absolute inset-0 bg-gradient-to-t from-blue-950/75 via-blue-950/10 to-transparent">
                             </div>
-                            <!-- Package Count Badge -->
-                            <div class="absolute top-4 right-4">
-                                <span
-                                    class="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+
+                            {{-- Package count badge --}}
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
                                     {{ $destination->packages_count }}
                                     {{ $destination->packages_count == 1 ? 'Package' : 'Packages' }}
                                 </span>
                             </div>
+
+                            {{-- Name + description pinned to bottom of image --}}
+                            <div class="absolute bottom-0 left-0 right-0 p-4">
+                                <h3 class="text-white font-bold text-lg leading-snug"
+                                    style="font-family: 'Syne', sans-serif;">
+                                    {{ $destination->name }}
+                                </h3>
+                                @if ($destination->description)
+                                    <p
+                                        class="text-blue-100 text-xs mt-1 line-clamp-2 leading-relaxed max-h-0 overflow-hidden group-hover:max-h-10 transition-all duration-300">
+                                        {{ Str::limit($destination->description, 90) }}
+                                    </p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="p-4">
-                            <h3
-                                class="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors text-center">
-                                {{ $destination->name }}
-                            </h3>
+
+                        {{-- Card Footer --}}
+                        <div class="px-4 py-3 flex items-center justify-between border-t border-gray-100">
+                            <div class="flex items-center gap-1.5 text-gray-400 text-xs">
+                                <i class="ri-map-pin-line text-orange-400 text-sm"></i>
+                                <span>Nepal</span>
+                            </div>
+                            <span
+                                class="text-blue-800 text-xs font-bold flex items-center gap-1 group-hover:gap-2 transition-all duration-200">
+                                Explore <i class="ri-arrow-right-line"></i>
+                            </span>
                         </div>
+
                     </a>
                 @endforeach
             </div>
@@ -855,7 +701,8 @@
                 </div>
 
                 <!-- Heading -->
-                <h2 class="text-2xl lg:text-3xl font-extrabold mb-3">
+                <h2 class="text-2xl lg:text-3xl font-extrabold mb-3"
+                    style="font-family: 'DM Serif Display', Georgia, serif;">
                     <span class="text-orange-500">Popular</span>
                     <span class="text-blue-700">Packages</span>
                 </h2>
@@ -869,176 +716,181 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($packages->take(3) as $package)
                     <div
-                        class="relative bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}"
-                            class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
-                        <div
-                            class="absolute top-4 right-4 bg-yellow-500 px-3 py-1 rounded-lg text-black text-sm font-bold shadow-md">
-                            New</div>
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ $package->package_name }}</h3>
-                            <p class="text-lg text-green-500 font-bold mb-4">${{ $package->package_price }}</p>
-                            <a href="{{ route('packages.read', ['package' => $package->id]) }}"
-                                class="block w-full py-2 text-center bg-indigo-500 text-white font-bold rounded-lg shadow-md hover:bg-indigo-600 transition transform hover:scale-105">
-                                View Details
-                            </a>
+                        class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+
+                        {{-- Image --}}
+                        <div class="relative h-52 overflow-hidden">
+                            <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+                            {{-- Dark gradient --}}
+                            <div class="absolute inset-0 bg-gradient-to-t from-blue-950/60 via-transparent to-transparent">
+                            </div>
+
+                            {{-- Duration badge top-left --}}
+                            <div class="absolute top-3 left-3">
+                                <span
+                                    class="bg-white/90 backdrop-blur-sm text-blue-900 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                                    <i class="ri-time-line text-orange-500"></i>
+                                    {{ $package->duration }}
+                                </span>
+                            </div>
+
+                            {{-- Transportation badge top-right --}}
+                            @if ($package->transportation)
+                                <div class="absolute top-3 right-3">
+                                    <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                        {{ $package->transportation }}
+                                    </span>
+                                </div>
+                            @endif
+
+                            {{-- Location pinned on image bottom --}}
+                            <div class="absolute bottom-3 left-4 flex items-center gap-1">
+                                <i class="ri-map-pin-fill text-orange-400 text-sm"></i>
+                                <span class="text-white text-xs font-semibold">{{ $package->package_location }}</span>
+                            </div>
+                        </div>
+
+                        {{-- Card Body --}}
+                        <div class="p-4">
+
+                            {{-- Package name --}}
+                            <h3 class="text-base font-bold text-gray-900 leading-snug mb-3 group-hover:text-blue-800 transition-colors duration-200"
+                                style="font-family: 'Syne', sans-serif;">
+                                {{ $package->package_name }}
+                            </h3>
+
+                            {{-- Includes row --}}
+                            <div class="flex items-center gap-3 mb-4">
+                                @if ($package->meals)
+                                    <span class="flex items-center gap-1 text-xs text-gray-500">
+                                        <i class="ri-restaurant-line text-orange-400"></i> Meals
+                                    </span>
+                                @endif
+                                @if ($package->accommodation)
+                                    <span class="flex items-center gap-1 text-xs text-gray-500">
+                                        <i class="ri-hotel-line text-orange-400"></i> Stay
+                                    </span>
+                                @endif
+                                @if ($package->transportation)
+                                    <span class="flex items-center gap-1 text-xs text-gray-500">
+                                        <i class="ri-bus-line text-orange-400"></i> Transport
+                                    </span>
+                                @endif
+                            </div>
+
+                            {{-- Price + CTA --}}
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                <div>
+                                    <span class="text-xs text-gray-400">Starting from</span>
+                                    <p class="text-lg font-extrabold text-blue-900">
+                                        ${{ number_format($package->package_price) }}</p>
+                                </div>
+                                <a href="{{ route('packages.read', ['package' => $package->id]) }}"
+                                    class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 flex items-center gap-1">
+                                    View <i class="ri-arrow-right-line"></i>
+                                </a>
+                            </div>
+
                         </div>
                     </div>
                 @endforeach
             </div>
-            <div class="mt-8">
+            <div class="text-center mt-12">
                 <a href="{{ route('packages') }}"
-                    class="px-8 py-3 bg-yellow-500 text-black font-bold rounded-full shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">
-                    See All
+                    class="inline-flex items-center bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-800 hover:to-blue-950 text-white px-8 py-2.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 shadow-lg">
+                    View All Packages
+                    <i class="ri-map-pin-line ml-3"></i>
                 </a>
             </div>
         </div>
     </section>
     <script>
-        // Custom Package Pricing Calculator with Form Data Persistence
+        // Custom Package Pricing Calculator
         function updateCustomPricing() {
-            console.log('updateCustomPricing called'); // Debug log
-
             const destinationSelect = document.getElementById('destination_id');
             const durationSelect = document.getElementById('duration_range');
-            const numPeople = document.getElementById('num_people').value || 2;
-            const packageType = document.getElementById('package_type');
+            const numPeopleInput = document.getElementById('num_people');
+            const selectedType = document.querySelector('input[name="package_type"]:checked');
 
-            if (!destinationSelect || !durationSelect || !packageType) {
-                console.error('Form elements not found');
+            if (!destinationSelect || !durationSelect || !numPeopleInput || !selectedType) {
                 return;
             }
 
+            const numPeople = parseInt(numPeopleInput.value, 10) || 2;
             const selectedDestination = destinationSelect.options[destinationSelect.selectedIndex];
             const selectedDurationOption = durationSelect.options[durationSelect.selectedIndex];
-            const selectedTypeOption = packageType.options[packageType.selectedIndex];
-
-            console.log('Selected values:', {
-                destination: selectedDestination?.value,
-                duration: durationSelect.value,
-                people: numPeople,
-                type: packageType.value
-            });
+            const typeMultiplier = parseFloat(selectedType.dataset.multiplier) || 1;
+            const typeText = selectedType.value.charAt(0).toUpperCase() + selectedType.value.slice(1);
 
             // Update display values
             document.getElementById('customSelectedDestination').textContent = selectedDestination?.dataset.name ||
                 'Not selected';
             document.getElementById('customSelectedDuration').textContent = selectedDurationOption?.text || 'Not selected';
-            document.getElementById('customSelectedPeople').textContent = numPeople;
-            document.getElementById('customSelectedType').textContent = selectedTypeOption?.text || 'Standard';
+            document.getElementById('customSelectedPeople').textContent = String(numPeople);
+            document.getElementById('customSelectedType').textContent = typeText;
 
-            // Calculate pricing
-            if (selectedDestination?.dataset.basePrice && selectedDurationOption?.dataset.multiplier && durationSelect
-                .value) {
-                const basePrice = parseFloat(selectedDestination.dataset.basePrice);
-                const duration = parseInt(durationSelect.value);
-                const durationMultiplier = parseFloat(selectedDurationOption.dataset.multiplier);
-                const typeMultiplier = parseFloat(selectedTypeOption.dataset.multiplier || 1);
+            const basePriceElement = document.getElementById('customBasePrice');
+            const subtotalElement = document.getElementById('customSubtotal');
+            const totalPriceElement = document.getElementById('customTotalPrice');
+            const discountRow = document.getElementById('customDiscountRow');
+            const discountElement = document.getElementById('customDiscount');
+            const checkoutBtn = document.getElementById('customCheckoutBtn');
+            const loginBtn = document.getElementById('loginToBookBtn');
+            const virtualPackageIdElement = document.getElementById('virtualPackageId');
 
-                console.log('Calculation values:', {
-                    basePrice,
-                    duration,
-                    durationMultiplier,
-                    typeMultiplier
-                });
-
-                const pricePerPersonDay = Math.round(basePrice * typeMultiplier);
-                const subtotal = pricePerPersonDay * parseInt(numPeople) * duration;
-
-                // Apply group discount for 5+ people
-                let total = subtotal;
-                let discountAmount = 0;
-                const discountRow = document.getElementById('customDiscountRow');
-
-                if (parseInt(numPeople) >= 5) {
-                    discountAmount = subtotal * 0.1; // 10% discount
-                    total = subtotal - discountAmount;
-                    if (discountRow) {
-                        discountRow.style.display = 'flex';
-                        document.getElementById('customDiscount').textContent = '-$' + Math.round(discountAmount);
-                    }
-                } else {
-                    if (discountRow) {
-                        discountRow.style.display = 'none';
-                    }
-                }
-
-                // Update display
-                const basePriceElement = document.getElementById('customBasePrice');
-                const subtotalElement = document.getElementById('customSubtotal');
-                const totalPriceElement = document.getElementById('customTotalPrice');
-
-                if (basePriceElement) basePriceElement.textContent = '$' + pricePerPersonDay;
-                if (subtotalElement) subtotalElement.textContent = '$' + subtotal;
-                if (totalPriceElement) totalPriceElement.textContent = '$' + Math.round(total);
-
-                console.log('Updated prices:', {
-                    pricePerPersonDay,
-                    subtotal,
-                    total
-                });
-
-                // Enable appropriate checkout button
-                const checkoutBtn = document.getElementById('customCheckoutBtn');
-                const loginBtn = document.getElementById('loginToBookBtn');
-
-                if (checkoutBtn) {
-                    checkoutBtn.disabled = false;
-                }
-                if (loginBtn) {
-                    loginBtn.disabled = false;
-                }
-
-                // Set virtual package ID for the form
-                const virtualPackageIdElement = document.getElementById('virtualPackageId');
-                if (virtualPackageIdElement) {
-                    virtualPackageIdElement.value = 'custom_' + selectedDestination.value + '_' + Date.now();
-                }
-            } else {
-                console.log('Missing required values for calculation');
-
-                // Reset pricing
-                const basePriceElement = document.getElementById('customBasePrice');
-                const subtotalElement = document.getElementById('customSubtotal');
-                const totalPriceElement = document.getElementById('customTotalPrice');
-                const discountRow = document.getElementById('customDiscountRow');
-
+            const hasSelection = !!(selectedDestination?.value && durationSelect.value);
+            const basePrice = parseFloat(selectedDestination?.dataset.basePrice || '');
+            if (!hasSelection || Number.isNaN(basePrice)) {
                 if (basePriceElement) basePriceElement.textContent = '$0';
                 if (subtotalElement) subtotalElement.textContent = '$0';
                 if (totalPriceElement) totalPriceElement.textContent = '$0';
                 if (discountRow) discountRow.style.display = 'none';
-
-                // Disable appropriate checkout button
-                const checkoutBtn = document.getElementById('customCheckoutBtn');
-                const loginBtn = document.getElementById('loginToBookBtn');
-
-                if (checkoutBtn) {
-                    checkoutBtn.disabled = true;
-                }
-                if (loginBtn) {
-                    loginBtn.disabled = true;
-                }
+                if (discountElement) discountElement.textContent = '-$0';
+                if (checkoutBtn) checkoutBtn.disabled = true;
+                if (loginBtn) loginBtn.disabled = true;
+                if (virtualPackageIdElement) virtualPackageIdElement.value = '0';
+                return;
             }
+
+            const duration = parseInt(durationSelect.value, 10);
+            const pricePerPersonDay = Math.round(basePrice * typeMultiplier);
+            const subtotal = pricePerPersonDay * numPeople * duration;
+
+            // Apply group discount for 5+ people
+            let total = subtotal;
+            let discountAmount = 0;
+
+            if (numPeople >= 5) {
+                discountAmount = subtotal * 0.1;
+                total = subtotal - discountAmount;
+                if (discountRow) discountRow.style.display = 'flex';
+                if (discountElement) discountElement.textContent = '-$' + Math.round(discountAmount);
+            } else if (discountRow) {
+                discountRow.style.display = 'none';
+            }
+
+            if (basePriceElement) basePriceElement.textContent = '$' + pricePerPersonDay;
+            if (subtotalElement) subtotalElement.textContent = '$' + subtotal;
+            if (totalPriceElement) totalPriceElement.textContent = '$' + Math.round(total);
+
+            if (checkoutBtn) checkoutBtn.disabled = false;
+            if (loginBtn) loginBtn.disabled = false;
+            if (virtualPackageIdElement) virtualPackageIdElement.value = 'custom';
         }
 
-        // Handle login redirect
         function redirectToLogin() {
             window.location.href = '{{ route('login') }}';
         }
 
-        // Initialize pricing on page load
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing custom package form...');
-
-            // Initialize pricing calculation
             updateCustomPricing();
 
-            // Add additional event listeners to ensure all interactions update pricing
             const formElements = [
                 document.getElementById('destination_id'),
                 document.getElementById('duration_range'),
                 document.getElementById('num_people'),
-                document.getElementById('package_type')
             ];
 
             formElements.forEach(element => {
@@ -1046,6 +898,10 @@
                     element.addEventListener('change', updateCustomPricing);
                     element.addEventListener('input', updateCustomPricing);
                 }
+            });
+
+            document.querySelectorAll('input[name="package_type"]').forEach(radio => {
+                radio.addEventListener('change', updateCustomPricing);
             });
         });
     </script>
