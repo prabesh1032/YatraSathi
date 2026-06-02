@@ -1,20 +1,30 @@
 @extends('layouts.master')
 
 @section('content')
-<!-- Header Section with Parallax Effect -->
-<header class="relative h-screen bg-cover bg-center" style="background-image: url('{{ asset('travelling7.png') }}'); background-attachment: fixed;">
-    <div class="absolute inset-0 bg-black opacity-50"></div>
-    <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-gray-100">
-        <h1 class="text-5xl md:text-6xl font-extrabold text-yellow-500 drop-shadow-lg animate__animated animate__fadeIn animate-bounce">Get In Touch</h1>
-        <p class="text-md md:text-xl mt-4 font-extrabold">We'd love to hear from you</p>
-        <a href="#contact-form" class="mt-6 px-5 py-3 bg-yellow-500 text-black font-bold rounded-full hover:bg-yellow-300 animate__animated animate__fadeIn animate__delay-2s">CONTACT US</a>
-    </div>
-</header>
+<header class="relative w-full bg-cover bg-center overflow-hidden"
+        style="height: 280px; background-image: url('{{ asset('travelling1.png') }}'); background-attachment: fixed;">
+        <div class="absolute inset-0"
+            style="background: linear-gradient(135deg, rgba(10,20,60,0.85) 0%, rgba(10,20,60,0.5) 50%, rgba(10,20,60,0.2) 100%);">
+        </div>
+        <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
+            <span class="inline-block text-orange-400 text-xs font-bold tracking-widest uppercase mb-3"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                ✦ YatraSathi
+            </span>
+            <h1 class="text-white font-semibold leading-tight mb-3"
+                style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); text-shadow: 0 2px 20px rgba(0,0,0,0.4);">
+                Get in Touch
+            </h1>
+            <p class="text-blue-100/80 text-sm max-w-md leading-relaxed"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+  Get in touch and start your next adventure.
+            </p>
+        </div>
+    </header>
 
 <!-- Main Content -->
 <div class="mt-20" id="contact-form">
-    <h2 class="text-4xl font-extrabold mb-6 text-center text-indigo-700">Contact Us</h2>
-    <p class="text-lg text-center mb-10 text-gray-600">Whether you're planning an adventure, need more information, or want to customize your experience, we're here to assist you!</p>
+    <p class="text-lg font-bold text-center mb-10 text-gray-600"style="font-family: 'Plus Jakarta Sans', sans-serif;">Whether you're planning an adventure, need more information, or want to customize your experience, we're here to assist you!</p>
 
     <!-- Contact Information Section -->
     <div class="container mx-auto mb-12 text-center">
@@ -72,7 +82,7 @@
     </div>
 
     <!-- Form Section -->
-    <div class="container mx-auto">
+    <div class="container mx-auto mb-8">
         <h2 class="text-3xl font-extrabold text-center mb-6 text-gray-800">Reach Out to Us - <span class="text-yellow-500">We Are Here for You!</span></h2>
         <p class="text-lg text-center mb-8 text-gray-600">Got questions or need assistance? Drop us a message, and we'll connect with you in no time!</p>
 
