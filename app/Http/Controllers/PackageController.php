@@ -229,16 +229,4 @@ class PackageController extends Controller
 
         return redirect()->route('packages.index')->with('success', 'Package deleted successfully.');
     }
-    public function showLocationPage(Package $package)
-    {
-        $locations = Package::select('package_location')->distinct()->get();
-        $packages = Package::where('id', '!=', $package->id)->get();
-        return view('location.index', compact('locations', 'packages', 'package'));
-    }
-    public function showPackagesByLocation(Request $request)
-    {
-        $location = $request->input('location');
-        $packages = Package::where('package_location', $location)->get();
-        return view('location.package', compact('location', 'packages'));
-    }
 }
