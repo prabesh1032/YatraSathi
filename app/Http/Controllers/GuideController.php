@@ -123,7 +123,6 @@ class GuideController extends Controller
             $photoname = time() . '.' . $request->photopath->extension();
             $request->photopath->move(public_path('images'), $photoname);
 
-            // Delete old photo if exists
             if ($guide->photopath) {
                 $oldphotopath = public_path('images') . '/' . $guide->photopath;
                 if (file_exists($oldphotopath)) {
@@ -142,7 +141,6 @@ class GuideController extends Controller
     {
         $guide = Guide::findOrFail($id);
 
-        // Delete the associated photo
         if ($guide->photopath) {
             $photo = public_path('images') . '/' . $guide->photopath;
             if (file_exists($photo)) {
@@ -150,10 +148,7 @@ class GuideController extends Controller
             }
         }
 
-        // Delete the guide record
         $guide->delete();
-
-        // Flash success message and redirect to the index
         return redirect()->route('guides.index')->with('success', 'Guide deleted successfully.');
     }
 }

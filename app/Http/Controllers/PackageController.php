@@ -10,8 +10,6 @@ class PackageController extends Controller
     public function package(Request $request)
     {
         $sort_by = $request->input('sort_by');
-
-        // Fetch all packages
         $packages = Package::all();
 
         // Bubble sort implementation
