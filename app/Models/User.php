@@ -30,7 +30,7 @@ class User extends Authenticatable
     {
         return $this->profile_picture
             ? asset('storage/profile_pictures/' . $this->profile_picture)
-            : asset('default-profile.png');
+            : asset('useravatar.avif');
     }
 
 
@@ -73,5 +73,10 @@ class User extends Authenticatable
     public function bookmarks()
     {
         return $this->belongsToMany(Package::class, 'bookmarks');
+    }
+
+    public function preferences()
+    {
+        return $this->hasOne(UserPreference::class);
     }
 }

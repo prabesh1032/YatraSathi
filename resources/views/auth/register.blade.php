@@ -1,102 +1,202 @@
-@extends('layouts.master')
-
-@section('content')
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | YatraSathi</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 </head>
-<header class="h-screen w-88 bg-cover mt-0 relative bg-center" style="background-image: url('{{ asset('travelling3.png') }}');">
-    <main class="container mx-auto py-12">
-        <!-- Overlay for darker background -->
-        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+<body class="min-h-screen bg-gray-50 flex">
 
-        <!-- Centered Transparent Form -->
-        <div class="relative flex items-center justify-center w-full h-full">
-            <div class="bg-white bg-opacity-30 backdrop-blur-lg rounded-lg shadow-md p-6 w-full max-w-xl text-gray-900">
-                <!-- Title -->
-                <h2 class="text-xl font-extrabold text-center text-gray-900 mb-4">
-                    <i class="ri-user-add-line"></i> Register to <span class="text-indigo-600">YatraSathi<i class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-yellow-500"></i></span>
-                </h2>
+    {{-- Left Panel --}}
+    <div class="hidden lg:flex flex-col justify-between w-5/12 bg-blue-900 p-12">
 
-                <!-- Registration Form -->
-                <form method="POST" action="{{ route('register') }}" class="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    @csrf
+        {{-- Logo --}}
+        <a href="{{ route('home') }}" class="flex items-center gap-3">
+            <img src="{{ asset('logo.png') }}" alt="YatraSathi" class="w-10 h-10 rounded-full">
+            <span class="text-white font-extrabold text-xl" style="font-family: 'DM Serif Display', Georgia, serif;">
+                Yatra<em class="not-italic text-orange-400">Sathi</em>
+            </span>
+        </a>
 
-                    <!-- Left Column (Name, Email, Phone) -->
-                    <div class="space-y-4">
-                        <!-- Name -->
-                        <div>
-                            <x-input-label for="name" :value="__('Name')" class="block text-sm font-semibold text-gray-900" />
-                            <x-text-input id="name" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-                            <x-input-error :messages="$errors->get('name')" class="mt-1 text-red-400 text-sm" />
-                        </div>
+        {{-- Middle content --}}
+        <div>
+            <span class="inline-block text-orange-400 text-xs font-bold tracking-widest uppercase mb-4"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                ✦ Join Us Today
+            </span>
+            <h2 class="text-white font-semibold leading-tight mb-4"
+                style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.8rem, 3vw, 2.8rem);">
+                Start Your Nepal <br><em class="not-italic text-orange-400">Adventure</em>
+            </h2>
+            <p class="text-blue-200 text-sm leading-relaxed max-w-xs"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                Create your account to book packages, connect with expert guides, and explore the best of Nepal.
+            </p>
+        </div>
 
-                        <!-- Email -->
-                        <div>
-                            <x-input-label for="email" :value="__('Email')" class="block text-sm font-semibold text-gray-900" />
-                            <x-text-input id="email" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                            <x-input-error :messages="$errors->get('email')" class="mt-1 text-red-400 text-sm" />
-                        </div>
-
-                        <!-- Phone -->
-                        <div>
-                            <x-input-label for="phone" :value="__('Phone Number')" class="block text-sm font-semibold text-gray-900" />
-                            <x-text-input id="phone" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="tel" name="phone" :value="old('phone')" required autocomplete="tel" />
-                            <x-input-error :messages="$errors->get('phone')" class="mt-1 text-red-400 text-sm" />
-                        </div>
-                    </div>
-
-                    <!-- Right Column (Address, Password, Confirm Password) -->
-                    <div class="space-y-4">
-                        <!-- Address -->
-                        <div>
-                            <x-input-label for="address" :value="__('Address')" class="block text-sm font-semibold text-gray-900" />
-                            <x-text-input id="address" name="address" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" />
-                            <x-input-error :messages="$errors->get('address')" class="mt-1 text-red-400 text-sm" />
-                        </div>
-
-                        <!-- Password -->
-                        <div>
-                            <x-input-label for="password" :value="__('Password')" class="block text-sm font-semibold text-gray-900" />
-                            <x-text-input id="password" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="password" name="password" required autocomplete="new-password" />
-                            <x-input-error :messages="$errors->get('password')" class="mt-1 text-red-400 text-sm" />
-                        </div>
-
-                        <!-- Confirm Password -->
-                        <div>
-                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="block text-sm font-semibold text-gray-900" />
-                            <x-text-input id="password_confirmation" class="block w-full mt-1 p-2 rounded-lg border-none bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-500" type="password" name="password_confirmation" required autocomplete="new-password" />
-                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1 text-red-400 text-sm" />
-                        </div>
-                    </div>
-
-                    <!-- Submit Button (Centered) -->
-                    <div class="flex justify-center mt-4">
-                        <button type="submit" class="block w-full bg-yellow-500 text-black text-lg font-semibold py-3 rounded-lg shadow-md hover:bg-yellow-300 transition">
-                            <i class="ri-arrow-right-line"></i> Register
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Links -->
-                <div class="mt-4 text-center text-sm">
-                    <p class="text-white font-semibold">
-                        Already registered?
-                        <a href="{{ route('login') }}" class="text-gray-900 font-extrabold hover:underline">
-                            Login Here <i class="ri-login-circle-line"></i>
-                        </a>
-                    </p>
-                </div>
+        {{-- Stats --}}
+        <div class="flex items-center gap-8 pt-8 border-t border-blue-700">
+            <div>
+                <div class="text-white font-extrabold text-xl"
+                    style="font-family: 'DM Serif Display', Georgia, serif;">1,000+</div>
+                <div class="text-blue-300 text-xs"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">Happy Travelers</div>
+            </div>
+            <div class="w-px h-8 bg-blue-700"></div>
+            <div>
+                <div class="text-white font-extrabold text-xl"
+                    style="font-family: 'DM Serif Display', Georgia, serif;">50+</div>
+                <div class="text-blue-300 text-xs"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">Destinations</div>
+            </div>
+            <div class="w-px h-8 bg-blue-700"></div>
+            <div>
+                <div class="text-white font-extrabold text-xl"
+                    style="font-family: 'DM Serif Display', Georgia, serif;">100%</div>
+                <div class="text-blue-300 text-xs"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">Local Expertise</div>
             </div>
         </div>
-    </main>
-</header>
+
+    </div>
+
+    {{-- Right Panel - Form --}}
+    <div class="flex-1 flex flex-col justify-center items-center px-6 py-12">
+
+        {{-- Mobile logo --}}
+        <a href="{{ route('home') }}" class="flex items-center gap-2 mb-8 lg:hidden">
+            <img src="{{ asset('logo.png') }}" alt="YatraSathi" class="w-8 h-8 rounded-full">
+            <span class="text-blue-900 font-extrabold text-lg"
+                style="font-family: 'DM Serif Display', Georgia, serif;">
+                Yatra<em class="not-italic text-orange-500">Sathi</em>
+            </span>
+        </a>
+
+        <div class="w-full max-w-md">
+
+            {{-- Heading --}}
+            <div class="mb-8">
+                <h1 class="text-blue-900 font-semibold mb-1"
+                    style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2rem);">
+                    Create your account
+                </h1>
+                <p class="text-gray-400 text-sm"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    Fill in your details to get started with YatraSathi.
+                </p>
+            </div>
+
+            {{-- Form --}}
+            <form method="POST" action="{{ route('register') }}" class="space-y-5">
+                @csrf
+
+                {{-- Name + Phone (2 col) --}}
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="name" class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                            <i class="ri-user-line mr-1 text-orange-400"></i> Name
+                        </label>
+                        <x-text-input id="name" type="text" name="name" :value="old('name')"
+                            placeholder="Full name" required autofocus autocomplete="name"
+                            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;" />
+                        <x-input-error :messages="$errors->get('name')" class="text-red-400 text-xs mt-1" />
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                            <i class="ri-phone-line mr-1 text-orange-400"></i> Phone
+                        </label>
+                        <x-text-input id="phone" type="tel" name="phone" :value="old('phone')"
+                            placeholder="98XXXXXXXX" required autocomplete="tel"
+                            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;" />
+                        <x-input-error :messages="$errors->get('phone')" class="text-red-400 text-xs mt-1" />
+                    </div>
+                </div>
+
+                {{-- Email --}}
+                <div>
+                    <label for="email" class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5"
+                        style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <i class="ri-mail-line mr-1 text-orange-400"></i> Email Address
+                    </label>
+                    <x-text-input id="email" type="email" name="email" :value="old('email')"
+                        placeholder="you@example.com" required autocomplete="username"
+                        class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                        style="font-family: 'Plus Jakarta Sans', sans-serif;" />
+                    <x-input-error :messages="$errors->get('email')" class="text-red-400 text-xs mt-1" />
+                </div>
+
+                {{-- Address --}}
+                <div>
+                    <label for="address" class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5"
+                        style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <i class="ri-map-pin-line mr-1 text-orange-400"></i> Address
+                    </label>
+                    <x-text-input id="address" type="text" name="address" :value="old('address')"
+                        placeholder="Your city / address"
+                        class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                        style="font-family: 'Plus Jakarta Sans', sans-serif;" />
+                    <x-input-error :messages="$errors->get('address')" class="text-red-400 text-xs mt-1" />
+                </div>
+
+                {{-- Password + Confirm (2 col) --}}
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="password" class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                            <i class="ri-lock-line mr-1 text-orange-400"></i> Password
+                        </label>
+                        <x-text-input id="password" type="password" name="password"
+                            placeholder="••••••••" required autocomplete="new-password"
+                            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;" />
+                        <x-input-error :messages="$errors->get('password')" class="text-red-400 text-xs mt-1" />
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                            <i class="ri-lock-2-line mr-1 text-orange-400"></i> Confirm
+                        </label>
+                        <x-text-input id="password_confirmation" type="password" name="password_confirmation"
+                            placeholder="••••••••" required autocomplete="new-password"
+                            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
+                            style="font-family: 'Plus Jakarta Sans', sans-serif;" />
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="text-red-400 text-xs mt-1" />
+                    </div>
+                </div>
+
+                {{-- Submit --}}
+                <button type="submit"
+                    class="w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition-all duration-300 hover:scale-105 text-sm mt-2"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <i class="ri-user-add-line mr-2"></i> Create Account
+                </button>
+
+                {{-- Divider --}}
+                <div class="flex items-center gap-3 my-2">
+                    <div class="flex-1 h-px bg-gray-200"></div>
+                    <span class="text-xs text-gray-400" style="font-family: 'Plus Jakarta Sans', sans-serif;">or</span>
+                    <div class="flex-1 h-px bg-gray-200"></div>
+                </div>
+
+                {{-- Login CTA --}}
+                <p class="text-center text-sm text-gray-500" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    Already have an account?
+                    <a href="{{ route('login') }}"
+                        class="text-orange-500 font-bold hover:text-orange-400 transition-colors">
+                        Login Here <i class="ri-arrow-right-line"></i>
+                    </a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+</body>
 </html>
-@endsection

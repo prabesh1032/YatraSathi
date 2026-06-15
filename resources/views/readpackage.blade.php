@@ -7,7 +7,7 @@
         <div class="lg:w-2/3">
             <div class="relative mb-8">
                 <!-- Package Image -->
-                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}"
+                <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}"
                     class="w-full h-80 rounded-lg shadow-lg object-cover">
                 <!-- Badge -->
                 <span class="absolute top-4 left-4 bg-green-600 text-white text-sm px-3 py-1 rounded-lg shadow-md">
@@ -16,11 +16,11 @@
             </div>
 
             <!-- Package Title -->
-            <h1 class="text-5xl font-extrabold text-gray-800 mb-4">{{ $package->name }}</h1>
+            <h1 class="text-5xl font-extrabold text-gray-800 mb-4">{{ $package->package_name }}</h1>
             <div class="bg-gray-50 p-6 rounded-lg shadow-lg mb-6">
                 <h3 class="text-2xl font-bold text-gray-800 mb-6"><i class="ri-calendar-event-line text-blue-500 text-3xl mr-2"></i>Itinerary</h3>
                 <div class="itinerary text-gray-700 text-base leading-relaxed">
-                    {!! $package->description !!}
+                    {!! $package->package_description !!}
                 </div>
             </div>
             <style>
@@ -49,16 +49,16 @@
             <!-- Importance Section -->
             <div class=" p-6 rounded-lg shadow-lg mb-8 border border-gray-300">
                 <h3 class="text-3xl font-semibold text-blue-700 mb-4">
-                    Why {{ $package->name }} is Important to Nepal
+                    Why {{ $package->package_name }} is Important to Nepal
                 </h3>
                 <p class="text-gray-700 leading-relaxed mb-4">
-                    {{ $package->name }} holds immense cultural, spiritual, and natural significance in Nepal. Known for its breathtaking landscapes, {{ $package->name }} attracts travelers from all over the world who seek adventure and peace. Its serene valleys, majestic mountains, and vibrant local traditions make it a unique destination.
+                    {{ $package->package_name }} holds immense cultural, spiritual, and natural significance in Nepal. Known for its breathtaking landscapes, {{ $package->package_name }} attracts travelers from all over the world who seek adventure and peace. Its serene valleys, majestic mountains, and vibrant local traditions make it a unique destination.
                 </p>
                 <p class="text-gray-700 leading-relaxed mb-4">
-                    With ancient temples, monasteries, and historical landmarks, {{ $package->name }} offers a glimpse into Nepal’s rich heritage and spiritual depth. Visiting here is more than sightseeing – it’s an experience of immersion in the essence of Nepal.
+                    With ancient temples, monasteries, and historical landmarks, {{ $package->package_name }} offers a glimpse into Nepal's rich heritage and spiritual depth. Visiting here is more than sightseeing – it's an experience of immersion in the essence of Nepal.
                 </p>
                 <p class="text-gray-700 leading-relaxed">
-                    From warm hospitality to sacred sites, {{ $package->name }} is a journey into the soul of Nepal. Perfect for adventurers, pilgrims, and peace-seekers alike.
+                    From warm hospitality to sacred sites, {{ $package->package_name }} is a journey into the soul of Nepal. Perfect for adventurers, pilgrims, and peace-seekers alike.
                 </p>
             </div>
         </div>
@@ -71,7 +71,7 @@
                     <i class="ri-wallet-line text-gray-800 text-2xl"></i>
                     <h2 class="text-xl font-bold text-gray-800">
                         Daily Charge Per Person:
-                        <span class="text-green-600">Rs.{{ $package->price }}</span>
+                        <span class="text-green-600">Rs.{{ $package->package_price }}</span>
                     </h2>
                 </div>
 

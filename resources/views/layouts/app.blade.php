@@ -33,6 +33,10 @@
     @if(Route::is('dashboard')) bg-yellow-200 @endif">
                     <i class="ri-dashboard-line text-blue-500 mr-2"></i> Dashboard
                 </a>
+                <a href="{{ route('destinations.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
+    @if(Route::is('destinations.*')) bg-yellow-200 @endif">
+                    <i class="ri-map-pin-line text-purple-500 mr-2"></i> Destinations
+                </a>
                 <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
     @if(Route::is('packages.index')) bg-yellow-200 @endif">
                     <i class="ri-suitcase-line text-orange-500 mr-2"></i> Packages

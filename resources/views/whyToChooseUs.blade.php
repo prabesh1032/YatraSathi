@@ -81,10 +81,10 @@
                 <div class="carousel flex transition-transform duration-500 ease-in-out">
                     @foreach($packages as $package)
                     <a href="{{ route('packages.read', ['package' => $package->id]) }}" class="w-full flex-shrink-0 relative block">
-                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->name }}" class="w-full h-80 object-cover rounded-lg">
+                        <img src="{{ asset('images/' . $package->photopath) }}" alt="{{ $package->package_name }}" class="w-full h-80 object-cover rounded-lg">
                         <div class="absolute bottom-0 left-0 bg-gradient-to-t from-black  to-transparent text-white p-4">
-                            <h3 class="text-3xl text-yellow-500 font-bold">{{ $package->name }}</h3>
-                            <p class="text-xl text-green-600 font-bold">${{ $package->price }}</p>
+                            <h3 class="text-3xl text-yellow-500 font-bold">{{ $package->package_name }}</h3>
+                            <p class="text-xl text-green-600 font-bold">${{ $package->package_price }}</p>
                         </div>
                     </a>
                     @endforeach

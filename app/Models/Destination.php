@@ -8,6 +8,11 @@ class Destination extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'photopath'];
+    protected $fillable = ['name', 'description', 'photopath', 'latitude', 'longitude'];
+
+    public function packages()
+    {
+        return $this->hasMany(Package::class);
+    }
 }
 

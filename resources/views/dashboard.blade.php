@@ -5,6 +5,21 @@
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 mb-12">
 
+    <!-- Destinations Card -->
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 p-6 rounded-3xl shadow-2xl transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl font-bold text-white">Destinations</h2>
+            <i class="ri-map-pin-line text-4xl text-white"></i>
+        </div>
+        <p class="text-white text-sm mb-6">Manage travel destinations and locations.</p>
+        <a href="{{ route('destinations.index') }}" class="block w-full text-center py-2 rounded-full bg-yellow-400 text-black font-bold hover:bg-yellow-300 transition-all">
+            Manage Destinations
+        </a>
+        <div class="absolute bottom-0 right-0 opacity-10 text-white text-[8rem]">
+            <i class="ri-map-pin-line"></i>
+        </div>
+    </div>
+
     <!-- Packages Card -->
     <div class="bg-gradient-to-r from-indigo-500 to-pink-500 p-6 rounded-3xl shadow-2xl transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 relative overflow-hidden">
         <div class="flex items-center justify-between mb-4">

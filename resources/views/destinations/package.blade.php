@@ -1,7 +1,6 @@
-<meta name="csrf-token" content="{{ csrf_token() }}">
 @extends('layouts.master')
 
-@section('title', 'All Packages - YatraSathi')
+@section('title', $destination->name . ' - Packages')
 
 @section('content')
 
@@ -15,12 +14,19 @@
         </span>
         <h1 class="text-white font-semibold leading-tight mb-3"
             style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); text-shadow: 0 2px 20px rgba(0,0,0,0.4);">
-            Our Packages
+            {{ $destination->name }}
         </h1>
-        <p class="text-blue-100/80 text-sm max-w-md leading-relaxed"
-            style="font-family: 'Plus Jakarta Sans', sans-serif;">
-            Explore Nepal's most iconic packages, where beauty meets adventure.
-        </p>
+        @if($destination->description)
+            <p class="text-blue-100/80 text-sm max-w-md leading-relaxed"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                {{ Str::limit($destination->description, 120) }}
+            </p>
+        @else
+            <p class="text-blue-100/80 text-sm max-w-md leading-relaxed"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                Discover amazing packages for your perfect getaway
+            </p>
+        @endif
     </div>
 </header>
 
@@ -28,29 +34,18 @@
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-6">
 
-        {{-- Filter + Count bar --}}
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        
 
-            {{-- Count --}}
+        {{-- Count bar --}}
+        <div class="flex items-center justify-between mb-8">
             <p class="text-blue-900 font-bold text-lg" style="font-family: 'DM Serif Display', Georgia, serif;">
                 {{ $packages->count() }} {{ $packages->count() == 1 ? 'Package' : 'Packages' }}
-                <span class="text-orange-500">Available</span>
+                <span class="text-orange-500">in {{ $destination->name }}</span>
             </p>
-
-            {{-- Sort Dropdown --}}
-            <form method="GET" action="{{ route('packages') }}" id="sortForm">
-                <select name="sort_by"
-                    onchange="document.getElementById('sortForm').submit();"
-                    class="px-4 py-2 border border-gray-200 rounded-full text-sm text-gray-700 font-semibold bg-white shadow-sm hover:border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-200 cursor-pointer"
-                    style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                    <option value="price_asc"  {{ request('sort_by') == 'price_asc'  ? 'selected' : '' }}>Price: Low to High</option>
-                    <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Price: High to Low</option>
-                    <option value="latest"     {{ request('sort_by') == 'latest'     ? 'selected' : '' }}>Latest</option>
-                    <option value="shortest"   {{ request('sort_by') == 'shortest'   ? 'selected' : '' }}>Shortest Duration</option>
-                    <option value="longest"    {{ request('sort_by') == 'longest'    ? 'selected' : '' }}>Longest Duration</option>
-                </select>
-            </form>
-
+            <span class="text-xs text-gray-400 flex items-center gap-1"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                <i class="ri-map-pin-line text-orange-400"></i> Nepal
+            </span>
         </div>
 
         @if($packages->count() > 0)
@@ -163,15 +158,24 @@
                 </h3>
                 <p class="text-gray-400 text-sm mb-6 max-w-sm mx-auto"
                     style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                    We're working on exciting new packages. Check back soon!
+                    We're working on exciting packages for {{ $destination->name }}. Check back soon!
                 </p>
                 <a href="{{ route('destinations.public') }}"
                     class="inline-flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white px-7 py-3 rounded-full font-bold text-sm transition-all duration-300"
                     style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                    <i class="ri-arrow-left-line"></i> Browse Destinations
+                    <i class="ri-arrow-left-line"></i> Browse Other Destinations
                 </a>
             </div>
         @endif
+
+        {{-- Back button --}}
+        <div class="text-center mt-12">
+            <a href="{{ route('destinations.public') }}"
+                class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white px-8 py-2.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 shadow-md"
+                style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                <i class="ri-arrow-left-line"></i> Back to Destinations
+            </a>
+        </div>
 
     </div>
 </section>
