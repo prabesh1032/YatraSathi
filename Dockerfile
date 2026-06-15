@@ -40,18 +40,14 @@ COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy composer files first (layer cache)
-COPY composer.json composer.lock ./
+# Copy all project files
 COPY . .
+
+# Install PHP dependencies
 RUN composer install --no-dev --no-interaction --optimize-autoloader --ignore-platform-reqs
-# Copy package.json and install node deps
-COPY package.json package-lock.json* ./
+
+# Install Node dependencies and build assets
 RUN npm ci
-
-# Copy rest of the app
-COPY . .
-
-# Build frontend assets
 RUN npm run build
 
 # Set permissions
@@ -71,5 +67,4 @@ COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
 EXPOSE 80
-
 CMD ["/start.sh"]
