@@ -31,7 +31,7 @@
 </head>
 
 <body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
-    @include('Layouts.alert')
+    @include('layouts.alert')
 
 <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 hidden md:block">
     <div class="container mx-auto px-4">

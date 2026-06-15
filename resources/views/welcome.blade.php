@@ -33,7 +33,7 @@
 
             {{-- CTAs --}}
             <div class="flex flex-wrap gap-3">
-                <a href="{{ route('location.index') }}"
+                <a href="{{ route('destinations.public') }}"
                     class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white px-7 py-3 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 shadow-lg"
                     style="font-family: 'Plus Jakarta Sans', sans-serif;">
                     Start Your Journey

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\JourneyController;
 use App\Http\Controllers\MapController;
@@ -25,18 +26,16 @@ Route::get('/adventure', [PageController::class, 'adventure'])->name('adventure'
 Route::get('/whyToChooseUs', [PageController::class, 'whyToChooseUs'])->name('whyToChooseUs');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::get('/journey/location', [PackageController::class, 'showLocationPage'])->name('location.index');
 Route::get('/allguides', [GuideController::class, 'show'])->name('guides.show');
 Route::get('/guides/{id}', [GuideController::class, 'profile'])->name('guides.profile');
 
-Route::get('/destinations', [App\Http\Controllers\DestinationController::class, 'showAll'])->name('destinations.public');
-Route::get('/destinations/{destination}', [App\Http\Controllers\DestinationController::class, 'show'])->name('destinations.show');
+Route::get('/destinations', [DestinationController::class, 'showAll'])->name('destinations.public');
+Route::get('/destinations/{destination}', [DestinationController::class, 'show'])->name('destinations.show');
 
 
 Route::get('/packages/{package}/show', [PackageController::class, 'show'])->name('packages.show');
 Route::get('/allpackages', [PackageController::class, 'package'])->name('packages');
 Route::get('/readpackages/{package}', [PackageController::class, 'read'])->name('packages.read');
-Route::get('/packages/location', [PackageController::class, 'showPackagesByLocation'])->name('packages.byLocation');
 
 Route::get('maps', [MapController::class, 'showRoutePlanning'])->name('maps.show');
 
