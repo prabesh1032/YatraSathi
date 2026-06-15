@@ -20,7 +20,7 @@
 </head>
 
 <body class="font-sans antialiased bg-gradient-to-r from-blue-50 via-white to-green-50">
-    @include('Layouts.alert')
+    @include('layouts.alert')
     <div class="flex">
         <!-- Sidebar -->
         <div class="w-56 h-screen sticky top-0 bg-cyan-200 shadow-lg">
