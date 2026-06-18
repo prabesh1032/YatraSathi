@@ -19,123 +19,166 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased bg-gradient-to-r from-blue-50 via-white to-green-50">
+<body class="font-sans antialiased bg-gray-50">
     @include('Layouts.alert')
-    <div class="flex">
-        <!-- Sidebar -->
-        <div class="w-56 h-screen sticky top-0 bg-cyan-200 shadow-lg">
-            <div class="flex flex-col items-center mt-3">
-                <a href="{{ route('home') }}"><img src="{{ asset('SS2.png') }}" alt="Logo"
-                        class="w-8/12 mx-auto bg-blue-400 p-2 rounded-lg shadow-lg"></a>
-            </div>
-            <div class="mt-5 space-y-1">
-                <a href="{{ route('dashboard') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('dashboard')) bg-yellow-200 @endif">
-                    <i class="ri-dashboard-line text-blue-500 mr-2"></i> Dashboard
-                </a>
-                <a href="{{ route('destinations.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('destinations.*')) bg-yellow-200 @endif">
-                    <i class="ri-map-pin-line text-purple-500 mr-2"></i> Destinations
-                </a>
-                <a href="{{ route('packages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('packages.index')) bg-yellow-200 @endif">
-                    <i class="ri-suitcase-line text-orange-500 mr-2"></i> Packages
-                </a>
-                <a href="{{ route('guides.index') }}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('guides.index')) bg-yellow-200 @endif">
-                    <i class="ri-user-heart-line text-indigo-500 mr-2"></i> Guides
-                </a>
-                <a href="{{route('orders.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('orders.index')) bg-yellow-200 @endif">
-                    <i class="ri-book-line text-green-500 mr-2"></i> Bookings
-                </a>
-                <a href="{{route('reviews.index')}}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('reviews.index')) bg-yellow-200 @endif">
-                    <i class="ri-star-line text-yellow-500 mr-2"></i> Reviews
-                </a>
-                <a href="{{ route('messages.index') }}" class="p-3 text-gray-700 hover:bg-yellow-400 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('messages.index')) bg-yellow-200 @endif">
-                    <i class="ri-message-line text-teal-500 mr-2"></i> Messages
-                </a>
-                <a href="{{route('travellers.index')}}" class="p-3 text-gray-700 hover:bg-yellow-300 flex items-center transition duration-200 ease-in-out
-    @if(Route::is('travellers.index')) bg-yellow-200 @endif">
-                    <i class="ri-user-line text-purple-500 mr-2"></i> Travellers
-                </a>
-                <form action="{{ route('logout') }}" method="POST" class="block p-3 text-gray-700 hover:bg-red-700 text-left transition duration-200 ease-in-out">
-                    @csrf
-                    <button type="submit" class="w-full flex items-center">
-                        <i class="ri-logout-box-line text-red-500 mr-2"></i> Logout
-                    </button>
-                </form>
-            </div>
+
+    <div class="lg:flex">
+
+        <!-- Mobile top bar -->
+        <div class="lg:hidden sticky top-0 z-30 flex items-center justify-between bg-blue-950 px-4 py-3 shadow-md">
+            <button id="sidebarOpenBtn" class="text-white p-1 -ml-1" aria-label="Open menu">
+                <i class="ri-menu-line text-2xl"></i>
+            </button>
+            <a href="{{ route('home') }}" class="flex items-center">
+                <img src="{{ asset('SS2.png') }}" alt="Logo" class="h-8 bg-white/10 px-2 py-1 rounded-lg">
+            </a>
+            <img src="{{ asset('useravatar.avif') }}" alt="User Avatar"
+                class="w-8 h-8 rounded-full border-2 border-white/20">
         </div>
+
+        <!-- Mobile overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 z-40 bg-black/50 lg:hidden hidden"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar"
+            class="fixed inset-y-0 left-0 z-50 w-64 bg-blue-950 shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out
+                   lg:translate-x-0 lg:static lg:z-auto lg:w-60 lg:shrink-0 lg:h-screen lg:sticky lg:top-0">
+
+            <div class="h-full flex flex-col overflow-y-auto">
+                <!-- Logo + close button -->
+                <div class="flex items-center justify-between px-5 pt-5 pb-4 lg:justify-center">
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset('SS2.png') }}" alt="Logo"
+                            class="h-10 bg-white/10 px-3 py-1.5 rounded-lg">
+                    </a>
+                    <button id="sidebarCloseBtn" class="text-white/70 hover:text-white lg:hidden"
+                        aria-label="Close menu">
+                        <i class="ri-close-line text-2xl"></i>
+                    </button>
+                </div>
+
+                <span class="px-5 mb-2 text-xs font-semibold uppercase tracking-widest text-blue-300/60">Menu</span>
+
+                <nav class="flex-1 px-3 space-y-1">
+                    <a href="{{ route('dashboard') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('dashboard') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-dashboard-line text-lg mr-3"></i> Dashboard
+                    </a>
+                    <a href="{{ route('destinations.index') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('destinations.*') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-map-pin-line text-lg mr-3"></i> Destinations
+                    </a>
+                    <a href="{{ route('packages.index') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('packages.index') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-suitcase-line text-lg mr-3"></i> Packages
+                    </a>
+                    <a href="{{ route('guides.index') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('guides.index') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-user-heart-line text-lg mr-3"></i> Guides
+                    </a>
+                    <a href="{{ route('orders.index') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('orders.index') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-book-line text-lg mr-3"></i> Bookings
+                    </a>
+                    <a href="{{ route('reviews.index') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('reviews.index') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-star-line text-lg mr-3"></i> Reviews
+                    </a>
+                    <a href="{{ route('messages.index') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('messages.index') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-message-line text-lg mr-3"></i> Messages
+                    </a>
+                    <a href="{{ route('travellers.index') }}"
+                        class="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150
+                        {{ Route::is('travellers.index') ? 'bg-orange-500 text-white' : 'text-blue-100 hover:bg-white/10' }}">
+                        <i class="ri-user-line text-lg mr-3"></i> Travellers
+                    </a>
+                </nav>
+
+                <div class="px-3 pb-5 mt-2 border-t border-white/10 pt-3">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="w-full flex items-center px-3 py-2.5 rounded-lg text-sm font-medium text-red-300 hover:bg-red-500/10 transition-colors duration-150">
+                            <i class="ri-logout-box-line text-lg mr-3"></i> Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+
         <!-- Main Content -->
-        <div class="flex-1 p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-6xl font-bold">@yield('title')</h1>
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <a href="">
-                            <i class="ri-notification-3-line text-3xl text-blue-500"></i>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">
-                                2
-                            </span>
-                        </a>
-                    </div>
-                    <img src="{{ asset('useravatar.avif') }}" alt="User Avatar" class="w-10 h-10 rounded-full">
+        <div class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
+
+            <!-- Desktop header -->
+            <div class="hidden lg:flex justify-between items-center mb-6">
+                <h1 class="text-3xl sm:text-4xl font-bold text-blue-950">@yield('title')</h1>
+                <div class="flex items-center space-x-5">
+                    <a href=""
+                        class="relative text-blue-900 hover:text-orange-500 transition-colors duration-150">
+                        <i class="ri-notification-3-line text-2xl"></i>
+                        <span
+                            class="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">2</span>
+                    </a>
+                    <img src="{{ asset('useravatar.avif') }}" alt="User Avatar"
+                        class="w-10 h-10 rounded-full border-2 border-gray-100">
                 </div>
             </div>
-            <hr class="h-1 bg-yellow-100 mb-6">
-            @php
-            $totalbookings = \App\Models\Order::count();
-            $totalreviews= \App\Models\Review::count();
-            $totalpackages = \App\Models\Package::count();
-            $totaltravellers= App\Models\User::count();
-            @endphp
-            <!-- Quick Stats -->
-            <div class="flex flex-col bg-white mb-4 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">Quick Stats</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Total Bookings -->
-                    <div class="bg-yellow-100 p-4 rounded-lg shadow flex items-center space-x-3">
-                        <i class="ri-book-line text-green-600 text-4xl"></i>
-                        <div>
-                            <p class="text-gray-700">Total Bookings</p>
-                            <p class="text-2xl font-bold">{{$totalbookings}}</p>
-                        </div>
-                    </div>
 
-                    <!-- New Reviews -->
-                    <div class="bg-yellow-100 p-4 rounded-lg shadow flex items-center space-x-3">
-                        <i class="ri-star-line text-yellow-500 text-4xl"></i>
-                        <div>
-                            <p class="text-gray-700">New Reviews</p>
-                            <p class="text-2xl font-bold">{{$totalreviews}}</p>
-                        </div>
-                    </div>
-
-                    <!-- Total Travellers -->
-                    <div class="bg-yellow-100 p-4 rounded-lg shadow flex items-center space-x-3">
-                        <i class="ri-user-line text-purple-500 text-4xl"></i>
-                        <div>
-                            <p class="text-gray-700">Total Travellers</p>
-                            <p class="text-2xl font-bold">{{$totaltravellers}}</p>
-                        </div>
-                    </div>
-
-                    <!-- Total Packages -->
-                    <div class="bg-yellow-100 p-4 rounded-lg shadow flex items-center space-x-3">
-                        <i class="ri-suitcase-line text-orange-500 text-4xl"></i>
-                        <div>
-                            <p class="text-gray-700">Total Packages</p>
-                            <p class="text-2xl font-bold">{{$totalpackages}}</p>
-                        </div>
-                    </div>
-                </div>
+            <!-- Mobile page title -->
+            <div class="lg:hidden flex items-center justify-between mb-5">
+                <h1 class="text-2xl font-bold text-blue-950">@yield('title')</h1>
+                <a href="" class="relative text-blue-900">
+                    <i class="ri-notification-3-line text-2xl"></i>
+                    <span
+                        class="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">2</span>
+                </a>
             </div>
+
+            <hr class="border-gray-200 mb-6">
+
             @yield('content')
         </div>
     </div>
+
+    <script>
+        (function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const openBtn = document.getElementById('sidebarOpenBtn');
+            const closeBtn = document.getElementById('sidebarCloseBtn');
+
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            openBtn.addEventListener('click', openSidebar);
+            closeBtn.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            // Close drawer automatically if the viewport grows into desktop size
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    closeSidebar();
+                }
+            });
+        })();
+    </script>
 </body>
 
 </html>

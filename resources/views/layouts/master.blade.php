@@ -4,376 +4,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YatraSathi</title>
+    <title>@yield('title', 'YatraSathi')</title>
 
-    <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://unpkg.com">
-
-    <!-- Load fonts with display=swap for better performance -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Slab:wght@700&display=swap"
-        rel="stylesheet" media="print" onload="this.media='all'">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
-    <!-- Load icons asynchronously -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'" />
-
-    <!-- Only load Leaflet on pages that need maps -->
     @if(request()->routeIs('maps.show'))
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script defer src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script defer src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
+<body class="font-sans bg-white text-gray-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+
     @include('Layouts.alert')
 
-<div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 hidden md:block">
-    <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center text-sm">
-
-            <!-- Left -->
-            <div class="flex items-center space-x-6">
-                <a href="mailto:prabesh11100@gmail.com"
-                    class="flex items-center space-x-2 hover:text-orange-300 transition-colors duration-300">
-                    <i class="ri-mail-line"></i>
-                    <span>yatrasathi@gmail.com</span>
+    {{-- Top Bar (desktop only) --}}
+    <div class="hidden md:block bg-blue-900 text-white" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="container mx-auto px-6 py-2 flex justify-between items-center text-xs font-semibold">
+            <div class="flex items-center gap-6">
+                <a href="mailto:yatrasathi@gmail.com" class="flex items-center gap-1.5 hover:text-orange-400 transition-colors">
+                    <i class="ri-mail-line"></i> yatrasathi@gmail.com
                 </a>
-                <a href="tel:+9779812965110"
-                    class="flex items-center space-x-2 hover:text-orange-300 transition-colors duration-300">
-                    <i class="ri-phone-line"></i>
-                    <span>+977 9812965110</span>
+                <a href="tel:+9779812965110" class="flex items-center gap-1.5 hover:text-orange-400 transition-colors">
+                    <i class="ri-phone-line"></i> +977 9812965110
                 </a>
             </div>
-
-            <!-- Right -->
-            <div class="flex items-center space-x-6">
-                <a href="{{ route('contact') }}"
-                    class="flex items-center space-x-2 hover:text-orange-300 transition-colors duration-300">
-                    <i class="ri-customer-service-2-line"></i>
-                    <span>24/7 Support</span>
+            <div class="flex items-center gap-6">
+                <a href="{{ route('contact') }}" class="flex items-center gap-1.5 hover:text-orange-400 transition-colors">
+                    <i class="ri-customer-service-2-line"></i> 24/7 Support
                 </a>
-                <a href="#"
-                    class="flex items-center space-x-2 hover:text-orange-300 transition-colors duration-300">
-                    <i class="ri-hand-coin-line"></i>
-                    <span>Best Price Guarantee</span>
-                </a>
-                <a href="{{ route('about') }}"
-                    class="flex items-center space-x-2 hover:text-orange-300 transition-colors duration-300">
-                    <i class="ri-shield-check-line"></i>
-                    <span>Trusted Travel Partner</span>
+                <a href="{{ route('about') }}" class="flex items-center gap-1.5 hover:text-orange-400 transition-colors">
+                    <i class="ri-shield-check-line"></i> Trusted Travel Partner
                 </a>
             </div>
         </div>
     </div>
-</div>
 
-<nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center h-24">
+    {{-- Navbar --}}
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
 
-            <!-- Logo -->
-            <div class="flex items-center space-x-3">
-                <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                    <img src="{{ asset('SS2.png') }}"
-                        class="w-14 h-14 rounded-full object-cover" alt="YatraSathi Logo">
-                    <span class="text-3xl font-extrabold text-blue-700">
-                        Yatra<span class="text-orange-500">Sathi
+                {{-- Logo --}}
+                <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0">
+                    <img src="{{ asset('SS2.png') }}" class="w-11 h-11 rounded-full object-cover" alt="YatraSathi">
+                    <span style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.4rem; color: #1e3a5f;">
+                        Yatra<span style="color: #f97316;">Sathi</span>
                     </span>
                 </a>
-            </div>
 
-            <!-- Desktop Navigation -->
-            <div class="hidden lg:flex items-center space-x-1 text-sm font-semibold">
+                {{-- Desktop Nav --}}
                 @php
                     $nav = [
-                        ['destinations.public','Destinations','ri-map-pin-line'],
-                        ['maps.show','Maps','ri-map-pin-2-line'],
-                        ['about','About','ri-information-line'],
-                        ['contact','Contact','ri-phone-line'],
-                        ['guides.show','Guides','ri-contacts-fill'],
+                        ['destinations.public', 'Destinations'],
+                        ['packages',            'Packages'],
+                        ['maps.show',           'Map'],
+                        ['guides.show',         'Guides'],
+                        ['about',               'About'],
+                        ['contact',             'Contact'],
                     ];
                 @endphp
 
-                @foreach ($nav as [$route,$label,$icon])
-                    <a href="{{ route($route) }}"
-                        class="relative px-3 py-2 {{ Route::currentRouteName()===$route ? 'text-blue-600' : 'text-gray-700' }} hover:text-blue-600 transition group">
-                        <i class="{{ $icon }}"></i> {{ $label }}
-                        <span
-                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300
-                            group-hover:w-full {{ Route::currentRouteName()===$route ? '!w-full' : '' }}"></span>
-                    </a>
-                @endforeach
-            </div>
-
-            <!-- Right Section -->
-            <div class="flex items-center space-x-4">
-
-                <!-- Search -->
-                <form action="{{ route('search') }}" method="GET" class="hidden lg:flex items-center">
-                    <input type="search" name="qry" value="{{ request()->qry }}"
-                        placeholder="Search..."
-                        class="border px-3 py-1.5 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500"
-                        minlength="2" required>
-                </form>
-
-                <!-- Login/Register Buttons -->
-                @guest
-                    <a href="/login"
-                        class="hidden lg:inline-block px-4 py-2 text-sm font-semibold text-blue-600 border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition duration-300">
-                        <i class="ri-login-box-line mr-1"></i>Login
-                    </a>
-                    <a href="/register"
-                        class="hidden lg:inline-block px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-300">
-                        <i class="ri-user-add-line mr-1"></i>Sign Up
-                    </a>
-                @endguest
-
-                <!-- USER AVATAR -->
-                @auth
-                    <div class="relative group">
-                        <a href="{{ route('userprofile.edit') }}"
-                            class="block w-11 h-11 transition-transform duration-300 hover:scale-105">
-                            @if (auth()->user()->profile_picture)
-                                <img src="{{ asset('storage/profile_pictures/' . auth()->user()->profile_picture) }}"
-                                    class="w-11 h-11 rounded-full border-2 border-blue-500 object-cover shadow-md">
-                            @else
-                                <img src="{{ asset('useravatar.avif') }}"
-                                    class="w-11 h-11 rounded-full border-2 border-blue-500 object-cover shadow-md">
-                            @endif
+                <div class="hidden lg:flex items-center gap-1 text-sm font-semibold">
+                    @foreach($nav as [$route, $label])
+                        <a href="{{ route($route) }}"
+                            class="relative px-3 py-2 transition-colors duration-200 group
+                            {{ Route::currentRouteName() === $route ? 'text-orange-500' : 'text-gray-600 hover:text-blue-900' }}">
+                            {{ $label }}
+                            <span class="absolute bottom-0 left-0 h-0.5 bg-orange-500 transition-all duration-300
+                                {{ Route::currentRouteName() === $route ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
                         </a>
+                    @endforeach
+                </div>
 
-                        <!-- Dropdown -->
-                        <div
-                            class="absolute right-0 top-full mt-3 w-64 bg-white rounded-lg shadow-lg
-                            opacity-0 invisible group-hover:opacity-100 group-hover:visible
-                            transition-all duration-300 z-50">
-                            <div class="py-2">
-                                <div class="px-4 py-2 border-b">
-                                    <p class="font-semibold text-gray-800">{{ auth()->user()->name }}</p>
-                                    <p class="text-sm text-gray-600">{{ auth()->user()->email }}</p>
+                {{-- Right: Search + Auth --}}
+                <div class="hidden lg:flex items-center gap-3">
+                    <form action="{{ route('search') }}" method="GET" class="flex items-center">
+                        <div class="relative">
+                            <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                            <input type="search" name="qry" value="{{ request()->qry }}"
+                                placeholder="Search packages..."
+                                class="pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-300 w-44"
+                                minlength="2" required>
+                        </div>
+                    </form>
+
+                    @guest
+                        <a href="/login"
+                            class="px-4 py-2 text-sm font-bold text-blue-900 border border-blue-900 rounded-full hover:bg-blue-900 hover:text-white transition-all duration-200">
+                            Login
+                        </a>
+                        <a href="/register"
+                            class="px-4 py-2 text-sm font-bold text-white bg-orange-500 rounded-full hover:bg-orange-400 transition-all duration-200">
+                            Sign Up
+                        </a>
+                    @endguest
+
+                    @auth
+                        <div class="relative group">
+                            <button class="flex items-center gap-2 focus:outline-none">
+                                @if(auth()->user()->profile_picture)
+                                    <img src="{{ asset('storage/profile_pictures/' . auth()->user()->profile_picture) }}"
+                                        class="w-10 h-10 rounded-full border-2 border-orange-400 object-cover">
+                                @else
+                                    <img src="{{ asset('useravatar.avif') }}"
+                                        class="w-10 h-10 rounded-full border-2 border-orange-400 object-cover">
+                                @endif
+                                <i class="ri-arrow-down-s-line text-gray-500 text-sm"></i>
+                            </button>
+
+                            {{-- Dropdown --}}
+                            <div class="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100
+                                opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <p class="font-bold text-sm text-gray-800">{{ auth()->user()->name }}</p>
+                                    <p class="text-xs text-gray-400 truncate">{{ auth()->user()->email }}</p>
                                 </div>
-
-                                <a href="{{ route('userprofile.edit') }}"
-                                    class="flex items-center px-4 py-2 hover:bg-gray-100">
-                                    <i class="ri-user-settings-line mr-3"></i> Edit Profile
-                                </a>
-
-                                <a href="{{ route('preferences.show') }}"
-                                    class="flex items-center px-4 py-2 hover:bg-gray-100">
-                                    <i class="ri-magic-line mr-3 text-blue-600"></i> AI Preferences
-                                </a>
-
-                                <a href="{{ route('historyindex') }}"
-                                    class="flex items-center px-4 py-2 hover:bg-gray-100">
-                                    <i class="ri-history-line mr-3"></i> Booking History
-                                </a>
-
-                                <div class="border-t mt-2">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit"
-                                            class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">
-                                            <i class="ri-logout-circle-line mr-3"></i> Logout
-                                        </button>
-                                    </form>
+                                <div class="py-1 text-sm">
+                                    <a href="{{ route('userprofile.edit') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50">
+                                        <i class="ri-user-settings-line text-orange-500"></i> Edit Profile
+                                    </a>
+                                    <a href="{{ route('preferences.show') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50">
+                                        <i class="ri-magic-line text-orange-500"></i> AI Preferences
+                                    </a>
+                                    <a href="{{ route('historyindex') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50">
+                                        <i class="ri-history-line text-orange-500"></i> Booking History
+                                    </a>
+                                    <div class="border-t border-gray-100 mt-1">
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-red-50 text-sm">
+                                                <i class="ri-logout-circle-line"></i> Logout
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endauth
+                    @endauth
+                </div>
 
-                <!-- Mobile Menu Button -->
-                <button id="menu-toggle"
-                    class="lg:hidden text-gray-700 hover:text-blue-600 text-2xl">
-                    <i class="ri-menu-line"></i>
-                </button>
+                {{-- Mobile: avatar + hamburger --}}
+                <div class="flex items-center gap-3 lg:hidden">
+                    @auth
+                        <a href="{{ route('userprofile.edit') }}">
+                            @if(auth()->user()->profile_picture)
+                                <img src="{{ asset('storage/profile_pictures/' . auth()->user()->profile_picture) }}"
+                                    class="w-9 h-9 rounded-full border-2 border-orange-400 object-cover">
+                            @else
+                                <img src="{{ asset('useravatar.avif') }}"
+                                    class="w-9 h-9 rounded-full border-2 border-orange-400 object-cover">
+                            @endif
+                        </a>
+                    @endauth
+                    <button id="menu-toggle" class="text-gray-700 hover:text-blue-900 text-2xl p-1">
+                        <i class="ri-menu-3-line" id="menu-icon"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
-    </div>
+    </nav>
+
+    {{-- Mobile Drawer --}}
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
 
     <div id="mobile-menu"
-        class="hidden fixed top-0 left-0 w-3/4 max-w-sm h-full bg-white shadow-2xl z-50
-        transform -translate-x-full transition-transform duration-300 lg:hidden">
-        <div class="p-6 space-y-4 font-semibold text-gray-700">
-            @foreach ($nav as [$route,$label,$icon])
-                <a href="{{ route($route) }}" class="block hover:text-blue-600">
-                    <i class="{{ $icon }} mr-2"></i>{{ $label }}
+        class="fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-2xl transform -translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
+
+        {{-- Drawer Header --}}
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+            <a href="{{ route('home') }}" class="flex items-center gap-2">
+                <img src="{{ asset('SS2.png') }}" class="w-9 h-9 rounded-full object-cover" alt="YatraSathi">
+                <span style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.2rem; color: #1e3a5f;">
+                    Yatra<span style="color: #f97316;">Sathi</span>
+                </span>
+            </a>
+            <button id="menu-close" class="text-gray-400 hover:text-gray-700 text-xl">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+
+        {{-- Nav Links --}}
+        <div class="flex-1 overflow-y-auto px-5 py-4 space-y-1 text-sm font-semibold">
+            @foreach($nav as [$route, $label])
+                <a href="{{ route($route) }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors
+                    {{ Route::currentRouteName() === $route ? 'bg-orange-50 text-orange-500' : 'text-gray-700 hover:bg-gray-50 hover:text-blue-900' }}">
+                    {{ $label }}
                 </a>
             @endforeach
 
-            <!-- Mobile Auth Buttons -->
-            <div class="border-t pt-4 mt-4 space-y-3">
-                @auth
-                    <a href="{{ route('userprofile.edit') }}" class="block hover:text-blue-600">
-                        <i class="ri-user-line mr-2"></i>Profile
-                    </a>
-                    <a href="{{ route('historyindex') }}" class="block hover:text-blue-600">
-                        <i class="ri-history-line mr-2"></i>My Bookings
-                    </a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="w-full text-left text-red-600 hover:text-red-700">
-                            <i class="ri-logout-circle-line mr-2"></i>Logout
-                        </button>
-                    </form>
-                @else
-                    <a href="/login" class="block px-4 py-2 text-center text-blue-600 border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition duration-300">
-                        <i class="ri-login-box-line mr-1"></i>Login
-                    </a>
-                    <a href="/register" class="block px-4 py-2 text-center text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-300">
-                        <i class="ri-user-add-line mr-1"></i>Sign Up
-                    </a>
-                @endauth
-            </div>
+            {{-- Search --}}
+            <form action="{{ route('search') }}" method="GET" class="pt-2">
+                <div class="relative">
+                    <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="search" name="qry" value="{{ request()->qry }}"
+                        placeholder="Search packages..."
+                        class="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                        minlength="2" required>
+                </div>
+            </form>
+        </div>
+
+        {{-- Auth Footer --}}
+        <div class="px-5 py-4 border-t border-gray-100 space-y-2">
+            @guest
+                <a href="/login"
+                    class="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-bold text-blue-900 border border-blue-900 rounded-full hover:bg-blue-900 hover:text-white transition-all">
+                    <i class="ri-login-box-line"></i> Login
+                </a>
+                <a href="/register"
+                    class="flex items-center justify-center gap-2 w-full py-2.5 text-sm font-bold text-white bg-orange-500 rounded-full hover:bg-orange-400 transition-all">
+                    <i class="ri-user-add-line"></i> Sign Up
+                </a>
+            @endguest
+
+            @auth
+                <a href="{{ route('historyindex') }}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:text-blue-900">
+                    <i class="ri-history-line text-orange-500"></i> Booking History
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-500 hover:bg-red-50 rounded-xl">
+                        <i class="ri-logout-circle-line"></i> Logout
+                    </button>
+                </form>
+            @endauth
         </div>
     </div>
-</nav>
-<script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
 
-    let isOpen = false;
-
-    function openMenu() {
-        mobileMenu.classList.remove('hidden');
-        setTimeout(() => {
-            mobileMenu.classList.remove('-translate-x-full');
-        }, 10);
-        document.body.classList.add('overflow-hidden');
-        isOpen = true;
-    }
-
-    function closeMenu() {
-        mobileMenu.classList.add('-translate-x-full');
-        setTimeout(() => {
-            mobileMenu.classList.add('hidden');
-        }, 300);
-        document.body.classList.remove('overflow-hidden');
-        isOpen = false;
-    }
-
-    menuToggle.addEventListener('click', () => {
-        isOpen ? closeMenu() : openMenu();
-    });
-
-    // Close on ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && isOpen) {
-            closeMenu();
-        }
-    });
-
-    // Close when clicking outside menu
-    document.addEventListener('click', (e) => {
-        if (
-            isOpen &&
-            !mobileMenu.contains(e.target) &&
-            !menuToggle.contains(e.target)
-        ) {
-            closeMenu();
-        }
-    });
-</script>
-
-
-
-    <!-- Main content -->
-
+    {{-- Page Content --}}
     @yield('content')
 
 
-    <!-- Useful Section Above Footer -->
-    <section class="bg-gradient-to-r from-lime-200 via-teal-200 to-indigo-200 py-10 ">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 ">
-            <div class="flex flex-col items-center">
-                <a href="{{ route('whyToChooseUs') }}"> <img src="{{ asset('whyus.jpg') }}" alt="Special Offers"
-                        class="w-24 h-24 rounded-full shadow-lg mb-4 hover:scale-110 transition duration-300 ease-in-out">
-                    <h2 class="text-2xl font-bold mb-2"><a href="{{ route('whyToChooseUs') }}">Why to Choose Us</h2>
-                    <p class="text-center text-gray-700">Discover why thousands trust YatraSathi for personalized
-                        travel experiences.</p>
-                </a>
-            </div>
-            <div class="flex flex-col items-center">
-                <a href="{{ route('adventure') }}"> <img src="{{ asset('aa.jpg') }}" alt="Customer Reviews"
-                        class="w-24 h-24 rounded-full shadow-lg mb-4 hover:scale-110 transition duration-300 ease-in-out">
-                    <h2 class="text-2xl font-bold mb-2"><a href="{{ route('adventure') }}">Adventure Activities</h2>
-                    <p class="text-center text-gray-700">Join thrilling adventures for unforgettable experiences with
-                        YatraSathi.</p>
-                </a>
-            </div>
+    {{-- Footer --}}
+    <footer class="bg-blue-950 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
-            <div class="flex flex-col items-center">
-                <a href="{{ route('traveltips') }}"><img src="{{ asset('tip-travel.png') }}" alt="Travel Tips"
-                        class="w-24 h-24 rounded-full shadow-lg mb-4 hover:scale-110 transition duration-300 ease-in-out">
-                    <h2 class="text-2xl font-bold mb-2"><a href="{{ route('traveltips') }}">Travel Tips</h2>
-                    <p class="text-center text-gray-700">Check out our travel tips and guides to make the most out of
-                        your next adventure.</p>
-                </a>
-            </div>
-
-        </div>
-    </section>
-    <footer class="bg-black text-white py-5">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
-            <!-- Logo and Tagline Section -->
-            <div class="flex flex-col items-center md:items-start">
-                <img src="{{ asset('SS2.png') }}" alt="Logo"
-                    class="w-24 h-24 rounded-full shadow-lg bg-white p-2">
-                <span class="mt-4 font-bold text-2xl text-yellow-500">YatraSathi<i
-                        class="ri-earth-line text-cyan-500 ml-2 transition-colors duration-300 hover:text-yellow-500"></i></span>
-            </div>
-
-            <!-- Customer Support Section -->
-            <div>
-                <h2 class="text-2xl font-bold mb-4">Customer Support</h2>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i
-                                class="ri-question-line mr-2"></i>FAQs</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i
-                                class="ri-service-line mr-2"></i>Help Center</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-yellow-500"><i
-                                class="ri-arrow-right-circle-line mr-2"></i>Cancellation Policy</a></li>
-                </ul>
-            </div>
-
-            <!-- Social Links Section -->
-            <div class="flex flex-col items-center md:items-start">
-                <h2 class="text-2xl font-bold mb-4">Follow Us:</h2>
-                <div class="flex space-x-5">
-                    <!-- Facebook -->
-                    <a href="https://facebook.com/prabesh.ach" class="text-blue-600 hover:text-blue-500">
-                        <i class="ri-facebook-line ri-2x"></i>
+                {{-- Brand --}}
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 mb-4">
+                        <img src="{{ asset('SS2.png') }}" class="w-12 h-12 rounded-full object-cover bg-white p-1" alt="YatraSathi">
+                        <span style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.3rem;">
+                            Yatra<span style="color: #f97316;">Sathi</span>
+                        </span>
                     </a>
-                    <!-- Twitter -->
-                    <a href="https://twitter.com/PrabeshAch33319" class="text-blue-400 hover:text-blue-300">
-                        <i class="ri-twitter-line ri-2x"></i>
-                    </a>
-                    <!-- Instagram -->
-                    <a href="https://instagram.com/prabesh_ach" class="text-pink-500 hover:text-pink-400">
-                        <i class="ri-instagram-line ri-2x"></i>
-                    </a>
-                    <!-- Email -->
-                    <a href="mailto:prabesh11100@gmail.com" class="text-gray-700 hover:text-gray-600">
-                        <i class="ri-mail-line ri-2x"></i>
-                    </a>
-                    <!-- Phone -->
-                    <a href="tel:+9779812965110" class="text-green-500 hover:text-green-400">
-                        <i class="ri-phone-line ri-2x"></i>
-                    </a>
+                    <p class="text-blue-200 text-xs leading-relaxed max-w-xs" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        Your trusted travel companion for exploring the beauty and culture of Nepal.
+                    </p>
                 </div>
+
+                {{-- Explore --}}
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-orange-400 mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">Explore</h4>
+                    <ul class="space-y-2 text-sm text-blue-200" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <li><a href="{{ route('destinations.public') }}" class="hover:text-orange-400 transition-colors">Destinations</a></li>
+                        <li><a href="{{ route('packages') }}" class="hover:text-orange-400 transition-colors">Packages</a></li>
+                        <li><a href="{{ route('maps.show') }}" class="hover:text-orange-400 transition-colors">Map</a></li>
+                        <li><a href="{{ route('guides.show') }}" class="hover:text-orange-400 transition-colors">Guides</a></li>
+                        <li><a href="{{ route('adventure') }}" class="hover:text-orange-400 transition-colors">Adventures</a></li>
+                    </ul>
+                </div>
+
+                {{-- Support --}}
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-orange-400 mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">Support</h4>
+                    <ul class="space-y-2 text-sm text-blue-200" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <li><a href="{{ route('about') }}" class="hover:text-orange-400 transition-colors">About Us</a></li>
+                        <li><a href="{{ route('contact') }}" class="hover:text-orange-400 transition-colors">Contact</a></li>
+                        <li><a href="{{ route('traveltips') }}" class="hover:text-orange-400 transition-colors">Travel Tips</a></li>
+                        <li><a href="{{ route('whyToChooseUs') }}" class="hover:text-orange-400 transition-colors">Why Choose Us</a></li>
+                    </ul>
+                </div>
+
+                {{-- Contact + Social --}}
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-orange-400 mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">Connect</h4>
+                    <ul class="space-y-2 text-sm text-blue-200 mb-5" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <li><a href="mailto:yatrasathi@gmail.com" class="flex items-center gap-2 hover:text-orange-400 transition-colors"><i class="ri-mail-line"></i> yatrasathi@gmail.com</a></li>
+                        <li><a href="tel:+9779812965110" class="flex items-center gap-2 hover:text-orange-400 transition-colors"><i class="ri-phone-line"></i> +977 9812965110</a></li>
+                    </ul>
+                    <div class="flex items-center gap-3">
+                        <a href="https://facebook.com/prabesh.ach" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-500 transition-colors">
+                            <i class="ri-facebook-line text-sm"></i>
+                        </a>
+                        <a href="https://twitter.com/PrabeshAch33319" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-500 transition-colors">
+                            <i class="ri-twitter-line text-sm"></i>
+                        </a>
+                        <a href="https://instagram.com/prabesh_ach" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-500 transition-colors">
+                            <i class="ri-instagram-line text-sm"></i>
+                        </a>
+                        <a href="mailto:prabesh11100@gmail.com" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-orange-500 transition-colors">
+                            <i class="ri-mail-line text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <!-- Footer Bottom Section -->
-        <div class="bg-gray-900 text-gray-300 text-center py-5">
-            <p>&copy; 2024 YatraSathi | All Rights Reserved</p>
+
+        {{-- Bottom Bar --}}
+        <div class="border-t border-white/10 py-4">
+            <div class="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-blue-300" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                <p>&copy; {{ date('Y') }} YatraSathi. All Rights Reserved.</p>
+                <p>Made with <span class="text-orange-400">♥</span> for Nepal</p>
+            </div>
         </div>
     </footer>
-</body>
 
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose  = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const overlay    = document.getElementById('mobile-overlay');
+
+        function openMenu() {
+            mobileMenu.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenu();
+        });
+    </script>
+
+</body>
 </html>

@@ -15,7 +15,7 @@
 
         {{-- Logo --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3">
-            <img src="{{ asset('logo.png') }}" alt="YatraSathi" class="w-10 h-10 rounded-full">
+            <img src="{{ asset('SS2.png') }}" alt="YatraSathi" class="w-10 h-10 rounded-full">
             <span class="text-white font-extrabold text-xl" style="font-family: 'DM Serif Display', Georgia, serif;">
                 Yatra<em class="not-italic text-orange-400">Sathi</em>
             </span>
