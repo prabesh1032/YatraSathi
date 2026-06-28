@@ -79,11 +79,7 @@
 
                     {{-- Footer --}}
                     <div class="flex justify-end items-center pt-3 border-t border-gray-100 gap-2">
-                        <a href="{{ route('guides.profile', $guide->id) }}"
-                            class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100 transition-colors duration-150"
-                            title="View Profile">
-                            <i class="ri-eye-line"></i>
-                        </a>
+                        
                         <a href="{{ route('guides.edit', $guide->id) }}"
                             class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors duration-150"
                             title="Edit">
