@@ -19,23 +19,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased bg-gray-50">
-    @include('Layouts.alert')
-
-    <div class="lg:flex">
-
-        <!-- Mobile top bar -->
-        <div class="lg:hidden sticky top-0 z-30 flex items-center justify-between bg-blue-950 px-4 py-3 shadow-md">
-            <button id="sidebarOpenBtn" class="text-white p-1 -ml-1" aria-label="Open menu">
-                <i class="ri-menu-line text-2xl"></i>
-            </button>
-            <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('SS2.png') }}" alt="Logo" class="h-8 bg-white/10 px-2 py-1 rounded-lg">
-            </a>
-            <img src="{{ asset('useravatar.avif') }}" alt="User Avatar"
-                class="w-8 h-8 rounded-full border-2 border-white/20">
-        </div>
-
+<body class="font-sans antialiased bg-gradient-to-r from-blue-50 via-white to-green-50">
+    @include('layouts.alert')
+    <div class="flex">
         <!-- Mobile overlay -->
         <div id="sidebarOverlay" class="fixed inset-0 z-40 bg-black/50 lg:hidden hidden"></div>
 

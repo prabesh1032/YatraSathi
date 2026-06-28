@@ -184,6 +184,9 @@ class OrderController extends Controller
                     'travelDate' => $data['travel_date'],
                     'numPeople' => $data['num_people'],
                     'totalPrice' => $data['total_price'],
+                    'status' => $order->status,
+                    'order' => $order,
+                    'package' => $checkoutData['package'],
                     'guide' => $guide,
                 ];
 

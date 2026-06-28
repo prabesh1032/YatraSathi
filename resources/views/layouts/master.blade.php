@@ -19,9 +19,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans bg-white text-gray-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-
-    @include('Layouts.alert')
+<body class="font-sans bg-gradient-to-r from-blue-50 via-white to-green-50 text-gray-800">
+    @include('layouts.alert')
 
     {{-- Top Bar (desktop only) --}}
     <div class="hidden md:block bg-blue-900 text-white" style="font-family: 'Plus Jakarta Sans', sans-serif;">

@@ -234,7 +234,7 @@
                                         <div class="absolute top-4 right-4">
                                             <span
                                                 class="bg-white/95 text-blue-900 px-3 py-2 rounded-full text-sm font-bold shadow">
-                                                ${{ $package->package_price }}
+                                                Rs. {{ $package->package_price }}
                                             </span>
                                         </div>
                                         <div
@@ -294,8 +294,7 @@
                                                 View Details
                                             </a>
                                             <div class="text-right">
-                                                <div class="text-2xl font-bold text-blue-900">${{ $package->package_price }}
-                                                </div>
+                                                <div class="text-2xl font-bold text-blue-900">Rs. {{ $package->package_price }}</div>
                                                 <div class="text-xs text-gray-500">per person</div>
                                             </div>
                                         </div>
@@ -542,16 +541,16 @@
                                 <div class="border-t border-blue-700 my-2 pt-3 space-y-3">
                                     <div class="flex justify-between items-center">
                                         <span class="text-blue-200 text-sm">Base Price / person / day</span>
-                                        <span id="customBasePrice" class="text-white text-sm font-semibold">$0</span>
+                                        <span id="customBasePrice" class="text-white text-sm font-semibold">Rs. 0</span>
                                     </div>
                                     <div class="flex justify-between items-center">
                                         <span class="text-blue-200 text-sm">Subtotal</span>
-                                        <span id="customSubtotal" class="text-white text-sm font-semibold">$0</span>
+                                        <span id="customSubtotal" class="text-white text-sm font-semibold">Rs. 0</span>
                                     </div>
                                     <div class="flex justify-between items-center text-orange-400" id="customDiscountRow"
                                         style="display: none;">
                                         <span class="text-sm">Group Discount (10%)</span>
-                                        <span id="customDiscount" class="text-sm font-semibold">-$0</span>
+                                        <span id="customDiscount" class="text-sm font-semibold">-Rs. 0</span>
                                     </div>
                                 </div>
 
@@ -559,7 +558,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="text-white font-bold text-base">Total Price</span>
                                         <span id="customTotalPrice" class="text-orange-400 font-extrabold text-2xl"
-                                            style="font-family: 'DM Serif Display', Georgia, serif;">$0</span>
+                                            style="font-family: 'DM Serif Display', Georgia, serif;">Rs. 0</span>
                                     </div>
                                 </div>
                             </div>
@@ -775,12 +774,12 @@
                                 @endif
                             </div>
 
-                            {{-- Price + CTA --}}
+                             {{-- Price + CTA --}}
                             <div class="flex items-center justify-between pt-3 border-t border-gray-100">
                                 <div>
                                     <span class="text-xs text-gray-400">Starting from</span>
                                     <p class="text-lg font-extrabold text-blue-900">
-                                        ${{ number_format($package->package_price) }}</p>
+                                        Rs. {{ number_format($package->package_price) }}</p>
                                 </div>
                                 <a href="{{ route('packages.read', ['package' => $package->id]) }}"
                                     class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 flex items-center gap-1">
@@ -869,11 +868,11 @@
             const hasSelection = !!(selectedDestination?.value && durationSelect.value);
             const basePrice = parseFloat(selectedDestination?.dataset.basePrice || '');
             if (!hasSelection || Number.isNaN(basePrice)) {
-                if (basePriceElement) basePriceElement.textContent = '$0';
-                if (subtotalElement) subtotalElement.textContent = '$0';
-                if (totalPriceElement) totalPriceElement.textContent = '$0';
+                if (basePriceElement) basePriceElement.textContent = 'Rs. 0';
+                if (subtotalElement) subtotalElement.textContent = 'Rs. 0';
+                if (totalPriceElement) totalPriceElement.textContent = 'Rs. 0';
                 if (discountRow) discountRow.style.display = 'none';
-                if (discountElement) discountElement.textContent = '-$0';
+                if (discountElement) discountElement.textContent = '-Rs. 0';
                 if (checkoutBtn) checkoutBtn.disabled = true;
                 if (loginBtn) loginBtn.disabled = true;
                 if (virtualPackageIdElement) virtualPackageIdElement.value = '0';
@@ -892,14 +891,14 @@
                 discountAmount = subtotal * 0.1;
                 total = subtotal - discountAmount;
                 if (discountRow) discountRow.style.display = 'flex';
-                if (discountElement) discountElement.textContent = '-$' + Math.round(discountAmount);
+                if (discountElement) discountElement.textContent = '-Rs. ' + Math.round(discountAmount);
             } else if (discountRow) {
                 discountRow.style.display = 'none';
             }
 
-            if (basePriceElement) basePriceElement.textContent = '$' + pricePerPersonDay;
-            if (subtotalElement) subtotalElement.textContent = '$' + subtotal;
-            if (totalPriceElement) totalPriceElement.textContent = '$' + Math.round(total);
+            if (basePriceElement) basePriceElement.textContent = 'Rs. ' + pricePerPersonDay;
+            if (subtotalElement) subtotalElement.textContent = 'Rs. ' + subtotal;
+            if (totalPriceElement) totalPriceElement.textContent = 'Rs. ' + Math.round(total);
 
             if (checkoutBtn) checkoutBtn.disabled = false;
             if (loginBtn) loginBtn.disabled = false;
