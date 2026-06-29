@@ -100,7 +100,7 @@
                             Welcome to YatraSathi
                         </div>
                         <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-800 mb-6 leading-tight"
-                         style="font-family: 'DM Serif Display', Georgia, serif;">
+                            style="font-family: 'DM Serif Display', Georgia, serif;">
                             Explore Nepal <br>
                             <span class="text-orange-500">With Confidence</span>
                         </h2>
@@ -189,12 +189,12 @@
         </section>
         @auth
             @if ($recommendedPackages->isNotEmpty())
-                <section class="py-16 bg-gradient-to-r from-indigo-50 to-purple-50">
+                <section class="py-16 bg-gradient-to-r from-orange-50 via-white to-blue-50">
                     <div class="container mx-auto">
                         <div class="fade-in-up text-center max-w-2xl mx-auto mb-12">
                             <!-- Top Badge -->
                             <div
-                                class="inline-block bg-orange-100 text-orange-600 px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+                                class="inline-block bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border border-blue-100">
                                 <i class="ri-magic-line mr-1"></i>
                                 Personalized Picks
                             </div>
@@ -203,7 +203,7 @@
                             <h2 class="text-2xl lg:text-3xl font-extrabold text-gray-800 mb-3">
                                 Recommended
                                 <span class="text-orange-500">For</span>
-                                <span class="text-blue-700">You</span>
+                                <span class="text-blue-900">You</span>
                             </h2>
 
                             <!-- Description -->
@@ -217,23 +217,24 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
                             @foreach ($recommendedPackages as $package)
                                 <div
-                                    class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 group">
+                                    class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border border-gray-100">
                                     <div class="relative overflow-hidden">
                                         <img src="{{ asset('images/' . $package->photopath) }}"
                                             alt="{{ $package->package_name }}"
                                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300">
                                         <div
-                                            class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300">
+                                            class="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-blue-950/10 to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-300">
                                         </div>
                                         <div class="absolute top-4 left-4">
                                             <span
-                                                class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                                class="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                                                 <i class="ri-star-fill mr-1"></i>AI Pick
                                             </span>
                                         </div>
                                         <div class="absolute top-4 right-4">
-                                            <span class="bg-yellow-400 text-black px-3 py-2 rounded-full text-sm font-bold">
-                                                ${{ $package->package_price }}
+                                            <span
+                                                class="bg-white/95 text-blue-900 px-3 py-2 rounded-full text-sm font-bold shadow">
+                                                Rs. {{ $package->package_price }}
                                             </span>
                                         </div>
                                         <div
@@ -251,15 +252,15 @@
 
                                     <div class="p-6">
                                         <h3
-                                            class="text-xl font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition-colors">
+                                            class="text-xl font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">
                                             {{ $package->package_name }}
                                         </h3>
                                         <div class="flex items-center text-gray-600 mb-3">
-                                            <i class="ri-map-pin-line mr-2 text-indigo-500"></i>
+                                            <i class="ri-map-pin-line mr-2 text-orange-500"></i>
                                             <span
                                                 class="text-sm">{{ $package->destination->name ?? 'Various Locations' }}</span>
                                             <span class="mx-2">•</span>
-                                            <i class="ri-time-line mr-2 text-indigo-500"></i>
+                                            <i class="ri-time-line mr-2 text-orange-500"></i>
                                             <span class="text-sm">{{ $package->duration }} days</span>
                                         </div>
 
@@ -278,23 +279,22 @@
                                                     );
                                                 @endphp
                                                 <div class="flex-1 bg-gray-200 rounded-full h-2 w-20">
-                                                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full"
+                                                    <div class="bg-gradient-to-r from-orange-400 to-blue-700 h-2 rounded-full"
                                                         style="width: {{ $scorePercentage }}%"></div>
                                                 </div>
                                                 <span
-                                                    class="text-xs text-indigo-600 ml-2 font-semibold">{{ round($scorePercentage) }}%</span>
+                                                    class="text-xs text-blue-700 ml-2 font-semibold">{{ round($scorePercentage) }}%</span>
                                             </div>
                                         </div>
 
                                         <div class="flex justify-between items-center">
                                             <a href="{{ route('packages.read', $package->id) }}"
-                                                class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center">
+                                                class="bg-gradient-to-r from-blue-700 to-blue-900 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-800 hover:to-blue-950 transition-all duration-300 transform hover:scale-105 flex items-center">
                                                 <i class="ri-eye-line mr-2"></i>
                                                 View Details
                                             </a>
                                             <div class="text-right">
-                                                <div class="text-2xl font-bold text-indigo-600">${{ $package->package_price }}
-                                                </div>
+                                                <div class="text-2xl font-bold text-blue-900">Rs. {{ $package->package_price }}</div>
                                                 <div class="text-xs text-gray-500">per person</div>
                                             </div>
                                         </div>
@@ -305,7 +305,7 @@
 
                         <div class="text-center mt-8">
                             <a href="{{ route('preferences.edit') }}"
-                                class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-semibold">
+                                class="inline-flex items-center text-blue-700 hover:text-blue-900 font-semibold">
                                 <i class="ri-settings-3-line mr-2"></i>
                                 Update Your Preferences
                             </a>
@@ -541,16 +541,16 @@
                                 <div class="border-t border-blue-700 my-2 pt-3 space-y-3">
                                     <div class="flex justify-between items-center">
                                         <span class="text-blue-200 text-sm">Base Price / person / day</span>
-                                        <span id="customBasePrice" class="text-white text-sm font-semibold">$0</span>
+                                        <span id="customBasePrice" class="text-white text-sm font-semibold">Rs. 0</span>
                                     </div>
                                     <div class="flex justify-between items-center">
                                         <span class="text-blue-200 text-sm">Subtotal</span>
-                                        <span id="customSubtotal" class="text-white text-sm font-semibold">$0</span>
+                                        <span id="customSubtotal" class="text-white text-sm font-semibold">Rs. 0</span>
                                     </div>
                                     <div class="flex justify-between items-center text-orange-400" id="customDiscountRow"
                                         style="display: none;">
                                         <span class="text-sm">Group Discount (10%)</span>
-                                        <span id="customDiscount" class="text-sm font-semibold">-$0</span>
+                                        <span id="customDiscount" class="text-sm font-semibold">-Rs. 0</span>
                                     </div>
                                 </div>
 
@@ -558,7 +558,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="text-white font-bold text-base">Total Price</span>
                                         <span id="customTotalPrice" class="text-orange-400 font-extrabold text-2xl"
-                                            style="font-family: 'DM Serif Display', Georgia, serif;">$0</span>
+                                            style="font-family: 'DM Serif Display', Georgia, serif;">Rs. 0</span>
                                     </div>
                                 </div>
                             </div>
@@ -774,12 +774,12 @@
                                 @endif
                             </div>
 
-                            {{-- Price + CTA --}}
+                             {{-- Price + CTA --}}
                             <div class="flex items-center justify-between pt-3 border-t border-gray-100">
                                 <div>
                                     <span class="text-xs text-gray-400">Starting from</span>
                                     <p class="text-lg font-extrabold text-blue-900">
-                                        ${{ number_format($package->package_price) }}</p>
+                                        Rs. {{ number_format($package->package_price) }}</p>
                                 </div>
                                 <a href="{{ route('packages.read', ['package' => $package->id]) }}"
                                     class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 flex items-center gap-1">
@@ -797,6 +797,37 @@
                     View All Packages
                     <i class="ri-map-pin-line ml-3"></i>
                 </a>
+            </div>
+        </div>
+    </section>
+    <section class="bg-gray-50 border-t border-gray-100 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+
+                <a href="{{ route('whyToChooseUs') }}" class="group flex flex-col items-center gap-3">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                        <img src="{{ asset('whyus.jpg') }}" alt="Why Us" class="w-10 h-10 rounded-xl object-cover">
+                    </div>
+                    <h3 class="font-bold text-blue-900 text-sm" style="font-family: 'DM Serif Display', Georgia, serif;">Why Choose Us</h3>
+                    <p class="text-xs text-gray-500 max-w-xs leading-relaxed">Thousands trust YatraSathi for personalized travel experiences.</p>
+                </a>
+
+                <a href="{{ route('adventure') }}" class="group flex flex-col items-center gap-3">
+                    <div class="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center group-hover:bg-orange-100 transition-colors">
+                        <img src="{{ asset('aa.jpg') }}" alt="Adventure" class="w-10 h-10 rounded-xl object-cover">
+                    </div>
+                    <h3 class="font-bold text-blue-900 text-sm" style="font-family: 'DM Serif Display', Georgia, serif;">Adventure Activities</h3>
+                    <p class="text-xs text-gray-500 max-w-xs leading-relaxed">Join thrilling adventures for unforgettable experiences.</p>
+                </a>
+
+                <a href="{{ route('traveltips') }}" class="group flex flex-col items-center gap-3">
+                    <div class="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                        <img src="{{ asset('tip-travel.png') }}" alt="Travel Tips" class="w-10 h-10 rounded-xl object-cover">
+                    </div>
+                    <h3 class="font-bold text-blue-900 text-sm" style="font-family: 'DM Serif Display', Georgia, serif;">Travel Tips</h3>
+                    <p class="text-xs text-gray-500 max-w-xs leading-relaxed">Guides and tips to make the most of your next adventure.</p>
+                </a>
+
             </div>
         </div>
     </section>
@@ -837,11 +868,11 @@
             const hasSelection = !!(selectedDestination?.value && durationSelect.value);
             const basePrice = parseFloat(selectedDestination?.dataset.basePrice || '');
             if (!hasSelection || Number.isNaN(basePrice)) {
-                if (basePriceElement) basePriceElement.textContent = '$0';
-                if (subtotalElement) subtotalElement.textContent = '$0';
-                if (totalPriceElement) totalPriceElement.textContent = '$0';
+                if (basePriceElement) basePriceElement.textContent = 'Rs. 0';
+                if (subtotalElement) subtotalElement.textContent = 'Rs. 0';
+                if (totalPriceElement) totalPriceElement.textContent = 'Rs. 0';
                 if (discountRow) discountRow.style.display = 'none';
-                if (discountElement) discountElement.textContent = '-$0';
+                if (discountElement) discountElement.textContent = '-Rs. 0';
                 if (checkoutBtn) checkoutBtn.disabled = true;
                 if (loginBtn) loginBtn.disabled = true;
                 if (virtualPackageIdElement) virtualPackageIdElement.value = '0';
@@ -860,14 +891,14 @@
                 discountAmount = subtotal * 0.1;
                 total = subtotal - discountAmount;
                 if (discountRow) discountRow.style.display = 'flex';
-                if (discountElement) discountElement.textContent = '-$' + Math.round(discountAmount);
+                if (discountElement) discountElement.textContent = '-Rs. ' + Math.round(discountAmount);
             } else if (discountRow) {
                 discountRow.style.display = 'none';
             }
 
-            if (basePriceElement) basePriceElement.textContent = '$' + pricePerPersonDay;
-            if (subtotalElement) subtotalElement.textContent = '$' + subtotal;
-            if (totalPriceElement) totalPriceElement.textContent = '$' + Math.round(total);
+            if (basePriceElement) basePriceElement.textContent = 'Rs. ' + pricePerPersonDay;
+            if (subtotalElement) subtotalElement.textContent = 'Rs. ' + subtotal;
+            if (totalPriceElement) totalPriceElement.textContent = 'Rs. ' + Math.round(total);
 
             if (checkoutBtn) checkoutBtn.disabled = false;
             if (loginBtn) loginBtn.disabled = false;

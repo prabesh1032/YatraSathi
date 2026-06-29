@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
@@ -13,10 +14,10 @@ class PageController extends Controller
         // Only load 12 packages for better performance
         $packages = Package::latest()->take(12)->get();
         $featuredDestinations = Destination::withCount('packages')
-                        ->whereHas('packages')
-                        ->orderBy('packages_count', 'desc')
-                        ->take(6)
-                        ->get();
+            ->orderByDesc('packages_count')
+            ->latest('id')
+            ->take(6)
+            ->get();
         // Get AI recommendations for authenticated users
         $recommendedPackages = collect();
         if (auth()->check()) {
@@ -32,7 +33,7 @@ class PageController extends Controller
             }
         }
 
-        return view('welcome', compact('packages', 'recommendedPackages','featuredDestinations'));
+        return view('welcome', compact('packages', 'recommendedPackages', 'featuredDestinations'));
     }
     public function about()
     {
@@ -58,12 +59,12 @@ class PageController extends Controller
     public function whyToChooseUs()
     {
         $packages = Package::take(12)->get();;
-        return view('whyToChooseUs',compact( 'packages'));
+        return view('whyToChooseUs', compact('packages'));
     }
     public function search(Request $request)
     {
-        $qry=$request->qry;
-        $packages=Package::where('package_name','like','%'.$qry.'%')->get();
-        return view('search',compact('packages','qry'));
+        $qry = $request->qry;
+        $packages = Package::where('package_name', 'like', '%' . $qry . '%')->get();
+        return view('search', compact('packages', 'qry'));
     }
 }

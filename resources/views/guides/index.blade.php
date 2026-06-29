@@ -1,70 +1,159 @@
 @extends('layouts.app')
-
 @section('title', 'Guides')
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Our Guides</h1>
-        <a href="{{ route('guides.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">Add New Guide</a>
+
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h2 class="text-lg font-semibold text-blue-950">Guides</h2>
+        <p class="text-sm text-gray-500 mt-0.5">
+            {{ $guides->count() }} {{ $guides->count() == 1 ? 'guide' : 'guides' }} on your team.
+        </p>
     </div>
+    <a href="{{ route('guides.create') }}"
+        class="bg-orange-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-orange-600 transition-colors duration-200 flex items-center shrink-0">
+        <i class="ri-add-line mr-1.5"></i>Add Guide
+    </a>
+</div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+@if($guides->isEmpty())
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 text-center py-16 px-4">
+        <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-100 text-orange-500 mb-4">
+            <i class="ri-user-3-line text-3xl"></i>
+        </span>
+        <h3 class="text-lg font-semibold text-blue-950 mb-1">No guides found</h3>
+        <p class="text-sm text-gray-500 mb-6">Start by adding your first tour guide.</p>
+        <a href="{{ route('guides.create') }}"
+            class="inline-flex items-center bg-orange-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-orange-600 transition-colors duration-200">
+            <i class="ri-add-line mr-1.5"></i>Add Guide
+        </a>
+    </div>
+@else
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         @foreach($guides as $guide)
-        <div class="shadow-lg rounded-lg bg-white overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            @if($guide->photopath)
-            <img src="{{ asset('images/' . $guide->photopath) }}" alt="{{ $guide->name }}" class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105">
-            @endif
-            <div class="p-4">
-                <h3 class="text-xl font-bold text-gray-900">{{ $guide->name }}</h3>
-                <div class="text-gray-700 mt-2 flex items-center">
-                    <i class="ri-map-pin-2-line text-green-500 mr-2"></i> Package: {{ $guide->package->name }}
-                </div>
-                <div class="text-gray-700 mt-2 flex items-center">
-                    <i class="ri-award-line text-yellow-500 mr-2"></i> Experience: {{ $guide->experience }} years
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 group">
+
+                {{-- Photo --}}
+                <div class="relative h-44 overflow-hidden">
+                    @if($guide->photopath)
+                        <img src="{{ asset('images/' . $guide->photopath) }}"
+                            alt="{{ $guide->name }}"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-br from-blue-50 to-orange-50 flex flex-col items-center justify-center">
+                            <i class="ri-user-3-line text-orange-300 text-4xl mb-1"></i>
+                            <span class="text-xs text-gray-400">No photo</span>
+                        </div>
+                    @endif
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/50 to-transparent"></div>
+
+                    {{-- Experience badge --}}
+                    <span class="absolute top-3 right-3 inline-flex items-center gap-1 bg-white/95 backdrop-blur text-blue-950 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                        <i class="ri-award-line text-orange-500"></i> {{ $guide->experience }} {{ $guide->experience == 1 ? 'yr' : 'yrs' }}
+                    </span>
+
+                    {{-- Name overlaid --}}
+                    <div class="absolute bottom-0 left-0 right-0 p-4">
+                        <h3 class="text-white text-base font-semibold drop-shadow-sm">{{ $guide->name }}</h3>
+                    </div>
                 </div>
 
-                <div class="flex justify-between items-center mt-4">
-                    <div class="flex items-center space-x-2">
-                        <a href="{{ route('guides.edit', $guide->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-yellow-600 transition duration-300">Edit</a>
-                        <button onclick="showModal('{{ $guide->id }}')" class="bg-red-700 text-white px-3 py-1.5 rounded-lg shadow-md hover:bg-red-800 transition duration-300">Delete</button>
+                <div class="p-5">
+                    {{-- Email --}}
+                    <div class="flex items-center gap-1.5 text-sm text-gray-600 mb-2">
+                        <i class="ri-mail-line text-orange-400"></i>
+                        <span class="truncate">{{ $guide->email }}</span>
+                    </div>
+
+                    {{-- Package assigned --}}
+                    <div class="mb-3">
+                        <span class="inline-flex items-center gap-1 text-xs text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full">
+                            <i class="ri-suitcase-line"></i>
+                            {{ $guide->package->package_name ?? 'Unassigned' }}
+                        </span>
+                    </div>
+
+                    {{-- Description --}}
+                    <p class="text-sm text-gray-500 mb-4 leading-relaxed">
+                        {{ Str::limit($guide->description, 90) }}
+                    </p>
+
+                    {{-- Footer --}}
+                    <div class="flex justify-end items-center pt-3 border-t border-gray-100 gap-2">
+                        
+                        <a href="{{ route('guides.edit', $guide->id) }}"
+                            class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors duration-150"
+                            title="Edit">
+                            <i class="ri-edit-line"></i>
+                        </a>
+                        <button
+                            data-action="{{ route('guides.destroy', $guide->id) }}"
+                            data-name="{{ $guide->name }}"
+                            class="delete-guide-btn w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors duration-150"
+                            title="Delete">
+                            <i class="ri-delete-bin-line"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
         @endforeach
+    </div>
+@endif
+
+{{-- Delete Confirmation Modal --}}
+<div id="deleteGuideModal" class="fixed inset-0 z-50 hidden bg-gray-900/50 backdrop-blur-sm flex justify-center items-center px-4">
+    <div class="bg-white p-8 rounded-2xl max-w-md w-full shadow-xl">
+        <div class="flex flex-col items-center text-center mb-6">
+            <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-red-100 text-red-600 mb-4">
+                <i class="ri-delete-bin-line text-2xl"></i>
+            </span>
+            <h3 class="text-xl font-bold text-blue-950 mb-2">Delete Guide</h3>
+            <p class="text-gray-500 text-sm">
+                Are you sure you want to delete
+                <span id="deleteGuideName" class="font-semibold text-gray-700"></span>?
+                This action cannot be undone.
+            </p>
+        </div>
+        <div class="flex justify-end gap-3">
+            <button id="closeDeleteGuideModal" type="button"
+                class="bg-gray-100 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors duration-150">
+                Cancel
+            </button>
+            <form id="deleteGuideForm" action="" method="POST" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                    class="bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors duration-150">
+                    <i class="ri-delete-bin-line mr-1.5"></i>Delete
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div class="fixed hidden inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50" id="deleteModal">
-    <form id="deleteForm" method="GET" class="bg-white p-6 rounded-lg shadow-2xl max-w-md">
-        @csrf
-        @method('GET')
-        <h1 class="text-2xl font-bold text-center text-blue-700 mb-4">
-            <i class="ri-error-warning-line text-yellow-500 mr-2"></i> Confirm Deletion
-        </h1>
-        <p class="text-gray-600 text-center mb-6">Are you sure you want to remove this guide? This action cannot be undone.</p>
-        <div class="flex justify-center gap-5">
-            <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-400">
-                <i class="ri-check-line mr-2"></i>Yes, Delete
-            </button>
-            <button type="button" onclick="hideModal()" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 focus:ring-2 focus:ring-gray-400">
-                <i class="ri-close-line mr-2"></i>Cancel
-            </button>
-        </div>
-    </form>
-</div>
 <script>
-    function showModal(guideId) {
-        const deleteModal = document.getElementById('deleteModal');
-        const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = `/guides/${guideId}/destroy`; // Set action to delete route for guide
-        deleteModal.classList.remove('hidden');
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('deleteGuideModal');
+        const closeModalBtn = document.getElementById('closeDeleteGuideModal');
+        const deleteButtons = document.querySelectorAll('.delete-guide-btn');
+        const deleteForm = document.getElementById('deleteGuideForm');
+        const deleteName = document.getElementById('deleteGuideName');
 
-    function hideModal() {
-        const deleteModal = document.getElementById('deleteModal');
-        deleteModal.classList.add('hidden');
-    }
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                deleteForm.action = this.getAttribute('data-action');
+                deleteName.textContent = this.getAttribute('data-name');
+                modal.classList.remove('hidden');
+            });
+        });
+
+        closeModalBtn.addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) modal.classList.add('hidden');
+        });
+    });
 </script>
+
 @endsection

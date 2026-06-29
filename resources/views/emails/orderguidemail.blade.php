@@ -23,7 +23,8 @@
             <p class="text-lg mb-6">Hello, <span class="font-semibold">{{ $guide->name }}</span>,</p>
 
             <p class="text-gray-700 leading-relaxed mb-6">
-                Congratulations! You have been assigned as the guide for a new booking. Below are the details for your reference:
+                Congratulations! You have been assigned as the guide for a new booking. Below are the details for your
+                reference:
             </p>
 
             <div class="bg-blue-50 p-4 rounded-md mb-6">
@@ -32,7 +33,8 @@
                     <li><span class="font-semibold">Package Name:</span> {{ $packageName }}</li>
                     <li><span class="font-semibold">Travel Date:</span> {{ $travelDate }}</li>
                     <li><span class="font-semibold">Number of People:</span> {{ $numPeople }}</li>
-                    <li><span class="font-semibold">Total Price:</span> ${{ number_format((float) $order->total_price, 2) }}</li>
+                    <li><span class="font-semibold">Total Price:</span> Rs. {{ number_format((float) $totalPrice, 2) }}
+                    </li>
                 </ul>
             </div>
 
@@ -46,7 +48,8 @@
             </div>
 
             <p class="text-gray-700 leading-relaxed mb-6">
-                Please contact the user at your earliest convenience to confirm the booking details and coordinate further.
+                Please contact the user at your earliest convenience to confirm the booking details and coordinate
+                further.
             </p>
 
             <p class="text-sm text-gray-500">

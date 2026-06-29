@@ -15,7 +15,7 @@
 
         {{-- Logo --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3">
-            <img src="{{ asset('logo.png') }}" alt="YatraSathi" class="w-10 h-10 rounded-full">
+            <img src="{{ asset('SS2.png') }}" alt="YatraSathi" class="w-10 h-10 rounded-full">
             <span class="text-white font-extrabold text-xl" style="font-family: 'DM Serif Display', Georgia, serif;">
                 Yatra<em class="not-italic text-orange-400">Sathi</em>
             </span>
@@ -154,6 +154,7 @@
                         </label>
                         <x-text-input id="password" type="password" name="password"
                             placeholder="••••••••" required autocomplete="new-password"
+                            minlength="8"
                             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
                             style="font-family: 'Plus Jakarta Sans', sans-serif;" />
                         <x-input-error :messages="$errors->get('password')" class="text-red-400 text-xs mt-1" />
@@ -165,11 +166,15 @@
                         </label>
                         <x-text-input id="password_confirmation" type="password" name="password_confirmation"
                             placeholder="••••••••" required autocomplete="new-password"
+                            minlength="8"
                             class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 text-gray-700"
                             style="font-family: 'Plus Jakarta Sans', sans-serif;" />
                         <x-input-error :messages="$errors->get('password_confirmation')" class="text-red-400 text-xs mt-1" />
                     </div>
                 </div>
+                <p class="text-xs text-gray-400 -mt-3" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    For security, password fields are cleared after server validation errors.
+                </p>
 
                 {{-- Submit --}}
                 <button type="submit"
@@ -198,5 +203,23 @@
         </div>
     </div>
 
+<script>
+    const password = document.getElementById('password');
+    const passwordConfirmation = document.getElementById('password_confirmation');
+
+    function validatePasswordConfirmation() {
+        if (!password.value || !passwordConfirmation.value) {
+            passwordConfirmation.setCustomValidity('');
+            return;
+        }
+
+        passwordConfirmation.setCustomValidity(
+            password.value === passwordConfirmation.value ? '' : 'Passwords do not match.'
+        );
+    }
+
+    password.addEventListener('input', validatePasswordConfirmation);
+    passwordConfirmation.addEventListener('input', validatePasswordConfirmation);
+</script>
 </body>
 </html>

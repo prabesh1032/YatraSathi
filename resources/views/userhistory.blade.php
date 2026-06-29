@@ -1,122 +1,140 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container px-4 py-10 mt-10">
-    <!-- Intro Section -->
-    <div class="text-center mb-8">
-        <h1 class="text-5xl font-extrabold text-gray-900">
-            <i class="ri-road-map-line mr-3 text-yellow-500"></i>Your Booking <span class="text-yellow-500">History
+<header class="relative w-full bg-cover bg-center overflow-hidden"
+    style="height: 280px; background-image: url('{{ asset('travelling1.png') }}'); background-attachment: fixed;">
+    <div class="absolute inset-0"
+        style="background: linear-gradient(135deg, rgba(10,20,60,0.85) 0%, rgba(10,20,60,0.5) 50%, rgba(10,20,60,0.2) 100%);">
+    </div>
+    <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
+        <span class="inline-block text-orange-400 text-xs font-bold tracking-widest uppercase mb-3"
+            style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            ✦ YatraSathi
+        </span>
+        <h1 class="text-white font-semibold leading-tight mb-3"
+            style="font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.8rem); text-shadow: 0 2px 20px rgba(0,0,0,0.4);">
+            Your Booking History
         </h1>
-        <p class="text-lg text-gray-700 mt-4">
-            Take a journey through your past adventures and memories. Relive the moments and manage your bookings effortlessly.
+        <p class="text-blue-100/80 text-sm max-w-md leading-relaxed"
+            style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            Relive the moments and manage your bookings effortlessly.
         </p>
     </div>
+</header>
 
-    <!-- Bookings Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-4 md:px-16 mb-10">
-        @forelse ($orders as $order)
-        <div class="p-6 border shadow-lg rounded-lg bg-gradient-to-br from-yellow-100 to-gray-100 hover:shadow-2xl hover:-translate-y-2 transform transition duration-300 ease-in-out">
-            <h2 class="text-3xl font-extrabold text-gray-900 mb-2">
-                <i class="ri-global-line text-blue-500 mr-2"></i>
-                {{ $order->is_custom_package ? $order->custom_package_name : ($order->package->package_name ?? 'Package') }}
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Image Section -->
-                <div class="relative mb-2">
-                    @if($order->is_custom_package)
-                        @php
-                            $destination = App\Models\Destination::find($order->package_id ?? 1);
-                            $imagePath = $destination && $destination->photopath ? $destination->photopath : 'default.jpg';
-                        @endphp
-                        <img src="{{ asset('images/' . $imagePath) }}" alt="Custom Package" class="w-full h-64 object-cover rounded-lg shadow-sm">
-                    @else
-                        <img src="{{ asset('images/' . ($order->package->photopath ?? 'default.jpg')) }}" alt="Package Image" class="w-full h-64 object-cover rounded-lg shadow-sm">
-                    @endif
-                    <div class="absolute top-4 left-4 bg-indigo-500 text-white text-xs font-extrabold py-1.5 px-3 rounded-full shadow-lg">
-                        {{ ucfirst($order->status) }}
-                    </div>
-                    <div class="absolute top-4 right-4 bg-yellow-400 text-gray-900 text-xs font-bold py-1.5 px-3 rounded-full shadow">
-                        {{ $order->payment_method }}
-                    </div>
-                    <div class="mt-5">
-                        @if (\Carbon\Carbon::parse($order->created_at)->diffInDays(\Carbon\Carbon::now()) <= 2 && $order->status != 'Cancelled')
-                        <div class="p-1">
-                            <button data-action="{{ route('orders.cancel', $order->id) }}" class="cancel-booking-btn w-full bg-red-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-red-700 transition duration-300">
-                                Cancel Booking
-                            </button>
-                        </div>
-                        @else
-                        <div class="p-1">
-                            <button class="w-full bg-gray-500 text-white rounded-md text-lg py-2  font-semibold cursor-not-allowed">
-                                Cancellation Not Allowed
-                            </button>
-                        </div>
-                        @endif
-                    </div>
-                </div>
+<div class="w-full bg-gray-50 py-12">
+    <div class="container mx-auto px-4">
 
-                <!-- Details Section -->
-                <div class="space-y-3">
-
-                    <p class="text-base font-medium text-gray-900 flex items-center">
-                        <i class="ri-user-line text-green-500 mr-2"></i><strong>Customer:</strong> {{ $order->name }}
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-map-pin-line text-red-500 mr-2"></i><strong>Address:</strong> {{ $order->address }}
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-phone-line text-yellow-500 mr-2"></i><strong>Phone:</strong> {{ $order->phone }}
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-group-line text-purple-500 mr-2"></i><strong>Travelers:</strong> {{ $order->num_people }}
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-wallet-line text-teal-500 mr-2"></i><strong>Total Price:</strong>
-                        <span class="text-green-600 font-bold">${{( $order->total_price) }}</span>
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-time-line text-orange-500 mr-2"></i><strong>Duration:</strong> {{ $order->duration }} days
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-calendar-event-line text-pink-500 mr-2"></i> <strong>Travel Date:</strong> {{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-calendar-line text-indigo-500 mr-2"></i><strong>Booking Date:</strong> {{ $order->created_at->format('d M Y') }}
-                    </p>
-                    <p class="text-base text-gray-900 flex items-center">
-                        <i class="ri-user-line text-purple-500 mr-2"></i> <strong>Guide:</strong>
-                        <span class="text-blue-600 font-semibold">{{ $order->guide ? $order->guide->name : 'Not Selected' }}</span>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Cancel Booking Button -->
-
-        </div>
-        @empty
-        <div class="col-span-full text-center py-12">
+        @if ($orders->isEmpty())
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 -mt-20 relative z-10 text-center py-16 px-4">
             <img src="{{ asset('notfound.jpg') }}" alt="No Bookings Found" class="w-1/3 mx-auto mb-4">
-            <h2 class="text-3xl font-bold text-gray-800">No Booking History Yet</h2>
-            <p class="text-gray-600 mt-2">It looks like your travel adventures are yet to begin. Discover exciting destinations and start your journey today!</p>
-            <a href="{{ route('packages') }}" class="mt-6 inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg shadow-md hover:bg-indigo-700 transition">
+            <h2 class="text-2xl font-bold text-blue-900">No Booking History Yet</h2>
+            <p class="text-gray-500 mt-2 max-w-md mx-auto">It looks like your travel adventures are yet to begin. Discover exciting destinations and start your journey today!</p>
+            <a href="{{ route('packages') }}" class="mt-6 inline-flex items-center bg-orange-500 text-white px-6 py-3 rounded-lg text-base font-semibold shadow-sm hover:bg-orange-600 transition-colors duration-200">
                 <i class="ri-flight-takeoff-line mr-2"></i>Explore Packages
             </a>
         </div>
-        @endforelse
-    </div>
+        @else
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 -mt-20 relative z-10 overflow-hidden">
 
+            <!-- Scroll hint (mobile) -->
+            <div class="flex items-center justify-between px-5 py-3 border-b border-gray-100 md:hidden">
+                <span class="text-sm font-semibold text-blue-900">{{ $orders->count() }} {{ $orders->count() == 1 ? 'Booking' : 'Bookings' }}</span>
+                <span class="text-xs text-gray-400 flex items-center">
+                    Scroll for more <i class="ri-arrow-right-line ml-1"></i>
+                </span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead>
+                        <tr class="bg-blue-50 text-blue-900 text-xs font-semibold uppercase tracking-wide">
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Package</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Customer</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Contact</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Travelers</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Duration</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Travel Date</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Booked On</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Guide</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Payment</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Total</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Status</th>
+                            <th class="px-5 py-4 text-left whitespace-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach ($orders as $order)
+                        @php
+                            $imagePath = $order->is_custom_package
+                                ? (App\Models\Destination::find($order->package_id ?? 1)->photopath ?? 'default.jpg')
+                                : ($order->package->photopath ?? 'default.jpg');
+                            $canCancel = \Carbon\Carbon::parse($order->created_at)->diffInDays(\Carbon\Carbon::now()) <= 2 && $order->status != 'Cancelled';
+                        @endphp
+                        <tr class="hover:bg-orange-50/40 transition-colors duration-150">
+                            <td class="px-5 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ asset('images/' . $imagePath) }}" alt="Package" class="w-10 h-10 rounded-lg object-cover border border-gray-100">
+                                    <span class="font-semibold text-gray-900">
+                                        {{ $order->is_custom_package ? $order->custom_package_name : ($order->package->package_name ?? 'Package') }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-5 py-4 whitespace-nowrap text-gray-700">
+                                <div class="flex items-center">
+                                    <i class="ri-user-line text-orange-500 mr-1.5"></i>{{ $order->name }}
+                                </div>
+                                <div class="text-xs text-gray-400 flex items-center mt-0.5">
+                                    <i class="ri-map-pin-line mr-1.5"></i>{{ $order->address }}
+                                </div>
+                            </td>
+                            <td class="px-5 py-4 whitespace-nowrap text-gray-700">{{ $order->phone }}</td>
+                            <td class="px-5 py-4 whitespace-nowrap text-gray-700">
+                                <i class="ri-group-line text-orange-500 mr-1.5"></i>{{ $order->num_people }}
+                            </td>
+                            <td class="px-5 py-4 whitespace-nowrap text-gray-700">{{ $order->duration }} days</td>
+                            <td class="px-5 py-4 whitespace-nowrap text-gray-700">{{ \Carbon\Carbon::parse($order->travel_date)->format('d M Y') }}</td>
+                            <td class="px-5 py-4 whitespace-nowrap text-gray-700">{{ $order->created_at->format('d M Y') }}</td>
+                            <td class="px-5 py-4 whitespace-nowrap text-blue-900 font-medium">{{ $order->guide ? $order->guide->name : 'Not Selected' }}</td>
+                            <td class="px-5 py-4 whitespace-nowrap">
+                                <span class="bg-orange-100 text-orange-600 text-xs font-bold py-1 px-2.5 rounded-full">{{ $order->payment_method }}</span>
+                            </td>
+                            <td class="px-5 py-4 whitespace-nowrap font-bold text-green-600">${{ $order->total_price }}</td>
+                            <td class="px-5 py-4 whitespace-nowrap">
+                                <span class="bg-blue-900 text-white text-xs font-bold py-1 px-2.5 rounded-full">{{ ucfirst($order->status) }}</span>
+                            </td>
+                            <td class="px-5 py-4 whitespace-nowrap">
+                                @if ($canCancel)
+                                <button data-action="{{ route('orders.cancel', $order->id) }}" class="cancel-booking-btn bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors duration-150">
+                                    Cancel
+                                </button>
+                                @else
+                                <span class="bg-gray-100 text-gray-400 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-not-allowed">
+                                    Locked
+                                </span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+
+    </div>
 </div>
 
 <!-- Modal for Confirmation -->
-<div id="cancelBookingModal" class="fixed inset-0 z-50 hidden bg-gray-800 bg-opacity-50 flex justify-center items-center">
-    <div class="bg-white p-8 rounded-lg max-w-lg w-full space-y-4">
-        <h3 class="text-2xl font-semibold text-gray-800">Cancel Booking</h3>
-        <p class="text-gray-600">Are you sure you want to cancel this booking? This action cannot be undone.</p>
-        <div class="flex justify-between">
-            <button id="closeModal" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md">Cancel</button>
+<div id="cancelBookingModal" class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-50 flex justify-center items-center px-4">
+    <div class="bg-white p-8 rounded-2xl max-w-lg w-full space-y-4 shadow-xl">
+        <h3 class="text-2xl font-bold text-blue-900">Cancel Booking</h3>
+        <p class="text-gray-500">Are you sure you want to cancel this booking? This action cannot be undone.</p>
+        <div class="flex justify-end gap-3">
+            <button id="closeModal" class="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-lg font-semibold hover:bg-gray-200 transition-colors duration-150">Cancel</button>
             <form id="cancelBookingForm" action="" method="POST" class="inline">
                 @csrf
-                <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition duration-300">
+                <button type="submit" class="bg-red-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-150">
                     Confirm Cancellation
                 </button>
             </form>
@@ -151,10 +169,3 @@
     });
 </script>
 @endsection
-
-
-
-
-
-
-
